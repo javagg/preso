@@ -1,0 +1,33 @@
+admin:
+  - getUserInfo:
+  - blockUser:
+  - unblockUser:
+apple:
+  - authenticate:
+email:
+  - authenticate:
+  - changePassword:
+  - initiatePasswordReset:
+  - resetPassword:
+  - createAccountRequest:
+  - createAccount:
+firebase:
+  - authenticate:
+google:
+  - authenticateWithServerAuthCode:
+  - authenticateWithIdToken:
+status:
+  - isSignedIn:
+  - signOut:
+  - signOutDevice:
+  - signOutAllDevices:
+  - getUserInfo:
+  - getUserSettingsConfig:
+user:
+  - removeUserImage:
+  - setUserImage:
+  - changeUserName:
+  - changeFullName:
+wechat:
+  - authenticateWithServerAuthCode:
+  - authenticateWithIdToken:

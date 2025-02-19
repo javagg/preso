@@ -4,8 +4,6 @@ environment:
   sdk: ^3.6.1
 
 workspace:
-  # - packages/serverpod_auth_client_wechat
-  # - packages/serverpod_auth_server_wechat
   - packages/serverpod_auth_wechat_flutter
   - packages/serverpod_auth_server
   - packages/serverpod_auth_client
@@ -16,7 +14,6 @@ workspace:
 dependencies:
   mailer: ^6.0.1
   serverpod: 2.3.1
-
 
 dev_dependencies:
   lints: '>=3.0.0 <6.0.0'

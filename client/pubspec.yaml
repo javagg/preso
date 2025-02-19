@@ -18,6 +18,9 @@ dependencies:
   preso_common: 0.1.0
   cupertino_icons: ^1.0.5
   get: ^5.0.0-release-candidate-9.3.2
+  get_storage: ^2.1.1
+  dio: ^5.8.0+1
+
 dev_dependencies:
   flutter_lints: '>=3.0.0 <6.0.0'
   flutter_test:

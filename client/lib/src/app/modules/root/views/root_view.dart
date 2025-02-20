@@ -13,40 +13,44 @@ class RootView extends GetView<RootController> {
     return Scaffold(
         // endDrawer: const DrawerWidget(),
         // drawer: const DrawerWidget(),
-        // appBar: AppBar(
-        //   title: RouterListener(builder: (context) {
-        //     final title = context.location;
-        //     return Text(title);
-        //   }),
-        //   centerTitle: true,
-        // ),
+        appBar: AppBar(
+          title: RouterListener(builder: (context) {
+            final title = context.location;
+            return Text(title);
+          }),
+          centerTitle: true,
+        ),
         body: Row(
-      children: [
-        Expanded(
-          flex: 1,
-          child: Container(
-            color: Colors.red,
-            child: Column(
-              children: [
-                Flexible(flex: 0, child: Text("head"), ),
-                Expanded(
-                  // flex: 5,
-                  child: Container(
-                    color: Colors.blue,
+          children: [
+            Expanded(
+              flex: 1,
+              child: Column(
+                children: [
+                  // Flexible(
+                  //   flex: 0,
+                  //   child: Text("head"),
+                  // ),
+                  Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
+                          ListTile(
+                            leading: Icon(Icons.home_max),
+                            title: Text("Dashboard"),
+                            onTap: () => Get.offAndToNamed(Routes.dashboard),
+                          ),
                           ExpansionTile(
-                            title: Text("main"),
+                            leading: Icon(Icons.settings),
+                            title: Text("Dashboard"),
                             children: [
-                              ListTile(title: Text("Home")),
-                              ListTile(title: Text("Home")),
-                              ListTile(title: Text("Home")),
-                              ListTile(title: Text("Home")),
-                              ListTile(title: Text("Home")),
-                              ListTile(title: Text("Home")),
-                              ListTile(title: Text("Home")),
-                              ListTile(title: Text("Home")),
+                              ListTile(
+                                title: Text("Settings"),
+                                onTap: () => Get.offAndToNamed(Routes.settings),
+                              ),
+                              ListTile(
+                                title: Text("Profile"),
+                                onTap: () => Get.offAndToNamed(Routes.profile),
+                              ),
                             ],
                           ),
                           ExpansionTile(
@@ -91,28 +95,27 @@ class RootView extends GetView<RootController> {
                           Text(
                             'Column-1',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: Colors.black),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
                           ),
                         ],
                       ),
                     ),
                   ),
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 7,
+              child: Container(
+                color: Colors.teal,
+                child: GetRouterOutlet(
+                  initialRoute: Routes.home,
+                  anchorRoute: '/',
                 ),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          flex: 7,
-          child: Container(
-            color: Colors.teal,
-            child: GetRouterOutlet(
-              initialRoute: Routes.home,
-              anchorRoute: '/',
-            ),
-          ),
-        )
-      ],
-    ));
+              ),
+            )
+          ],
+        ));
   }
 }

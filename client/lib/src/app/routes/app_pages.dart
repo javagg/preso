@@ -30,78 +30,98 @@ class AppPages {
 
   static final routes = [
     GetPage(
+      middlewares: [
+        //only enter this route when not authed
+        EnsureNotAuthedMiddleware(),
+      ],
+      name: _Paths.login,
+      page: () => const LoginView(),
+      bindings: [LoginBinding()],
+    ),
+    GetPage(
       name: '/',
       page: () => const RootView(),
+      middlewares: [
+        // EnsureAuthMiddleware(),
+      ],
       bindings: [RootBinding()],
       participatesInRootNavigator: true,
       preventDuplicates: true,
       children: [
+        // GetPage(
+        //   middlewares: [
+        //     //only enter this route when not authed
+        //     EnsureNotAuthedMiddleware(),
+        //   ],
+        //   name: _Paths.login,
+        //   page: () => const LoginView(),
+        //   bindings: [LoginBinding()],
+        // ),
         GetPage(
-          middlewares: [
-            //only enter this route when not authed
-            EnsureNotAuthedMiddleware(),
-          ],
-          name: _Paths.login,
-          page: () => const LoginView(),
-          bindings: [LoginBinding()],
-        ),
-        GetPage(
-          preventDuplicates: true,
-          name: _Paths.home,
-          page: () => const HomeView(),
+          name: _Paths.dashboard,
+          page: () => const DashboardView(),
           bindings: [
-            HomeBinding(),
+            DashboardBinding(),
           ],
-          title: null,
-          children: [
-            GetPage(
-              name: _Paths.dashboard,
-              page: () => const DashboardView(),
-              bindings: [
-                DashboardBinding(),
-              ],
-            ),
-            GetPage(
-              middlewares: [
-                //only enter this route when authed
-                EnsureAuthMiddleware(),
-              ],
-              name: _Paths.profile,
-              page: () => const ProfileView(),
-              title: 'Profile',
-              transition: Transition.size,
-              bindings: [ProfileBinding()],
-            ),
-            GetPage(
-              name: _Paths.products,
-              page: () => const ProductsView(),
-              title: 'Products',
-              transition: Transition.cupertino,
-              showCupertinoParallax: true,
-              participatesInRootNavigator: false,
-              bindings: [ProductsBinding(), ProductDetailsBinding()],
-              children: [
-                GetPage(
-                  name: _Paths.productDetails,
-                  transition: Transition.cupertino,
-                  showCupertinoParallax: true,
-                  page: () => const ProductDetailsView(),
-                  bindings: const [],
-                  middlewares: [
-                    //only enter this route when authed
-                    EnsureAuthMiddleware(),
-                  ],
-                ),
-              ],
-            ),
-          ],
+          transition: Transition.noTransition,
         ),
+        // GetPage(
+        //   preventDuplicates: true,
+        //   name: _Paths.home,
+        //   page: () => const HomeView(),
+        //   bindings: [
+        //     HomeBinding(),
+        //   ],
+        //   title: null,
+        //   children: [
+        //     GetPage(
+        //       middlewares: [
+        //         //only enter this route when authed
+        //         EnsureAuthMiddleware(),
+        //       ],
+        //       name: _Paths.profile,
+        //       page: () => const ProfileView(),
+        //       title: 'Profile',
+        //       transition: Transition.size,
+        //       bindings: [ProfileBinding()],
+        //     ),
+        //     GetPage(
+        //       name: _Paths.products,
+        //       page: () => const ProductsView(),
+        //       title: 'Products',
+        //       transition: Transition.cupertino,
+        //       showCupertinoParallax: true,
+        //       participatesInRootNavigator: false,
+        //       bindings: [ProductsBinding(), ProductDetailsBinding()],
+        //       children: [
+        //         GetPage(
+        //           name: _Paths.productDetails,
+        //           transition: Transition.cupertino,
+        //           showCupertinoParallax: true,
+        //           page: () => const ProductDetailsView(),
+        //           bindings: const [],
+        //           middlewares: [
+        //             //only enter this route when authed
+        //             EnsureAuthMiddleware(),
+        //           ],
+        //         ),
+        //       ],
+        //     ),
+        //   ],
+        // ),
         GetPage(
           name: _Paths.settings,
           page: () => const SettingsView(),
           bindings: [
             SettingsBinding(),
           ],
+        ),
+        GetPage(
+          name: _Paths.profile,
+          page: () => const ProfileView(),
+          title: 'Profile',
+          transition: Transition.size,
+          bindings: [ProfileBinding()],
         ),
       ],
     ),

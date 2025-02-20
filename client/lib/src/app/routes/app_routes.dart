@@ -6,13 +6,13 @@ part of 'app_pages.dart';
 abstract class Routes {
   static const home = _Paths.home;
 
-  static const profile = _Paths.home + _Paths.profile;
+  static const profile = _Paths.profile;
   static const settings = _Paths.settings;
 
-  static const products = _Paths.home + _Paths.products;
+  static const products = _Paths.products;
 
   static const login = _Paths.login;
-  static const dashboard = _Paths.home + _Paths.dashboard;
+  static const dashboard = _Paths.dashboard;
   Routes._();
   static String LOGIN_THEN(String afterSuccessfulLogin) =>
       '$login?then=${Uri.encodeQueryComponent(afterSuccessfulLogin)}';

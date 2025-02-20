@@ -8,6 +8,7 @@ workspace:
   - packages/serverpod_auth_server
   - packages/serverpod_auth_client
   - packages/common
+  - packages/taro
   - server
   - client
 

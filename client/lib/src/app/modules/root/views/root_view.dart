@@ -21,23 +21,86 @@ class RootView extends GetView<RootController> {
         //   centerTitle: true,
         // ),
         body: Row(
-      children: <Widget>[
+      children: [
         Expanded(
           flex: 1,
-          child: SingleChildScrollView(
-              child: Column(
-            children: [
-              ExpansionTile(
-                title: Text("main"),
-                children: [ListTile(title: Text("Home"), onTap: () {})],
-              ),
-              Text(
-                'Column-1',
-                style:
-                    TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-              ),
-            ],
-          )),
+          child: Container(
+            color: Colors.red,
+            child: Column(
+              children: [
+                Flexible(flex: 0, child: Text("head"), ),
+                Expanded(
+                  // flex: 5,
+                  child: Container(
+                    color: Colors.blue,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          ExpansionTile(
+                            title: Text("main"),
+                            children: [
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: Text("main"),
+                            children: [
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: Text("main"),
+                            children: [
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                            ],
+                          ),
+                          ExpansionTile(
+                            title: Text("main"),
+                            children: [
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                              ListTile(title: Text("Home")),
+                            ],
+                          ),
+                          Text(
+                            'Column-1',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
         Expanded(
           flex: 7,

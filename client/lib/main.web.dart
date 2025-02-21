@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'src/app/routes/app_pages.dart';
-import 'src/app/pages/not_found/not_found.dart';
-import 'src/generated/locales.g.dart';
-import 'src/services/auth_service.dart';
+import 'app/web_routes/app_pages.dart';
+import 'app/pages/not_found/not_found.dart';
+import 'generated/locales.g.dart';
+import 'services/auth_service.dart';
+import 'dart:developer';
 
 Future<void> init() async {
   await Get.put(DbService()).init();
@@ -29,6 +30,42 @@ class SettingsService extends GetxService {
     // print('$runtimeType ready!');
   }
 }
+
+
+class MainMiddleware extends GetMiddleware {
+  @override
+  void onPageDispose() {
+    log('MainMiddleware onPageDispose');
+    super.onPageDispose();
+  }
+
+  @override
+  Widget onPageBuilt(Widget page) {
+    log('MainMiddleware onPageBuilt');
+    return super.onPageBuilt(page);
+  }
+
+  @override
+  GetPage? onPageCalled(GetPage? page) {
+    log('MainMiddleware onPageCalled for route: ${page?.name}');
+    return super.onPageCalled(page);
+  }
+
+  @override
+  List<R>? onBindingsStart<R>(List<R>? bindings) {
+    log('MainMiddleware onBindingsStart');
+    return super.onBindingsStart(bindings);
+  }
+
+  @override
+  GetPageBuilder? onPageBuildStart(GetPageBuilder? page) {
+    log('MainMiddleware onPageBuildStart');
+
+    return super.onPageBuildStart(page);
+  }
+}
+
+
 
 void main() async {
   await init();

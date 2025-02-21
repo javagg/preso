@@ -1,61 +1,38 @@
-import './src/widgets/account_page.dart';
-import './src/serverpod_client.dart';
-import './src/widgets/sign_in_page.dart';
+import 'services/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-void main() async {
-  // Need to call this as SessionManager is using Flutter bindings before runApp
-  // is called.
-  WidgetsFlutterBinding.ensureInitialized();
+import 'app/mobile_routes/app_pages.dart';
 
-  await initializeServerpodClient();
-
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Auth example',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Serverpod Example'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  MyHomePageState createState() => MyHomePageState();
-}
-
-class MyHomePageState extends State<MyHomePage> {
-  @override
-  void initState() {
-    super.initState();
-
-    // Make sure that we rebuild the page if signed in status changes.
-    sessionManager.addListener(() {
-      setState(() {});
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body:
-          sessionManager.isSignedIn ? const AccountPage() : const SignInPage(),
-    );
-  }
+void main() {
+  runApp(
+    GetMaterialApp(
+      title: "Application",
+      binds: [
+        Bind.put(AuthService()),
+      ],
+      getPages: AppPages.routes,
+      initialRoute: AppPages.initial,
+      // builder: (context, child) {
+      //   return FutureBuilder<void>(
+      //     key: ValueKey('initFuture'),
+      //     future: Get.find<SplashService>().init(),
+      //     builder: (context, snapshot) {
+      //       if (snapshot.connectionState == ConnectionState.done) {
+      //         return child ?? SizedBox.shrink();
+      //       }
+      //       return SplashView();
+      //     },
+      //   );
+      // },
+      // routeInformationParser: GetInformationParser(
+      //     // initialRoute: Routes.HOME,
+      //     ),
+      // routerDelegate: GetDelegate(
+      //   backButtonPopMode: PopMode.History,
+      //   preventDuplicateHandlingMode:
+      //       PreventDuplicateHandlingMode.ReorderRoutes,
+      // ),
+    ),
+  );
 }

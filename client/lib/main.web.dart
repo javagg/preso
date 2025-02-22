@@ -7,6 +7,7 @@ import 'app/pages/not_found/not_found.dart';
 import 'generated/locales.g.dart';
 import 'services/auth_service.dart';
 import 'dart:developer';
+import 'serverpod_client.dart';
 
 Future<void> init() async {
   await Get.put(DbService()).init();
@@ -68,6 +69,10 @@ class MainMiddleware extends GetMiddleware {
 
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await initializeServerpodClient();
+
   await init();
   runApp(
     GetMaterialApp(

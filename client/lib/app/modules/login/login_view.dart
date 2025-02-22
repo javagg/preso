@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../services/auth_service.dart';
-import '../../mobile_routes/app_pages.dart';
+import '../../routes/app_routes.dart';
 import 'login_controller.dart';
 
 class LoginView extends GetView<LoginController> {

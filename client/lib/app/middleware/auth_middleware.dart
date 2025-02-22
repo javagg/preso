@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../services/auth_service.dart';
-import '../web_routes/app_pages.dart';
+import '../routes/app_routes.dart';
 
 class EnsureAuthMiddleware extends GetMiddleware {
   @override

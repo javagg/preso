@@ -2,7 +2,7 @@ import 'services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'app/mobile_routes/app_pages.dart';
+import 'app/routes/mobile/app_pages.dart';
 
 void main() {
   runApp(

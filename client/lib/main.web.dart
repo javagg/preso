@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'app/web_routes/app_pages.dart';
+import 'app/routes/web/app_pages.dart';
 import 'app/pages/not_found/not_found.dart';
 import 'generated/locales.g.dart';
 import 'services/auth_service.dart';

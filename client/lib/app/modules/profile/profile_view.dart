@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../mobile_routes/app_pages.dart';
+import '../../routes/app_routes.dart';
 import 'profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {

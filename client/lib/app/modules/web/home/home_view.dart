@@ -13,6 +13,13 @@ class HomeView extends GetView<HomeController> {
       route: Routes.home,
       builder: (context) {
         return Scaffold(
+          appBar: AppBar(
+            title: RouterListener(builder: (context) {
+              final title = context.location;
+              return Text(title);
+            }),
+            centerTitle: true,
+          ),
           body: Row(
             children: [
               Expanded(
@@ -32,11 +39,11 @@ class HomeView extends GetView<HomeController> {
                               leading: Icon(Icons.settings),
                               title: Text("Dashboard"),
                               children: [
-                                ListTile(
-                                  title: Text("Settings"),
-                                  onTap: () =>
-                                      Get.offAndToNamed(Routes.settings),
-                                ),
+                                // ListTile(
+                                //   title: Text("Settings"),
+                                //   onTap: () =>
+                                //       Get.offAndToNamed(Routes.settings),
+                                // ),
                                 ListTile(
                                   title: Text("Profile"),
                                   onTap: () =>

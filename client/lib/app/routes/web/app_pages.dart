@@ -12,14 +12,12 @@ import '../../modules/web/root/root_view.dart';
 // import '../../middleware/auth_middleware.dart';
 import '../../modules/dashboard/dashboard_binding.dart';
 import '../../modules/dashboard/dashboard_view.dart';
-// import '../../modules1/login/bindings/login_binding.dart';
-// import '../../modules1/login/views/login_view.dart';
 // import '../../modules1/product_details/bindings/product_details_binding.dart';
 // import '../../modules1/product_details/views/product_details_view.dart';
 // import '../../modules1/products/bindings/products_binding.dart';
 // import '../../modules1/products/views/products_view.dart';
-// import '../../modules1/profile/bindings/profile_binding.dart';
-// import '../../modules1/profile/views/profile_view.dart';
+import '../../modules/profile/profile_binding.dart';
+import '../../modules/profile/profile_view.dart';
 // import '../../modules1/root/bindings/root_binding.dart';
 // import '../../modules1/root/views/root_view.dart';
 import '../../modules/settings/settings_binding.dart';
@@ -76,6 +74,17 @@ class AppPages {
                   DashboardBinding(),
                 ],
               ),
+              GetPage(
+              middlewares: [
+                //only enter this route when authed
+                // EnsureAuthMiddleware(),
+              ],
+              name: Paths.profile,
+              page: () => const ProfileView(),
+              title: 'Profile',
+              transition: Transition.size,
+              bindings: [ProfileBinding()],
+            ),
             ]),
         GetPage(
           name: Paths.settings,

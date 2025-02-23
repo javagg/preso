@@ -1,11 +1,14 @@
+import 'serverpod_client.dart';
 import 'services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'app/routes/mobile/app_pages.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await initializeServerpodClient();
 
   runApp(
     GetMaterialApp(

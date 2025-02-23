@@ -23,19 +23,19 @@ class HomeView extends GetView<HomeController> {
               }),
               centerTitle: true,
               actions: [
-                 sessionManager.isSignedIn // AuthService.to.isLoggedInValue
-                        ? IconButton(
-                            icon: const Icon(Icons.logout),
-                            onPressed: () {
-                              sessionManager.signOutDevice();
-                              AuthService.to.logout();
-                              Get.toNamed(Routes.login);
-                            },
-                          )
-                        : IconButton(
-                            icon: const Icon(Icons.login),
-                            onPressed: () => Get.toNamed(Routes.login),
-                          ),
+                sessionManager.isSignedIn // AuthService.to.isLoggedInValue
+                    ? IconButton(
+                        icon: const Icon(Icons.logout),
+                        onPressed: () {
+                          sessionManager.signOutDevice();
+                          AuthService.to.logout();
+                          Get.toNamed(Routes.login);
+                        },
+                      )
+                    : IconButton(
+                        icon: const Icon(Icons.login),
+                        onPressed: () => Get.toNamed(Routes.login),
+                      ),
                 // Obx(
                 //   () {
                 //     return AuthService.to.isLoggedInValue
@@ -85,14 +85,14 @@ class HomeView extends GetView<HomeController> {
                               onTap: () => Get.offAndToNamed(Routes.dashboard),
                             ),
                             ExpansionTile(
-                              leading: Icon(Icons.settings),
-                              title: Text("Dashboard"),
+                              leading: Icon(Icons.card_membership),
+                              title: Text("Membership"),
                               children: [
-                                // ListTile(
-                                //   title: Text("Settings"),
-                                //   onTap: () =>
-                                //       Get.offAndToNamed(Routes.settings),
-                                // ),
+                                ListTile(
+                                  title: Text("Members"),
+                                  onTap: () =>
+                                      Get.offAndToNamed(Routes.mebmers),
+                                ),
                                 ListTile(
                                   title: Text("Profile"),
                                   onTap: () =>

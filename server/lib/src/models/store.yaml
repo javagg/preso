@@ -1,0 +1,6 @@
+class: Store
+table: store
+fields:
+  name: String
+  address: Address?, relation
+

@@ -6,6 +6,8 @@ import 'package:preso_client/app/modules/login/login_view.dart';
 
 import '../../middleware/auth_middleware.dart';
 import '../../modules/login/login_binding.dart';
+import '../../modules/member/member_binding.dart';
+import '../../modules/member/member_view.dart';
 import '../../modules/web/root/root_binding.dart';
 import '../../modules/web/root/root_view.dart';
 import '../../modules/dashboard/dashboard_binding.dart';
@@ -53,19 +55,30 @@ class AppPages {
               GetPage(
                 name: Paths.dashboard,
                 page: () => const DashboardView(),
+                transition: Transition.noTransition,
                 bindings: [
                   DashboardBinding(),
                 ],
               ),
               GetPage(
                 middlewares: [
-                  //only enter this route when authed
+                  // EnsureAuthMiddleware(),
+                ],
+                name: Paths.members,
+                page: () => const MemberView(),
+                title: 'Members',
+                transition: Transition.noTransition,
+                bindings: [MemberBinding()],
+              ),
+              GetPage(
+                middlewares: [
                   EnsureAuthMiddleware(),
                 ],
                 name: Paths.profile,
                 page: () => const ProfileView(),
+                transition: Transition.noTransition,
                 title: 'Profile',
-                transition: Transition.size,
+                // transition: Transition.size,
                 bindings: [ProfileBinding()],
               ),
             ]),

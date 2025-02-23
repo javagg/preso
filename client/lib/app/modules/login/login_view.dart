@@ -19,18 +19,24 @@ class LoginView extends GetView<LoginController> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Obx(
-              () {
-                // final isLoggedIn = AuthService.to.isLoggedInValue;
-                final isLoggedIn = sessionManager.isSignedIn;
-                return Text(
-                  'You are currently:'
-                  ' ${isLoggedIn ? "Logged In" : "Not Logged In"}'
-                  "\nIt's impossible to enter this "
-                  "route when you are logged in!",
-                );
-              },
+            Text(
+              'You are currently:'
+              ' ${sessionManager.isSignedIn ? "Logged In" : "Not Logged In"}'
+              "\nIt's impossible to enter this "
+              "route when you are logged in!",
             ),
+            // Obx(
+            //   () {
+            //     // final isLoggedIn = AuthService.to.isLoggedInValue;
+            //     // final isLoggedIn = sessionManager.isSignedIn;
+            //     return Text(
+            //       'You are currently:'
+            //       ' ${sessionManager.isSignedIn ? "Logged In" : "Not Logged In"}'
+            //       "\nIt's impossible to enter this "
+            //       "route when you are logged in!",
+            //     );
+            //   },
+            // ),
             MaterialButton(
               child: const Text(
                 'Do LOGIN !!',

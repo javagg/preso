@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../../services/auth_service.dart';
 import '../../../routes/app_routes.dart';
 import 'home_controller.dart';
 
@@ -14,12 +15,46 @@ class HomeView extends GetView<HomeController> {
       builder: (context) {
         return Scaffold(
           appBar: AppBar(
-            title: RouterListener(builder: (context) {
-              final title = context.location;
-              return Text(title);
-            }),
-            centerTitle: true,
-          ),
+              leading: Hero(tag: "logo", child: FlutterLogo()),
+              title: RouterListener(builder: (context) {
+                final title = context.location;
+                return Text(title);
+              }),
+              centerTitle: true,
+              actions: [
+                Obx(
+                  () {
+                    return AuthService.to.isLoggedInValue
+                        ? IconButton(
+                            icon: const Icon(Icons.logout),
+                            onPressed: () {
+                              AuthService.to.logout();
+                              Get.toNamed(Routes.login);
+                            },
+                          )
+                        : IconButton(
+                            icon: const Icon(Icons.login),
+                            onPressed: () => Get.toNamed(Routes.login),
+                          );
+                  },
+                ),
+                DropdownButton<String>(
+                  value: "选项1",
+                  icon: Icon(Icons.arrow_downward),
+                  iconSize: 24,
+                  elevation: 16,
+                  style: TextStyle(color: Colors.deepPurple),
+                  alignment: AlignmentDirectional.bottomCenter,
+                  onChanged: (newValue) {},
+                  items: <String>['选项1', '选项2', '选项3']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ]),
           body: Row(
             children: [
               Expanded(

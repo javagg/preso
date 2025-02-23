@@ -12,21 +12,12 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 
 abstract class User implements _i1.TableRow, _i1.ProtocolSerialization {
-  User._({
-    this.id,
-    required this.addressId,
-  });
+  User._({this.id});
 
-  factory User({
-    int? id,
-    required int addressId,
-  }) = _UserImpl;
+  factory User({int? id}) = _UserImpl;
 
   factory User.fromJson(Map<String, dynamic> jsonSerialization) {
-    return User(
-      id: jsonSerialization['id'] as int?,
-      addressId: jsonSerialization['addressId'] as int,
-    );
+    return User(id: jsonSerialization['id'] as int?);
   }
 
   static final t = UserTable();
@@ -36,29 +27,18 @@ abstract class User implements _i1.TableRow, _i1.ProtocolSerialization {
   @override
   int? id;
 
-  int addressId;
-
   @override
   _i1.Table get table => t;
 
-  User copyWith({
-    int? id,
-    int? addressId,
-  });
+  User copyWith({int? id});
   @override
   Map<String, dynamic> toJson() {
-    return {
-      if (id != null) 'id': id,
-      'addressId': addressId,
-    };
+    return {if (id != null) 'id': id};
   }
 
   @override
   Map<String, dynamic> toJsonForProtocol() {
-    return {
-      if (id != null) 'id': id,
-      'addressId': addressId,
-    };
+    return {if (id != null) 'id': id};
   }
 
   static UserInclude include() {
@@ -94,41 +74,19 @@ abstract class User implements _i1.TableRow, _i1.ProtocolSerialization {
 class _Undefined {}
 
 class _UserImpl extends User {
-  _UserImpl({
-    int? id,
-    required int addressId,
-  }) : super._(
-          id: id,
-          addressId: addressId,
-        );
+  _UserImpl({int? id}) : super._(id: id);
 
   @override
-  User copyWith({
-    Object? id = _Undefined,
-    int? addressId,
-  }) {
-    return User(
-      id: id is int? ? id : this.id,
-      addressId: addressId ?? this.addressId,
-    );
+  User copyWith({Object? id = _Undefined}) {
+    return User(id: id is int? ? id : this.id);
   }
 }
 
 class UserTable extends _i1.Table {
-  UserTable({super.tableRelation}) : super(tableName: 'user') {
-    addressId = _i1.ColumnInt(
-      'addressId',
-      this,
-    );
-  }
-
-  late final _i1.ColumnInt addressId;
+  UserTable({super.tableRelation}) : super(tableName: 'user') {}
 
   @override
-  List<_i1.Column> get columns => [
-        id,
-        addressId,
-      ];
+  List<_i1.Column> get columns => [id];
 }
 
 class UserInclude extends _i1.IncludeObject {

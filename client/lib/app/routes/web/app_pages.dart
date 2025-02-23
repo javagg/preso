@@ -8,18 +8,10 @@ import '../../middleware/auth_middleware.dart';
 import '../../modules/login/login_binding.dart';
 import '../../modules/web/root/root_binding.dart';
 import '../../modules/web/root/root_view.dart';
-
-// import '../../middleware/auth_middleware.dart';
 import '../../modules/dashboard/dashboard_binding.dart';
 import '../../modules/dashboard/dashboard_view.dart';
-// import '../../modules1/product_details/bindings/product_details_binding.dart';
-// import '../../modules1/product_details/views/product_details_view.dart';
-// import '../../modules1/products/bindings/products_binding.dart';
-// import '../../modules1/products/views/products_view.dart';
 import '../../modules/profile/profile_binding.dart';
 import '../../modules/profile/profile_view.dart';
-// import '../../modules1/root/bindings/root_binding.dart';
-// import '../../modules1/root/views/root_view.dart';
 import '../../modules/settings/settings_binding.dart';
 import '../../modules/settings/settings_view.dart';
 import '../../modules/web/home/home_binding.dart';
@@ -33,15 +25,6 @@ class AppPages {
   static const initial = Routes.home;
 
   static final routes = [
-    // GetPage(
-    //   middlewares: [
-    //     //only enter this route when not authed
-    //     EnsureNotAuthedMiddleware(),
-    //   ],
-    //   name: _Paths.login,
-    //   page: () => const LoginView(),
-    //   bindings: [LoginBinding()],
-    // ),
     GetPage(
       name: '/',
       page: () => const RootView(),
@@ -75,16 +58,16 @@ class AppPages {
                 ],
               ),
               GetPage(
-              middlewares: [
-                //only enter this route when authed
-                // EnsureAuthMiddleware(),
-              ],
-              name: Paths.profile,
-              page: () => const ProfileView(),
-              title: 'Profile',
-              transition: Transition.size,
-              bindings: [ProfileBinding()],
-            ),
+                middlewares: [
+                  //only enter this route when authed
+                  EnsureAuthMiddleware(),
+                ],
+                name: Paths.profile,
+                page: () => const ProfileView(),
+                title: 'Profile',
+                transition: Transition.size,
+                bindings: [ProfileBinding()],
+              ),
             ]),
         GetPage(
           name: Paths.settings,
@@ -93,72 +76,6 @@ class AppPages {
             SettingsBinding(),
           ],
         ),
-        // GetPage(
-        //   name: _Paths.dashboard,
-        //   page: () => const DashboardView(),
-        //   bindings: [
-        //     DashboardBinding(),
-        //   ],
-        //   transition: Transition.noTransition,
-        // ),
-        // GetPage(
-        //   preventDuplicates: true,
-        //   name: _Paths.home,
-        //   page: () => const HomeView(),
-        //   bindings: [
-        //     HomeBinding(),
-        //   ],
-        //   title: null,
-        //   children: [
-        //     GetPage(
-        //       middlewares: [
-        //         //only enter this route when authed
-        //         EnsureAuthMiddleware(),
-        //       ],
-        //       name: _Paths.profile,
-        //       page: () => const ProfileView(),
-        //       title: 'Profile',
-        //       transition: Transition.size,
-        //       bindings: [ProfileBinding()],
-        //     ),
-        //     GetPage(
-        //       name: _Paths.products,
-        //       page: () => const ProductsView(),
-        //       title: 'Products',
-        //       transition: Transition.cupertino,
-        //       showCupertinoParallax: true,
-        //       participatesInRootNavigator: false,
-        //       bindings: [ProductsBinding(), ProductDetailsBinding()],
-        //       children: [
-        //         GetPage(
-        //           name: _Paths.productDetails,
-        //           transition: Transition.cupertino,
-        //           showCupertinoParallax: true,
-        //           page: () => const ProductDetailsView(),
-        //           bindings: const [],
-        //           middlewares: [
-        //             //only enter this route when authed
-        //             EnsureAuthMiddleware(),
-        //           ],
-        //         ),
-        //       ],
-        //     ),
-        //   ],
-        // ),
-        // GetPage(
-        //   name: _Paths.settings,
-        //   page: () => const SettingsView(),
-        //   bindings: [
-        //     SettingsBinding(),
-        //   ],
-        // ),
-        // GetPage(
-        //   name: _Paths.profile,
-        //   page: () => const ProfileView(),
-        //   title: 'Profile',
-        //   transition: Transition.size,
-        //   bindings: [ProfileBinding()],
-        // ),
       ],
     ),
   ];

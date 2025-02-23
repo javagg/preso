@@ -1,8 +1,8 @@
 class: User
 table: user
-fields:
-  addressId: int, relation(parent=address)
-indexes:
-  user_address_unique_idx:
-    fields: addressId
-    unique: true
+# fields:
+#   addressId: int, relation(parent=address)
+# indexes:
+#   user_address_unique_idx:
+#     fields: addressId
+#     unique: true

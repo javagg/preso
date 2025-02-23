@@ -12,21 +12,12 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
 abstract class User implements _i1.SerializableModel {
-  User._({
-    this.id,
-    required this.addressId,
-  });
+  User._({this.id});
 
-  factory User({
-    int? id,
-    required int addressId,
-  }) = _UserImpl;
+  factory User({int? id}) = _UserImpl;
 
   factory User.fromJson(Map<String, dynamic> jsonSerialization) {
-    return User(
-      id: jsonSerialization['id'] as int?,
-      addressId: jsonSerialization['addressId'] as int,
-    );
+    return User(id: jsonSerialization['id'] as int?);
   }
 
   /// The database id, set if the object has been inserted into the
@@ -34,18 +25,10 @@ abstract class User implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  int addressId;
-
-  User copyWith({
-    int? id,
-    int? addressId,
-  });
+  User copyWith({int? id});
   @override
   Map<String, dynamic> toJson() {
-    return {
-      if (id != null) 'id': id,
-      'addressId': addressId,
-    };
+    return {if (id != null) 'id': id};
   }
 
   @override
@@ -57,22 +40,10 @@ abstract class User implements _i1.SerializableModel {
 class _Undefined {}
 
 class _UserImpl extends User {
-  _UserImpl({
-    int? id,
-    required int addressId,
-  }) : super._(
-          id: id,
-          addressId: addressId,
-        );
+  _UserImpl({int? id}) : super._(id: id);
 
   @override
-  User copyWith({
-    Object? id = _Undefined,
-    int? addressId,
-  }) {
-    return User(
-      id: id is int? ? id : this.id,
-      addressId: addressId ?? this.addressId,
-    );
+  User copyWith({Object? id = _Undefined}) {
+    return User(id: id is int? ? id : this.id);
   }
 }

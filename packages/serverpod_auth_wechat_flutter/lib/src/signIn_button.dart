@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
 import 'package:serverpod_auth_client/serverpod_auth_client.dart';
-// as auth_client;
-// import 'package:serverpod_auth_client_wechat/serverpod_auth_client_wechat.dart';
 import 'auth.dart';
 
 class SignInWithWechatButton extends StatefulWidget {

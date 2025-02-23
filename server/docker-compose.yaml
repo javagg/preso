@@ -5,10 +5,10 @@ services:
       - '8090:5432'
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_DB: auth_example
+      POSTGRES_DB: preso
       POSTGRES_PASSWORD: "9S8rYW7XeIA8bmGY9FBzOSLwQZtQEFNr"
     volumes:
-      - auth_example_data:/var/lib/postgresql/data
+      - db-data:/var/lib/postgresql/data
   redis:
     image: redis:6
     ports:
@@ -17,4 +17,4 @@ services:
     environment:
       - REDIS_REPLICATION_MODE=master
 volumes:
-  auth_example_data:
+  db-data:

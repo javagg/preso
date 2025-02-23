@@ -3,7 +3,7 @@
   "tables": [],
   "installedModules": [
     {
-      "module": "auth_example",
+      "module": "preso",
       "version": "20240115074259905"
     },
     {

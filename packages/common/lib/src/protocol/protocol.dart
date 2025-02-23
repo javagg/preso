@@ -11,10 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'example.dart' as _i2;
-import 'user.dart' as _i3;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i4;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i3;
 export 'example.dart';
-export 'user.dart';
 export 'client.dart';
 
 class Protocol extends _i1.SerializationManager {
@@ -33,17 +31,11 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i2.Example) {
       return _i2.Example.fromJson(data) as T;
     }
-    if (t == _i3.User) {
-      return _i3.User.fromJson(data) as T;
-    }
     if (t == _i1.getType<_i2.Example?>()) {
       return (data != null ? _i2.Example.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i3.User?>()) {
-      return (data != null ? _i3.User.fromJson(data) : null) as T;
-    }
     try {
-      return _i4.Protocol().deserialize<T>(data, t);
+      return _i3.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -55,10 +47,7 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i2.Example) {
       return 'Example';
     }
-    if (data is _i3.User) {
-      return 'User';
-    }
-    className = _i4.Protocol().getClassNameForObject(data);
+    className = _i3.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -74,12 +63,9 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'Example') {
       return deserialize<_i2.Example>(data['data']);
     }
-    if (dataClassName == 'User') {
-      return deserialize<_i3.User>(data['data']);
-    }
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
-      return _i4.Protocol().deserializeByClassName(data);
+      return _i3.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }

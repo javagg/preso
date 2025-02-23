@@ -6,10 +6,10 @@ BEGIN;
 ALTER TABLE "serverpod_user_info" ALTER COLUMN "userName" DROP NOT NULL;
 
 --
--- MIGRATION VERSION FOR auth_example
+-- MIGRATION VERSION FOR preso
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('auth_example', '20241219152445123', now())
+    VALUES ('preso', '20241219152445123', now())
     ON CONFLICT ("module")
     DO UPDATE SET "version" = '20241219152445123', "timestamp" = now();
 

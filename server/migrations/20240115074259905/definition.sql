@@ -350,10 +350,10 @@ ALTER TABLE ONLY "serverpod_query_log"
 
 
 --
--- MIGRATION VERSION FOR auth_example
+-- MIGRATION VERSION FOR preso
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('auth_example', '20240115074259905', now())
+    VALUES ('preso', '20240115074259905', now())
     ON CONFLICT ("module")
     DO UPDATE SET "version" = '20240115074259905', "timestamp" = now();
 

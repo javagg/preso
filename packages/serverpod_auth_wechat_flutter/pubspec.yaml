@@ -3,7 +3,7 @@
 
 name: serverpod_auth_wechat_flutter
 description: Sign in with Wechat for the Serverpod auth module.
-version: 0.1.0
+version: 2.3.1
 # repository: https://github.com/serverpod/serverpod
 
 environment:

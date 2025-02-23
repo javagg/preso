@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:preso_client/serverpod_client.dart';
 import 'package:serverpod_auth_email_flutter/serverpod_auth_email_flutter.dart';
 import 'package:serverpod_auth_wechat_flutter/serverpod_auth_wechat_flutter.dart';
+import 'package:serverpod_auth_email_flutter/src/signin_dialog.dart';
 
 import '../../../services/auth_service.dart';
 import '../../routes/app_routes.dart';
@@ -35,9 +36,15 @@ class LoginView extends GetView<LoginController> {
                 style: TextStyle(color: Colors.blue, fontSize: 20),
               ),
               onPressed: () {
-                AuthService.to.login();
-                final thenTo = context.params['then'];
-                Get.offNamed(thenTo ?? Routes.home);
+                showSignInWithEmailDialog(
+                  context: context,
+                  caller: client.modules.auth,
+                  onSignedIn: () {
+                    AuthService.to.login();
+                    final thenTo = context.params['then'];
+                    Get.offNamed(thenTo ?? Routes.home);
+                  },
+                );
               },
             ),
             Row(children: [

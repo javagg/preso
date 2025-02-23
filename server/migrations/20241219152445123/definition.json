@@ -1,5 +1,5 @@
 {
-  "moduleName": "auth_example",
+  "moduleName": "preso",
   "tables": [
     {
       "name": "serverpod_auth_key",
@@ -1693,7 +1693,7 @@
   ],
   "installedModules": [
     {
-      "module": "auth_example",
+      "module": "preso",
       "version": "20241219152445123"
     },
     {

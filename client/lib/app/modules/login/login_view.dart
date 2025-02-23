@@ -21,7 +21,8 @@ class LoginView extends GetView<LoginController> {
           children: [
             Obx(
               () {
-                final isLoggedIn = AuthService.to.isLoggedInValue;
+                // final isLoggedIn = AuthService.to.isLoggedInValue;
+                final isLoggedIn = sessionManager.isSignedIn;
                 return Text(
                   'You are currently:'
                   ' ${isLoggedIn ? "Logged In" : "Not Logged In"}'
@@ -48,9 +49,6 @@ class LoginView extends GetView<LoginController> {
               },
             ),
             Row(children: [
-              SignInWithEmailButton(
-                caller: client.modules.auth,
-              ),
               SignInWithWechatButton(
                 caller: client.modules.auth,
                 clientId: "_googleClientId",

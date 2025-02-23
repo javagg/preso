@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:preso_client/serverpod_client.dart';
 
 import '../../../../services/auth_service.dart';
 import '../../../routes/app_routes.dart';
@@ -22,12 +23,11 @@ class HomeView extends GetView<HomeController> {
               }),
               centerTitle: true,
               actions: [
-                Obx(
-                  () {
-                    return AuthService.to.isLoggedInValue
+                 sessionManager.isSignedIn // AuthService.to.isLoggedInValue
                         ? IconButton(
                             icon: const Icon(Icons.logout),
                             onPressed: () {
+                              sessionManager.signOutDevice();
                               AuthService.to.logout();
                               Get.toNamed(Routes.login);
                             },
@@ -35,9 +35,23 @@ class HomeView extends GetView<HomeController> {
                         : IconButton(
                             icon: const Icon(Icons.login),
                             onPressed: () => Get.toNamed(Routes.login),
-                          );
-                  },
-                ),
+                          ),
+                // Obx(
+                //   () {
+                //     return AuthService.to.isLoggedInValue
+                //         ? IconButton(
+                //             icon: const Icon(Icons.logout),
+                //             onPressed: () {
+                //               AuthService.to.logout();
+                //               Get.toNamed(Routes.login);
+                //             },
+                //           )
+                //         : IconButton(
+                //             icon: const Icon(Icons.login),
+                //             onPressed: () => Get.toNamed(Routes.login),
+                //           );
+                //   },
+                // ),
                 DropdownButton<String>(
                   value: "选项1",
                   icon: Icon(Icons.arrow_downward),

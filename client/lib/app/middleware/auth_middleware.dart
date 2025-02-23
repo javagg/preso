@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:preso_client/serverpod_client.dart';
 
 import '../../services/auth_service.dart';
 import '../routes/app_routes.dart';
@@ -9,8 +10,8 @@ class EnsureAuthMiddleware extends GetMiddleware {
     // you can do whatever you want here
     // but it's preferable to make this method fast
     // await Future.delayed(Duration(milliseconds: 500));
-
-    if (!AuthService.to.isLoggedInValue) {
+    if (!sessionManager.isSignedIn) {
+    // if (!AuthService.to.isLoggedInValue) {
       final newRoute = Routes.LOGIN_THEN(route.pageSettings!.name);
       return RouteDecoder.fromRoute(newRoute);
     }
@@ -21,7 +22,8 @@ class EnsureAuthMiddleware extends GetMiddleware {
 class EnsureNotAuthedMiddleware extends GetMiddleware {
   @override
   Future<RouteDecoder?> redirectDelegate(RouteDecoder route) async {
-    if (AuthService.to.isLoggedInValue) {
+    if (sessionManager.isSignedIn) {
+    // if (AuthService.to.isLoggedInValue) {
       //NEVER navigate to auth screen, when user is already authed
       return null;
 

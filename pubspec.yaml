@@ -15,6 +15,16 @@ workspace:
 dependencies:
   mailer: ^6.0.1
   serverpod: 2.3.1
+  syncfusion_flutter_datagrid: ^28.2.6
+  syncfusion_flutter_charts : ^28.2.6
+  syncfusion_flutter_gauges : ^28.2.6
+  # syncfusion_flutter_maps : ^28.2.6
+  syncfusion_flutter_pdf: ^28.2.6
+  syncfusion_flutter_xlsio: ^28.2.6
+  syncfusion_flutter_calendar: ^28.2.6
+  syncfusion_flutter_pdfviewer: ^28.2.6
+  syncfusion_flutter_signaturepad: ^28.2.6
+  syncfusion_flutter_sliders: ^28.2.6
 
 dev_dependencies:
   lints: '>=3.0.0 <6.0.0'

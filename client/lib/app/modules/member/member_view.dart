@@ -78,6 +78,11 @@ class MemberView extends GetView<MemberViewController> {
     var employees = getEmployees();
     var employeeDataSource = MemberDataSource(employees: employees);
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(onPressed: () async {}, icon: Icon(Icons.import_export))
+        ],
+      ),
       body: Center(
         child: Expanded(
           child: SfDataGrid(

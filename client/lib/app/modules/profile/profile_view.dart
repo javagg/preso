@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:preso_client/serverpod_client.dart';
 import 'package:serverpod_auth_shared_flutter/serverpod_auth_shared_flutter.dart';
 
+import '../../../widgets/dropzone.dart';
 import '../../routes/app_routes.dart';
 import 'profile_controller.dart';
 
@@ -66,6 +67,16 @@ class ProfileView extends GetView<ProfileController> {
                 child: const Text('Sign out'),
               ),
             ),
+            // SizedBox(
+            //   height: 300,
+            //   child: DropZoneWidget(
+            //     onDroppedFile: (file) => setState(() => this.file = file),
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // DroppedFileWidget(file: file),
           ],
         ),
       ),

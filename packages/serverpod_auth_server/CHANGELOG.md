@@ -1,4 +1,4 @@
-## 2.3.1
+## 2.4.0
 - fix: Resolved an issue where database exceptions failed to generate informative `toString` messages.
 - fix: Improves performance of HTTP request body parsing for both endpoints and the web server.
 

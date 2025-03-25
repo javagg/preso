@@ -38,20 +38,29 @@ class Promise<T> {}
 @JS()
 class SuccessCallbackResult {}
 
+
 @JS('Taro.scanCode')
 external Promise<SuccessCallbackResult> _scanCode(JSObject options);
 
 @JS('Taro.chooseImage')
 external Promise<SuccessCallbackResult> _chooseImage(JSObject options);
 
+
+@JS('Taro.chooseImage')
+external Promise<CallbackResult> _requestPayment(JSObject options);
+
+@JS('Taro.getLocation')
+external Promise<SuccessCallbackResult> _getLocation(JSObject options);
  
-/// @JS()
-/// 
-/// external Promise<num> get threePromise;
-///
 
 Future scanCode(JSObject options) async =>
     await promiseToFuture(_scanCode(options));
 
 Future chooseImage(JSObject options) async =>
     await promiseToFuture(_chooseImage(options));
+
+Future requestPayment(JSObject options) async =>
+    await promiseToFuture(_requestPayment(options));
+
+Future getLocation(JSObject options) async =>
+    await promiseToFuture(_getLocation(options));

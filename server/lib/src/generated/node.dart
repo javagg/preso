@@ -11,48 +11,50 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
-  Address._({
+/// Holds a note with a text written by the user.
+abstract class Note implements _i1.TableRow, _i1.ProtocolSerialization {
+  Note._({
     this.id,
-    required this.street,
+    required this.text,
   });
 
-  factory Address({
+  factory Note({
     int? id,
-    required String street,
-  }) = _AddressImpl;
+    required String text,
+  }) = _NoteImpl;
 
-  factory Address.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Address(
+  factory Note.fromJson(Map<String, dynamic> jsonSerialization) {
+    return Note(
       id: jsonSerialization['id'] as int?,
-      street: jsonSerialization['street'] as String,
+      text: jsonSerialization['text'] as String,
     );
   }
 
-  static final t = AddressTable();
+  static final t = NoteTable();
 
-  static const db = AddressRepository._();
+  static const db = NoteRepository._();
 
   @override
   int? id;
 
-  String street;
+  /// The contents of the note.
+  String text;
 
   @override
   _i1.Table get table => t;
 
-  /// Returns a shallow copy of this [Address]
+  /// Returns a shallow copy of this [Note]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
-  Address copyWith({
+  Note copyWith({
     int? id,
-    String? street,
+    String? text,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
-      'street': street,
+      'text': text,
     };
   }
 
@@ -60,30 +62,30 @@ abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
   Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
-      'street': street,
+      'text': text,
     };
   }
 
-  static AddressInclude include() {
-    return AddressInclude._();
+  static NoteInclude include() {
+    return NoteInclude._();
   }
 
-  static AddressIncludeList includeList({
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+  static NoteIncludeList includeList({
+    _i1.WhereExpressionBuilder<NoteTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AddressTable>? orderBy,
+    _i1.OrderByBuilder<NoteTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<AddressTable>? orderByList,
-    AddressInclude? include,
+    _i1.OrderByListBuilder<NoteTable>? orderByList,
+    NoteInclude? include,
   }) {
-    return AddressIncludeList._(
+    return NoteIncludeList._(
       where: where,
       limit: limit,
       offset: offset,
-      orderBy: orderBy?.call(Address.t),
+      orderBy: orderBy?.call(Note.t),
       orderDescending: orderDescending,
-      orderByList: orderByList?.call(Address.t),
+      orderByList: orderByList?.call(Note.t),
       include: include,
     );
   }
@@ -96,60 +98,61 @@ abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
 
 class _Undefined {}
 
-class _AddressImpl extends Address {
-  _AddressImpl({
+class _NoteImpl extends Note {
+  _NoteImpl({
     int? id,
-    required String street,
+    required String text,
   }) : super._(
           id: id,
-          street: street,
+          text: text,
         );
 
-  /// Returns a shallow copy of this [Address]
+  /// Returns a shallow copy of this [Note]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   @override
-  Address copyWith({
+  Note copyWith({
     Object? id = _Undefined,
-    String? street,
+    String? text,
   }) {
-    return Address(
+    return Note(
       id: id is int? ? id : this.id,
-      street: street ?? this.street,
+      text: text ?? this.text,
     );
   }
 }
 
-class AddressTable extends _i1.Table {
-  AddressTable({super.tableRelation}) : super(tableName: 'address') {
-    street = _i1.ColumnString(
-      'street',
+class NoteTable extends _i1.Table {
+  NoteTable({super.tableRelation}) : super(tableName: 'note') {
+    text = _i1.ColumnString(
+      'text',
       this,
     );
   }
 
-  late final _i1.ColumnString street;
+  /// The contents of the note.
+  late final _i1.ColumnString text;
 
   @override
   List<_i1.Column> get columns => [
         id,
-        street,
+        text,
       ];
 }
 
-class AddressInclude extends _i1.IncludeObject {
-  AddressInclude._();
+class NoteInclude extends _i1.IncludeObject {
+  NoteInclude._();
 
   @override
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Address.t;
+  _i1.Table get table => Note.t;
 }
 
-class AddressIncludeList extends _i1.IncludeList {
-  AddressIncludeList._({
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+class NoteIncludeList extends _i1.IncludeList {
+  NoteIncludeList._({
+    _i1.WhereExpressionBuilder<NoteTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -157,20 +160,20 @@ class AddressIncludeList extends _i1.IncludeList {
     super.orderByList,
     super.include,
   }) {
-    super.where = where?.call(Address.t);
+    super.where = where?.call(Note.t);
   }
 
   @override
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Address.t;
+  _i1.Table get table => Note.t;
 }
 
-class AddressRepository {
-  const AddressRepository._();
+class NoteRepository {
+  const NoteRepository._();
 
-  /// Returns a list of [Address]s matching the given query parameters.
+  /// Returns a list of [Note]s matching the given query parameters.
   ///
   /// Use [where] to specify which items to include in the return value.
   /// If none is specified, all items will be returned.
@@ -192,20 +195,20 @@ class AddressRepository {
   ///   limit: 100,
   /// );
   /// ```
-  Future<List<Address>> find(
+  Future<List<Note>> find(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+    _i1.WhereExpressionBuilder<NoteTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AddressTable>? orderBy,
+    _i1.OrderByBuilder<NoteTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<AddressTable>? orderByList,
+    _i1.OrderByListBuilder<NoteTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.find<Address>(
-      where: where?.call(Address.t),
-      orderBy: orderBy?.call(Address.t),
-      orderByList: orderByList?.call(Address.t),
+    return session.db.find<Note>(
+      where: where?.call(Note.t),
+      orderBy: orderBy?.call(Note.t),
+      orderByList: orderByList?.call(Note.t),
       orderDescending: orderDescending,
       limit: limit,
       offset: offset,
@@ -213,7 +216,7 @@ class AddressRepository {
     );
   }
 
-  /// Returns the first matching [Address] matching the given query parameters.
+  /// Returns the first matching [Note] matching the given query parameters.
   ///
   /// Use [where] to specify which items to include in the return value.
   /// If none is specified, all items will be returned.
@@ -230,136 +233,136 @@ class AddressRepository {
   ///   orderBy: (t) => t.age,
   /// );
   /// ```
-  Future<Address?> findFirstRow(
+  Future<Note?> findFirstRow(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+    _i1.WhereExpressionBuilder<NoteTable>? where,
     int? offset,
-    _i1.OrderByBuilder<AddressTable>? orderBy,
+    _i1.OrderByBuilder<NoteTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<AddressTable>? orderByList,
+    _i1.OrderByListBuilder<NoteTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.findFirstRow<Address>(
-      where: where?.call(Address.t),
-      orderBy: orderBy?.call(Address.t),
-      orderByList: orderByList?.call(Address.t),
+    return session.db.findFirstRow<Note>(
+      where: where?.call(Note.t),
+      orderBy: orderBy?.call(Note.t),
+      orderByList: orderByList?.call(Note.t),
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
     );
   }
 
-  /// Finds a single [Address] by its [id] or null if no such row exists.
-  Future<Address?> findById(
+  /// Finds a single [Note] by its [id] or null if no such row exists.
+  Future<Note?> findById(
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.findById<Address>(
+    return session.db.findById<Note>(
       id,
       transaction: transaction,
     );
   }
 
-  /// Inserts all [Address]s in the list and returns the inserted rows.
+  /// Inserts all [Note]s in the list and returns the inserted rows.
   ///
-  /// The returned [Address]s will have their `id` fields set.
+  /// The returned [Note]s will have their `id` fields set.
   ///
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// insert, none of the rows will be inserted.
-  Future<List<Address>> insert(
+  Future<List<Note>> insert(
     _i1.Session session,
-    List<Address> rows, {
+    List<Note> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.insert<Address>(
+    return session.db.insert<Note>(
       rows,
       transaction: transaction,
     );
   }
 
-  /// Inserts a single [Address] and returns the inserted row.
+  /// Inserts a single [Note] and returns the inserted row.
   ///
-  /// The returned [Address] will have its `id` field set.
-  Future<Address> insertRow(
+  /// The returned [Note] will have its `id` field set.
+  Future<Note> insertRow(
     _i1.Session session,
-    Address row, {
+    Note row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.insertRow<Address>(
+    return session.db.insertRow<Note>(
       row,
       transaction: transaction,
     );
   }
 
-  /// Updates all [Address]s in the list and returns the updated rows. If
+  /// Updates all [Note]s in the list and returns the updated rows. If
   /// [columns] is provided, only those columns will be updated. Defaults to
   /// all columns.
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// update, none of the rows will be updated.
-  Future<List<Address>> update(
+  Future<List<Note>> update(
     _i1.Session session,
-    List<Address> rows, {
-    _i1.ColumnSelections<AddressTable>? columns,
+    List<Note> rows, {
+    _i1.ColumnSelections<NoteTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.update<Address>(
+    return session.db.update<Note>(
       rows,
-      columns: columns?.call(Address.t),
+      columns: columns?.call(Note.t),
       transaction: transaction,
     );
   }
 
-  /// Updates a single [Address]. The row needs to have its id set.
+  /// Updates a single [Note]. The row needs to have its id set.
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
-  Future<Address> updateRow(
+  Future<Note> updateRow(
     _i1.Session session,
-    Address row, {
-    _i1.ColumnSelections<AddressTable>? columns,
+    Note row, {
+    _i1.ColumnSelections<NoteTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.updateRow<Address>(
+    return session.db.updateRow<Note>(
       row,
-      columns: columns?.call(Address.t),
+      columns: columns?.call(Note.t),
       transaction: transaction,
     );
   }
 
-  /// Deletes all [Address]s in the list and returns the deleted rows.
+  /// Deletes all [Note]s in the list and returns the deleted rows.
   /// This is an atomic operation, meaning that if one of the rows fail to
   /// be deleted, none of the rows will be deleted.
-  Future<List<Address>> delete(
+  Future<List<Note>> delete(
     _i1.Session session,
-    List<Address> rows, {
+    List<Note> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.delete<Address>(
+    return session.db.delete<Note>(
       rows,
       transaction: transaction,
     );
   }
 
-  /// Deletes a single [Address].
-  Future<Address> deleteRow(
+  /// Deletes a single [Note].
+  Future<Note> deleteRow(
     _i1.Session session,
-    Address row, {
+    Note row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.deleteRow<Address>(
+    return session.db.deleteRow<Note>(
       row,
       transaction: transaction,
     );
   }
 
   /// Deletes all rows matching the [where] expression.
-  Future<List<Address>> deleteWhere(
+  Future<List<Note>> deleteWhere(
     _i1.Session session, {
-    required _i1.WhereExpressionBuilder<AddressTable> where,
+    required _i1.WhereExpressionBuilder<NoteTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.deleteWhere<Address>(
-      where: where(Address.t),
+    return session.db.deleteWhere<Note>(
+      where: where(Note.t),
       transaction: transaction,
     );
   }
@@ -368,12 +371,12 @@ class AddressRepository {
   /// will return the count of all rows in the table.
   Future<int> count(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+    _i1.WhereExpressionBuilder<NoteTable>? where,
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.count<Address>(
-      where: where?.call(Address.t),
+    return session.db.count<Note>(
+      where: where?.call(Note.t),
       limit: limit,
       transaction: transaction,
     );

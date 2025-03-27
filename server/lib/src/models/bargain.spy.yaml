@@ -1,0 +1,4 @@
+class: Bargain
+table: bargain
+fields:
+  name: String

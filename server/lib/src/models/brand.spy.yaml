@@ -1,0 +1,9 @@
+class: Brand
+table: brand
+fields:
+  name: String
+  logo: String
+  description: String
+  website: String
+#   address: Address
+#   contact: Contact

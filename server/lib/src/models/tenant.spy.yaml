@@ -1,0 +1,4 @@
+class: Tenant
+table: tenant
+fields:
+  name: String

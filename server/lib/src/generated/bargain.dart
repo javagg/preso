@@ -11,48 +11,48 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
-  Address._({
+abstract class Bargain implements _i1.TableRow, _i1.ProtocolSerialization {
+  Bargain._({
     this.id,
-    required this.street,
+    required this.name,
   });
 
-  factory Address({
+  factory Bargain({
     int? id,
-    required String street,
-  }) = _AddressImpl;
+    required String name,
+  }) = _BargainImpl;
 
-  factory Address.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Address(
+  factory Bargain.fromJson(Map<String, dynamic> jsonSerialization) {
+    return Bargain(
       id: jsonSerialization['id'] as int?,
-      street: jsonSerialization['street'] as String,
+      name: jsonSerialization['name'] as String,
     );
   }
 
-  static final t = AddressTable();
+  static final t = BargainTable();
 
-  static const db = AddressRepository._();
+  static const db = BargainRepository._();
 
   @override
   int? id;
 
-  String street;
+  String name;
 
   @override
   _i1.Table get table => t;
 
-  /// Returns a shallow copy of this [Address]
+  /// Returns a shallow copy of this [Bargain]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
-  Address copyWith({
+  Bargain copyWith({
     int? id,
-    String? street,
+    String? name,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
-      'street': street,
+      'name': name,
     };
   }
 
@@ -60,30 +60,30 @@ abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
   Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
-      'street': street,
+      'name': name,
     };
   }
 
-  static AddressInclude include() {
-    return AddressInclude._();
+  static BargainInclude include() {
+    return BargainInclude._();
   }
 
-  static AddressIncludeList includeList({
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+  static BargainIncludeList includeList({
+    _i1.WhereExpressionBuilder<BargainTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AddressTable>? orderBy,
+    _i1.OrderByBuilder<BargainTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<AddressTable>? orderByList,
-    AddressInclude? include,
+    _i1.OrderByListBuilder<BargainTable>? orderByList,
+    BargainInclude? include,
   }) {
-    return AddressIncludeList._(
+    return BargainIncludeList._(
       where: where,
       limit: limit,
       offset: offset,
-      orderBy: orderBy?.call(Address.t),
+      orderBy: orderBy?.call(Bargain.t),
       orderDescending: orderDescending,
-      orderByList: orderByList?.call(Address.t),
+      orderByList: orderByList?.call(Bargain.t),
       include: include,
     );
   }
@@ -96,60 +96,60 @@ abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
 
 class _Undefined {}
 
-class _AddressImpl extends Address {
-  _AddressImpl({
+class _BargainImpl extends Bargain {
+  _BargainImpl({
     int? id,
-    required String street,
+    required String name,
   }) : super._(
           id: id,
-          street: street,
+          name: name,
         );
 
-  /// Returns a shallow copy of this [Address]
+  /// Returns a shallow copy of this [Bargain]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   @override
-  Address copyWith({
+  Bargain copyWith({
     Object? id = _Undefined,
-    String? street,
+    String? name,
   }) {
-    return Address(
+    return Bargain(
       id: id is int? ? id : this.id,
-      street: street ?? this.street,
+      name: name ?? this.name,
     );
   }
 }
 
-class AddressTable extends _i1.Table {
-  AddressTable({super.tableRelation}) : super(tableName: 'address') {
-    street = _i1.ColumnString(
-      'street',
+class BargainTable extends _i1.Table {
+  BargainTable({super.tableRelation}) : super(tableName: 'bargain') {
+    name = _i1.ColumnString(
+      'name',
       this,
     );
   }
 
-  late final _i1.ColumnString street;
+  late final _i1.ColumnString name;
 
   @override
   List<_i1.Column> get columns => [
         id,
-        street,
+        name,
       ];
 }
 
-class AddressInclude extends _i1.IncludeObject {
-  AddressInclude._();
+class BargainInclude extends _i1.IncludeObject {
+  BargainInclude._();
 
   @override
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Address.t;
+  _i1.Table get table => Bargain.t;
 }
 
-class AddressIncludeList extends _i1.IncludeList {
-  AddressIncludeList._({
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+class BargainIncludeList extends _i1.IncludeList {
+  BargainIncludeList._({
+    _i1.WhereExpressionBuilder<BargainTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -157,20 +157,20 @@ class AddressIncludeList extends _i1.IncludeList {
     super.orderByList,
     super.include,
   }) {
-    super.where = where?.call(Address.t);
+    super.where = where?.call(Bargain.t);
   }
 
   @override
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Address.t;
+  _i1.Table get table => Bargain.t;
 }
 
-class AddressRepository {
-  const AddressRepository._();
+class BargainRepository {
+  const BargainRepository._();
 
-  /// Returns a list of [Address]s matching the given query parameters.
+  /// Returns a list of [Bargain]s matching the given query parameters.
   ///
   /// Use [where] to specify which items to include in the return value.
   /// If none is specified, all items will be returned.
@@ -192,20 +192,20 @@ class AddressRepository {
   ///   limit: 100,
   /// );
   /// ```
-  Future<List<Address>> find(
+  Future<List<Bargain>> find(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+    _i1.WhereExpressionBuilder<BargainTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AddressTable>? orderBy,
+    _i1.OrderByBuilder<BargainTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<AddressTable>? orderByList,
+    _i1.OrderByListBuilder<BargainTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.find<Address>(
-      where: where?.call(Address.t),
-      orderBy: orderBy?.call(Address.t),
-      orderByList: orderByList?.call(Address.t),
+    return session.db.find<Bargain>(
+      where: where?.call(Bargain.t),
+      orderBy: orderBy?.call(Bargain.t),
+      orderByList: orderByList?.call(Bargain.t),
       orderDescending: orderDescending,
       limit: limit,
       offset: offset,
@@ -213,7 +213,7 @@ class AddressRepository {
     );
   }
 
-  /// Returns the first matching [Address] matching the given query parameters.
+  /// Returns the first matching [Bargain] matching the given query parameters.
   ///
   /// Use [where] to specify which items to include in the return value.
   /// If none is specified, all items will be returned.
@@ -230,136 +230,136 @@ class AddressRepository {
   ///   orderBy: (t) => t.age,
   /// );
   /// ```
-  Future<Address?> findFirstRow(
+  Future<Bargain?> findFirstRow(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+    _i1.WhereExpressionBuilder<BargainTable>? where,
     int? offset,
-    _i1.OrderByBuilder<AddressTable>? orderBy,
+    _i1.OrderByBuilder<BargainTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<AddressTable>? orderByList,
+    _i1.OrderByListBuilder<BargainTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.findFirstRow<Address>(
-      where: where?.call(Address.t),
-      orderBy: orderBy?.call(Address.t),
-      orderByList: orderByList?.call(Address.t),
+    return session.db.findFirstRow<Bargain>(
+      where: where?.call(Bargain.t),
+      orderBy: orderBy?.call(Bargain.t),
+      orderByList: orderByList?.call(Bargain.t),
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
     );
   }
 
-  /// Finds a single [Address] by its [id] or null if no such row exists.
-  Future<Address?> findById(
+  /// Finds a single [Bargain] by its [id] or null if no such row exists.
+  Future<Bargain?> findById(
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.findById<Address>(
+    return session.db.findById<Bargain>(
       id,
       transaction: transaction,
     );
   }
 
-  /// Inserts all [Address]s in the list and returns the inserted rows.
+  /// Inserts all [Bargain]s in the list and returns the inserted rows.
   ///
-  /// The returned [Address]s will have their `id` fields set.
+  /// The returned [Bargain]s will have their `id` fields set.
   ///
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// insert, none of the rows will be inserted.
-  Future<List<Address>> insert(
+  Future<List<Bargain>> insert(
     _i1.Session session,
-    List<Address> rows, {
+    List<Bargain> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.insert<Address>(
+    return session.db.insert<Bargain>(
       rows,
       transaction: transaction,
     );
   }
 
-  /// Inserts a single [Address] and returns the inserted row.
+  /// Inserts a single [Bargain] and returns the inserted row.
   ///
-  /// The returned [Address] will have its `id` field set.
-  Future<Address> insertRow(
+  /// The returned [Bargain] will have its `id` field set.
+  Future<Bargain> insertRow(
     _i1.Session session,
-    Address row, {
+    Bargain row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.insertRow<Address>(
+    return session.db.insertRow<Bargain>(
       row,
       transaction: transaction,
     );
   }
 
-  /// Updates all [Address]s in the list and returns the updated rows. If
+  /// Updates all [Bargain]s in the list and returns the updated rows. If
   /// [columns] is provided, only those columns will be updated. Defaults to
   /// all columns.
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// update, none of the rows will be updated.
-  Future<List<Address>> update(
+  Future<List<Bargain>> update(
     _i1.Session session,
-    List<Address> rows, {
-    _i1.ColumnSelections<AddressTable>? columns,
+    List<Bargain> rows, {
+    _i1.ColumnSelections<BargainTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.update<Address>(
+    return session.db.update<Bargain>(
       rows,
-      columns: columns?.call(Address.t),
+      columns: columns?.call(Bargain.t),
       transaction: transaction,
     );
   }
 
-  /// Updates a single [Address]. The row needs to have its id set.
+  /// Updates a single [Bargain]. The row needs to have its id set.
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
-  Future<Address> updateRow(
+  Future<Bargain> updateRow(
     _i1.Session session,
-    Address row, {
-    _i1.ColumnSelections<AddressTable>? columns,
+    Bargain row, {
+    _i1.ColumnSelections<BargainTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.updateRow<Address>(
+    return session.db.updateRow<Bargain>(
       row,
-      columns: columns?.call(Address.t),
+      columns: columns?.call(Bargain.t),
       transaction: transaction,
     );
   }
 
-  /// Deletes all [Address]s in the list and returns the deleted rows.
+  /// Deletes all [Bargain]s in the list and returns the deleted rows.
   /// This is an atomic operation, meaning that if one of the rows fail to
   /// be deleted, none of the rows will be deleted.
-  Future<List<Address>> delete(
+  Future<List<Bargain>> delete(
     _i1.Session session,
-    List<Address> rows, {
+    List<Bargain> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.delete<Address>(
+    return session.db.delete<Bargain>(
       rows,
       transaction: transaction,
     );
   }
 
-  /// Deletes a single [Address].
-  Future<Address> deleteRow(
+  /// Deletes a single [Bargain].
+  Future<Bargain> deleteRow(
     _i1.Session session,
-    Address row, {
+    Bargain row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.deleteRow<Address>(
+    return session.db.deleteRow<Bargain>(
       row,
       transaction: transaction,
     );
   }
 
   /// Deletes all rows matching the [where] expression.
-  Future<List<Address>> deleteWhere(
+  Future<List<Bargain>> deleteWhere(
     _i1.Session session, {
-    required _i1.WhereExpressionBuilder<AddressTable> where,
+    required _i1.WhereExpressionBuilder<BargainTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.deleteWhere<Address>(
-      where: where(Address.t),
+    return session.db.deleteWhere<Bargain>(
+      where: where(Bargain.t),
       transaction: transaction,
     );
   }
@@ -368,12 +368,12 @@ class AddressRepository {
   /// will return the count of all rows in the table.
   Future<int> count(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+    _i1.WhereExpressionBuilder<BargainTable>? where,
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.count<Address>(
-      where: where?.call(Address.t),
+    return session.db.count<Bargain>(
+      where: where?.call(Bargain.t),
       limit: limit,
       transaction: transaction,
     );

@@ -11,48 +11,48 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
-  Address._({
+abstract class Tenant implements _i1.TableRow, _i1.ProtocolSerialization {
+  Tenant._({
     this.id,
-    required this.street,
+    required this.name,
   });
 
-  factory Address({
+  factory Tenant({
     int? id,
-    required String street,
-  }) = _AddressImpl;
+    required String name,
+  }) = _TenantImpl;
 
-  factory Address.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Address(
+  factory Tenant.fromJson(Map<String, dynamic> jsonSerialization) {
+    return Tenant(
       id: jsonSerialization['id'] as int?,
-      street: jsonSerialization['street'] as String,
+      name: jsonSerialization['name'] as String,
     );
   }
 
-  static final t = AddressTable();
+  static final t = TenantTable();
 
-  static const db = AddressRepository._();
+  static const db = TenantRepository._();
 
   @override
   int? id;
 
-  String street;
+  String name;
 
   @override
   _i1.Table get table => t;
 
-  /// Returns a shallow copy of this [Address]
+  /// Returns a shallow copy of this [Tenant]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
-  Address copyWith({
+  Tenant copyWith({
     int? id,
-    String? street,
+    String? name,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
-      'street': street,
+      'name': name,
     };
   }
 
@@ -60,30 +60,30 @@ abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
   Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
-      'street': street,
+      'name': name,
     };
   }
 
-  static AddressInclude include() {
-    return AddressInclude._();
+  static TenantInclude include() {
+    return TenantInclude._();
   }
 
-  static AddressIncludeList includeList({
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+  static TenantIncludeList includeList({
+    _i1.WhereExpressionBuilder<TenantTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AddressTable>? orderBy,
+    _i1.OrderByBuilder<TenantTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<AddressTable>? orderByList,
-    AddressInclude? include,
+    _i1.OrderByListBuilder<TenantTable>? orderByList,
+    TenantInclude? include,
   }) {
-    return AddressIncludeList._(
+    return TenantIncludeList._(
       where: where,
       limit: limit,
       offset: offset,
-      orderBy: orderBy?.call(Address.t),
+      orderBy: orderBy?.call(Tenant.t),
       orderDescending: orderDescending,
-      orderByList: orderByList?.call(Address.t),
+      orderByList: orderByList?.call(Tenant.t),
       include: include,
     );
   }
@@ -96,60 +96,60 @@ abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
 
 class _Undefined {}
 
-class _AddressImpl extends Address {
-  _AddressImpl({
+class _TenantImpl extends Tenant {
+  _TenantImpl({
     int? id,
-    required String street,
+    required String name,
   }) : super._(
           id: id,
-          street: street,
+          name: name,
         );
 
-  /// Returns a shallow copy of this [Address]
+  /// Returns a shallow copy of this [Tenant]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   @override
-  Address copyWith({
+  Tenant copyWith({
     Object? id = _Undefined,
-    String? street,
+    String? name,
   }) {
-    return Address(
+    return Tenant(
       id: id is int? ? id : this.id,
-      street: street ?? this.street,
+      name: name ?? this.name,
     );
   }
 }
 
-class AddressTable extends _i1.Table {
-  AddressTable({super.tableRelation}) : super(tableName: 'address') {
-    street = _i1.ColumnString(
-      'street',
+class TenantTable extends _i1.Table {
+  TenantTable({super.tableRelation}) : super(tableName: 'tenant') {
+    name = _i1.ColumnString(
+      'name',
       this,
     );
   }
 
-  late final _i1.ColumnString street;
+  late final _i1.ColumnString name;
 
   @override
   List<_i1.Column> get columns => [
         id,
-        street,
+        name,
       ];
 }
 
-class AddressInclude extends _i1.IncludeObject {
-  AddressInclude._();
+class TenantInclude extends _i1.IncludeObject {
+  TenantInclude._();
 
   @override
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Address.t;
+  _i1.Table get table => Tenant.t;
 }
 
-class AddressIncludeList extends _i1.IncludeList {
-  AddressIncludeList._({
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+class TenantIncludeList extends _i1.IncludeList {
+  TenantIncludeList._({
+    _i1.WhereExpressionBuilder<TenantTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -157,20 +157,20 @@ class AddressIncludeList extends _i1.IncludeList {
     super.orderByList,
     super.include,
   }) {
-    super.where = where?.call(Address.t);
+    super.where = where?.call(Tenant.t);
   }
 
   @override
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Address.t;
+  _i1.Table get table => Tenant.t;
 }
 
-class AddressRepository {
-  const AddressRepository._();
+class TenantRepository {
+  const TenantRepository._();
 
-  /// Returns a list of [Address]s matching the given query parameters.
+  /// Returns a list of [Tenant]s matching the given query parameters.
   ///
   /// Use [where] to specify which items to include in the return value.
   /// If none is specified, all items will be returned.
@@ -192,20 +192,20 @@ class AddressRepository {
   ///   limit: 100,
   /// );
   /// ```
-  Future<List<Address>> find(
+  Future<List<Tenant>> find(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+    _i1.WhereExpressionBuilder<TenantTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<AddressTable>? orderBy,
+    _i1.OrderByBuilder<TenantTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<AddressTable>? orderByList,
+    _i1.OrderByListBuilder<TenantTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.find<Address>(
-      where: where?.call(Address.t),
-      orderBy: orderBy?.call(Address.t),
-      orderByList: orderByList?.call(Address.t),
+    return session.db.find<Tenant>(
+      where: where?.call(Tenant.t),
+      orderBy: orderBy?.call(Tenant.t),
+      orderByList: orderByList?.call(Tenant.t),
       orderDescending: orderDescending,
       limit: limit,
       offset: offset,
@@ -213,7 +213,7 @@ class AddressRepository {
     );
   }
 
-  /// Returns the first matching [Address] matching the given query parameters.
+  /// Returns the first matching [Tenant] matching the given query parameters.
   ///
   /// Use [where] to specify which items to include in the return value.
   /// If none is specified, all items will be returned.
@@ -230,136 +230,136 @@ class AddressRepository {
   ///   orderBy: (t) => t.age,
   /// );
   /// ```
-  Future<Address?> findFirstRow(
+  Future<Tenant?> findFirstRow(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+    _i1.WhereExpressionBuilder<TenantTable>? where,
     int? offset,
-    _i1.OrderByBuilder<AddressTable>? orderBy,
+    _i1.OrderByBuilder<TenantTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<AddressTable>? orderByList,
+    _i1.OrderByListBuilder<TenantTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.findFirstRow<Address>(
-      where: where?.call(Address.t),
-      orderBy: orderBy?.call(Address.t),
-      orderByList: orderByList?.call(Address.t),
+    return session.db.findFirstRow<Tenant>(
+      where: where?.call(Tenant.t),
+      orderBy: orderBy?.call(Tenant.t),
+      orderByList: orderByList?.call(Tenant.t),
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
     );
   }
 
-  /// Finds a single [Address] by its [id] or null if no such row exists.
-  Future<Address?> findById(
+  /// Finds a single [Tenant] by its [id] or null if no such row exists.
+  Future<Tenant?> findById(
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.findById<Address>(
+    return session.db.findById<Tenant>(
       id,
       transaction: transaction,
     );
   }
 
-  /// Inserts all [Address]s in the list and returns the inserted rows.
+  /// Inserts all [Tenant]s in the list and returns the inserted rows.
   ///
-  /// The returned [Address]s will have their `id` fields set.
+  /// The returned [Tenant]s will have their `id` fields set.
   ///
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// insert, none of the rows will be inserted.
-  Future<List<Address>> insert(
+  Future<List<Tenant>> insert(
     _i1.Session session,
-    List<Address> rows, {
+    List<Tenant> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.insert<Address>(
+    return session.db.insert<Tenant>(
       rows,
       transaction: transaction,
     );
   }
 
-  /// Inserts a single [Address] and returns the inserted row.
+  /// Inserts a single [Tenant] and returns the inserted row.
   ///
-  /// The returned [Address] will have its `id` field set.
-  Future<Address> insertRow(
+  /// The returned [Tenant] will have its `id` field set.
+  Future<Tenant> insertRow(
     _i1.Session session,
-    Address row, {
+    Tenant row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.insertRow<Address>(
+    return session.db.insertRow<Tenant>(
       row,
       transaction: transaction,
     );
   }
 
-  /// Updates all [Address]s in the list and returns the updated rows. If
+  /// Updates all [Tenant]s in the list and returns the updated rows. If
   /// [columns] is provided, only those columns will be updated. Defaults to
   /// all columns.
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// update, none of the rows will be updated.
-  Future<List<Address>> update(
+  Future<List<Tenant>> update(
     _i1.Session session,
-    List<Address> rows, {
-    _i1.ColumnSelections<AddressTable>? columns,
+    List<Tenant> rows, {
+    _i1.ColumnSelections<TenantTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.update<Address>(
+    return session.db.update<Tenant>(
       rows,
-      columns: columns?.call(Address.t),
+      columns: columns?.call(Tenant.t),
       transaction: transaction,
     );
   }
 
-  /// Updates a single [Address]. The row needs to have its id set.
+  /// Updates a single [Tenant]. The row needs to have its id set.
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
-  Future<Address> updateRow(
+  Future<Tenant> updateRow(
     _i1.Session session,
-    Address row, {
-    _i1.ColumnSelections<AddressTable>? columns,
+    Tenant row, {
+    _i1.ColumnSelections<TenantTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.updateRow<Address>(
+    return session.db.updateRow<Tenant>(
       row,
-      columns: columns?.call(Address.t),
+      columns: columns?.call(Tenant.t),
       transaction: transaction,
     );
   }
 
-  /// Deletes all [Address]s in the list and returns the deleted rows.
+  /// Deletes all [Tenant]s in the list and returns the deleted rows.
   /// This is an atomic operation, meaning that if one of the rows fail to
   /// be deleted, none of the rows will be deleted.
-  Future<List<Address>> delete(
+  Future<List<Tenant>> delete(
     _i1.Session session,
-    List<Address> rows, {
+    List<Tenant> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.delete<Address>(
+    return session.db.delete<Tenant>(
       rows,
       transaction: transaction,
     );
   }
 
-  /// Deletes a single [Address].
-  Future<Address> deleteRow(
+  /// Deletes a single [Tenant].
+  Future<Tenant> deleteRow(
     _i1.Session session,
-    Address row, {
+    Tenant row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.deleteRow<Address>(
+    return session.db.deleteRow<Tenant>(
       row,
       transaction: transaction,
     );
   }
 
   /// Deletes all rows matching the [where] expression.
-  Future<List<Address>> deleteWhere(
+  Future<List<Tenant>> deleteWhere(
     _i1.Session session, {
-    required _i1.WhereExpressionBuilder<AddressTable> where,
+    required _i1.WhereExpressionBuilder<TenantTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.deleteWhere<Address>(
-      where: where(Address.t),
+    return session.db.deleteWhere<Tenant>(
+      where: where(Tenant.t),
       transaction: transaction,
     );
   }
@@ -368,12 +368,12 @@ class AddressRepository {
   /// will return the count of all rows in the table.
   Future<int> count(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<AddressTable>? where,
+    _i1.WhereExpressionBuilder<TenantTable>? where,
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.count<Address>(
-      where: where?.call(Address.t),
+    return session.db.count<Tenant>(
+      where: where?.call(Tenant.t),
       limit: limit,
       transaction: transaction,
     );

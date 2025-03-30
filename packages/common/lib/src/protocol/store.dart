@@ -50,6 +50,9 @@ abstract class Store implements _i1.SerializableModel {
 
   _i2.Address? address;
 
+  /// Returns a shallow copy of this [Store]
+  /// with some or all fields replaced by the given arguments.
+  @_i1.useResult
   Store copyWith({
     int? id,
     String? name,
@@ -87,6 +90,9 @@ class _StoreImpl extends Store {
           address: address,
         );
 
+  /// Returns a shallow copy of this [Store]
+  /// with some or all fields replaced by the given arguments.
+  @_i1.useResult
   @override
   Store copyWith({
     Object? id = _Undefined,

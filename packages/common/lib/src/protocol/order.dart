@@ -12,20 +12,43 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
 abstract class Order implements _i1.SerializableModel {
-  Order._({required this.no});
+  Order._({
+    this.id,
+    required this.no,
+  });
 
-  factory Order({required int no}) = _OrderImpl;
+  factory Order({
+    int? id,
+    required int no,
+  }) = _OrderImpl;
 
   factory Order.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Order(no: jsonSerialization['no'] as int);
+    return Order(
+      id: jsonSerialization['id'] as int?,
+      no: jsonSerialization['no'] as int,
+    );
   }
+
+  /// The database id, set if the object has been inserted into the
+  /// database or if it has been fetched from the database. Otherwise,
+  /// the id will be null.
+  int? id;
 
   int no;
 
-  Order copyWith({int? no});
+  /// Returns a shallow copy of this [Order]
+  /// with some or all fields replaced by the given arguments.
+  @_i1.useResult
+  Order copyWith({
+    int? id,
+    int? no,
+  });
   @override
   Map<String, dynamic> toJson() {
-    return {'no': no};
+    return {
+      if (id != null) 'id': id,
+      'no': no,
+    };
   }
 
   @override
@@ -34,11 +57,28 @@ abstract class Order implements _i1.SerializableModel {
   }
 }
 
-class _OrderImpl extends Order {
-  _OrderImpl({required int no}) : super._(no: no);
+class _Undefined {}
 
+class _OrderImpl extends Order {
+  _OrderImpl({
+    int? id,
+    required int no,
+  }) : super._(
+          id: id,
+          no: no,
+        );
+
+  /// Returns a shallow copy of this [Order]
+  /// with some or all fields replaced by the given arguments.
+  @_i1.useResult
   @override
-  Order copyWith({int? no}) {
-    return Order(no: no ?? this.no);
+  Order copyWith({
+    Object? id = _Undefined,
+    int? no,
+  }) {
+    return Order(
+      id: id is int? ? id : this.id,
+      no: no ?? this.no,
+    );
   }
 }

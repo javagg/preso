@@ -1,0 +1,5 @@
+class: Permission
+table: permission
+fields:
+  name: String
+  description: String

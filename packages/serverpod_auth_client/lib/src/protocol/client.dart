@@ -318,7 +318,7 @@ class EndpointWechat extends _i1.EndpointRef {
   @override
   String get name => 'serverpod_auth.wechat';
 
-  /// Authenticates a user with Wechat using the serverAuthCode.
+  /// Authenticates a user with Google using the serverAuthCode.
   _i2.Future<_i4.AuthenticationResponse> authenticateWithServerAuthCode(
     String authenticationCode,
     String? redirectUri,

@@ -1,3 +1,21 @@
 example:
   - hello:
   - echoStream:
+notes:
+  - getAllNotes:
+  - updateNote:
+  - createNote:
+  - deleteNote:
+store:
+  - all:
+  - get:
+tenant:
+  - all:
+user:
+  - userInfoUpdate:
+  - add:
+  - delete:
+  - getAll:
+  - getById:
+  - getByUserInfoId:
+  - update:

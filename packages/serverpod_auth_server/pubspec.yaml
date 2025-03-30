@@ -1,5 +1,5 @@
 # This file is generated. Do not modify, instead edit the files in the templates/pubspecs directory.
-# Mode: production
+# Mode: development
 
 name: serverpod_auth_server
 description: Serverpod authentication server module.
@@ -7,9 +7,7 @@ version: 2.4.0
 repository: https://github.com/serverpod/serverpod
 
 environment:
-  sdk: '^3.6.1'
-
-resolution: workspace
+  sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
   serverpod: 2.4.0

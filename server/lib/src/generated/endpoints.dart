@@ -11,7 +11,13 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 import '../endpoints/example_endpoint.dart' as _i2;
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i3;
+import '../endpoints/notes_endpoint.dart' as _i3;
+import '../endpoints/store_endpoint.dart' as _i4;
+import '../endpoints/tenant_endpoint.dart' as _i5;
+import '../endpoints/user_endpoint.dart' as _i6;
+import 'package:preso_server/src/generated/node.dart' as _i7;
+import 'package:preso_server/src/generated/user.dart' as _i8;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i9;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -22,7 +28,31 @@ class Endpoints extends _i1.EndpointDispatch {
           server,
           'example',
           null,
-        )
+        ),
+      'notes': _i3.NotesEndpoint()
+        ..initialize(
+          server,
+          'notes',
+          null,
+        ),
+      'store': _i4.StoreEndpoint()
+        ..initialize(
+          server,
+          'store',
+          null,
+        ),
+      'tenant': _i5.TenantEndpoint()
+        ..initialize(
+          server,
+          'tenant',
+          null,
+        ),
+      'user': _i6.UserEndpoint()
+        ..initialize(
+          server,
+          'user',
+          null,
+        ),
     };
     connectors['example'] = _i1.EndpointConnector(
       name: 'example',
@@ -68,6 +98,252 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
-    modules['serverpod_auth'] = _i3.Endpoints()..initializeEndpoints(server);
+    connectors['notes'] = _i1.EndpointConnector(
+      name: 'notes',
+      endpoint: endpoints['notes']!,
+      methodConnectors: {
+        'getAllNotes': _i1.MethodConnector(
+          name: 'getAllNotes',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['notes'] as _i3.NotesEndpoint).getAllNotes(session),
+        ),
+        'updateNote': _i1.MethodConnector(
+          name: 'updateNote',
+          params: {
+            'note': _i1.ParameterDescription(
+              name: 'note',
+              type: _i1.getType<_i7.Note>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['notes'] as _i3.NotesEndpoint).updateNote(
+            session,
+            params['note'],
+          ),
+        ),
+        'createNote': _i1.MethodConnector(
+          name: 'createNote',
+          params: {
+            'note': _i1.ParameterDescription(
+              name: 'note',
+              type: _i1.getType<_i7.Note>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['notes'] as _i3.NotesEndpoint).createNote(
+            session,
+            params['note'],
+          ),
+        ),
+        'deleteNote': _i1.MethodConnector(
+          name: 'deleteNote',
+          params: {
+            'note': _i1.ParameterDescription(
+              name: 'note',
+              type: _i1.getType<_i7.Note>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['notes'] as _i3.NotesEndpoint).deleteNote(
+            session,
+            params['note'],
+          ),
+        ),
+      },
+    );
+    connectors['store'] = _i1.EndpointConnector(
+      name: 'store',
+      endpoint: endpoints['store']!,
+      methodConnectors: {
+        'all': _i1.MethodConnector(
+          name: 'all',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['store'] as _i4.StoreEndpoint).all(session),
+        ),
+        'get': _i1.MethodConnector(
+          name: 'get',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['store'] as _i4.StoreEndpoint).get(session),
+        ),
+      },
+    );
+    connectors['tenant'] = _i1.EndpointConnector(
+      name: 'tenant',
+      endpoint: endpoints['tenant']!,
+      methodConnectors: {
+        'all': _i1.MethodConnector(
+          name: 'all',
+          params: {},
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['tenant'] as _i5.TenantEndpoint).all(session),
+        )
+      },
+    );
+    connectors['user'] = _i1.EndpointConnector(
+      name: 'user',
+      endpoint: endpoints['user']!,
+      methodConnectors: {
+        'userInfoUpdate': _i1.MethodConnector(
+          name: 'userInfoUpdate',
+          params: {
+            'user': _i1.ParameterDescription(
+              name: 'user',
+              type: _i1.getType<_i8.User>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i6.UserEndpoint).userInfoUpdate(
+            session,
+            params['user'],
+          ),
+        ),
+        'add': _i1.MethodConnector(
+          name: 'add',
+          params: {
+            'data': _i1.ParameterDescription(
+              name: 'data',
+              type: _i1.getType<_i8.User>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i6.UserEndpoint).add(
+            session,
+            params['data'],
+          ),
+        ),
+        'delete': _i1.MethodConnector(
+          name: 'delete',
+          params: {
+            'data': _i1.ParameterDescription(
+              name: 'data',
+              type: _i1.getType<_i8.User>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i6.UserEndpoint).delete(
+            session,
+            params['data'],
+          ),
+        ),
+        'getAll': _i1.MethodConnector(
+          name: 'getAll',
+          params: {
+            'limit': _i1.ParameterDescription(
+              name: 'limit',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'offset': _i1.ParameterDescription(
+              name: 'offset',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i6.UserEndpoint).getAll(
+            session,
+            limit: params['limit'],
+            offset: params['offset'],
+          ),
+        ),
+        'getById': _i1.MethodConnector(
+          name: 'getById',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i6.UserEndpoint).getById(
+            session,
+            params['id'],
+          ),
+        ),
+        'getByUserInfoId': _i1.MethodConnector(
+          name: 'getByUserInfoId',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i6.UserEndpoint).getByUserInfoId(
+            session,
+            params['id'],
+          ),
+        ),
+        'update': _i1.MethodConnector(
+          name: 'update',
+          params: {
+            'data': _i1.ParameterDescription(
+              name: 'data',
+              type: _i1.getType<_i8.User>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['user'] as _i6.UserEndpoint).update(
+            session,
+            params['data'],
+          ),
+        ),
+      },
+    );
+    modules['serverpod_auth'] = _i9.Endpoints()..initializeEndpoints(server);
   }
 }

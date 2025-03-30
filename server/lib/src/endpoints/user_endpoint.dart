@@ -1,3 +1,11 @@
+import 'package:serverpod/serverpod.dart';
+import 'package:serverpod_auth_server/serverpod_auth_server.dart';
+
+import '../generated/protocol.dart';
+import '../helpers/auth_helper.dart';
+import '../helpers/database_helper.dart';
+import '../interfaces/database.dart';
+
 class UserEndpoint extends Endpoint
     with DatabaseHelper, AuthHelper
     implements IDatabaseEndpoint<User> {

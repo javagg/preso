@@ -15,17 +15,20 @@ abstract class Tenant implements _i1.SerializableModel {
   Tenant._({
     this.id,
     required this.name,
+    required this.description,
   });
 
   factory Tenant({
     int? id,
     required String name,
+    required String description,
   }) = _TenantImpl;
 
   factory Tenant.fromJson(Map<String, dynamic> jsonSerialization) {
     return Tenant(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
+      description: jsonSerialization['description'] as String,
     );
   }
 
@@ -36,18 +39,22 @@ abstract class Tenant implements _i1.SerializableModel {
 
   String name;
 
+  String description;
+
   /// Returns a shallow copy of this [Tenant]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   Tenant copyWith({
     int? id,
     String? name,
+    String? description,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'name': name,
+      'description': description,
     };
   }
 
@@ -63,9 +70,11 @@ class _TenantImpl extends Tenant {
   _TenantImpl({
     int? id,
     required String name,
+    required String description,
   }) : super._(
           id: id,
           name: name,
+          description: description,
         );
 
   /// Returns a shallow copy of this [Tenant]
@@ -75,10 +84,12 @@ class _TenantImpl extends Tenant {
   Tenant copyWith({
     Object? id = _Undefined,
     String? name,
+    String? description,
   }) {
     return Tenant(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
+      description: description ?? this.description,
     );
   }
 }

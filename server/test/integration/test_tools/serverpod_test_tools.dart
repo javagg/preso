@@ -15,7 +15,7 @@ import 'package:serverpod_test/serverpod_test.dart' as _i1;
 import 'package:serverpod/serverpod.dart' as _i2;
 import 'dart:async' as _i3;
 import 'package:preso_server/src/generated/node.dart' as _i4;
-import 'package:preso_server/src/generated/store.dart' as _i5;
+import 'package:preso_server/src/generated/tenantable.dart' as _i5;
 import 'package:preso_server/src/generated/tenant.dart' as _i6;
 import 'package:preso_server/src/generated/user.dart' as _i7;
 import 'package:preso_server/src/generated/protocol.dart';

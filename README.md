@@ -10,3 +10,13 @@ dart bin/main.dart
 cd client
 flutter run -d chrome -t lib/main.web.dart
 ```
+## migrations
+```
+cd server
+serverpod create-migration --experimental-features=inheritance
+dart bin/main.dart --apply-migrations
+```
+## generation
+```
+serverpod generate --experimental-features=inheritance
+```

@@ -1,0 +1,5 @@
+class: Invoice
+extends: Tenantable
+table: invoice
+fields:
+  name: String

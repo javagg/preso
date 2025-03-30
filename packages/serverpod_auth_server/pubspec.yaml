@@ -7,7 +7,7 @@ version: 2.4.0
 repository: https://github.com/serverpod/serverpod
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
+  sdk: '>=3.6.0 <4.0.0'
 
 dependencies:
   serverpod: 2.4.0
@@ -29,6 +29,7 @@ dev_dependencies:
   test: ^1.24.2
   serverpod_test: 2.4.0
 
+resolution: workspace
 # dependency_overrides:
 #   serverpod:
 #     path: ../../../packages/serverpod

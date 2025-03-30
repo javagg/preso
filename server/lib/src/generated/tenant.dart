@@ -15,17 +15,20 @@ abstract class Tenant implements _i1.TableRow, _i1.ProtocolSerialization {
   Tenant._({
     this.id,
     required this.name,
+    required this.description,
   });
 
   factory Tenant({
     int? id,
     required String name,
+    required String description,
   }) = _TenantImpl;
 
   factory Tenant.fromJson(Map<String, dynamic> jsonSerialization) {
     return Tenant(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
+      description: jsonSerialization['description'] as String,
     );
   }
 
@@ -38,6 +41,8 @@ abstract class Tenant implements _i1.TableRow, _i1.ProtocolSerialization {
 
   String name;
 
+  String description;
+
   @override
   _i1.Table get table => t;
 
@@ -47,12 +52,14 @@ abstract class Tenant implements _i1.TableRow, _i1.ProtocolSerialization {
   Tenant copyWith({
     int? id,
     String? name,
+    String? description,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'name': name,
+      'description': description,
     };
   }
 
@@ -61,6 +68,7 @@ abstract class Tenant implements _i1.TableRow, _i1.ProtocolSerialization {
     return {
       if (id != null) 'id': id,
       'name': name,
+      'description': description,
     };
   }
 
@@ -100,9 +108,11 @@ class _TenantImpl extends Tenant {
   _TenantImpl({
     int? id,
     required String name,
+    required String description,
   }) : super._(
           id: id,
           name: name,
+          description: description,
         );
 
   /// Returns a shallow copy of this [Tenant]
@@ -112,10 +122,12 @@ class _TenantImpl extends Tenant {
   Tenant copyWith({
     Object? id = _Undefined,
     String? name,
+    String? description,
   }) {
     return Tenant(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
+      description: description ?? this.description,
     );
   }
 }
@@ -126,14 +138,21 @@ class TenantTable extends _i1.Table {
       'name',
       this,
     );
+    description = _i1.ColumnString(
+      'description',
+      this,
+    );
   }
 
   late final _i1.ColumnString name;
+
+  late final _i1.ColumnString description;
 
   @override
   List<_i1.Column> get columns => [
         id,
         name,
+        description,
       ];
 }
 

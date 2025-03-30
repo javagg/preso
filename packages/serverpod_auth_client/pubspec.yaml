@@ -9,11 +9,12 @@ homepage: https://serverpod.dev
 issue_tracker: https://github.com/serverpod/serverpod/issues
 
 environment:
-  sdk: '>=3.3.0 <4.0.0'
+  sdk: '>=3.6.0 <4.0.0'
 dependencies:
   lints: '>=3.0.0 <6.0.0'
   serverpod_client: 2.4.0
 
+resolution: workspace
 # dependency_overrides:
 #   serverpod_client:
 #     path: ../../../packages/serverpod_client

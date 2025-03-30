@@ -1,0 +1,4 @@
+class: Tenantable
+sealed: true
+fields:
+  tenantId: int

@@ -8,13 +8,13 @@
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
 
-// ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:serverpod/serverpod.dart' as _i1;
-import 'address.dart' as _i2;
+part of 'tenantable.dart';
 
-abstract class Store implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Store extends _i1.Tenantable
+    implements _i2.TableRow, _i2.ProtocolSerialization {
   Store._({
     this.id,
+    required super.tenantId,
     required this.name,
     required this.addressId,
     this.address,
@@ -22,19 +22,21 @@ abstract class Store implements _i1.TableRow, _i1.ProtocolSerialization {
 
   factory Store({
     int? id,
+    required int tenantId,
     required String name,
     required int addressId,
-    _i2.Address? address,
+    _i3.Address? address,
   }) = _StoreImpl;
 
   factory Store.fromJson(Map<String, dynamic> jsonSerialization) {
     return Store(
       id: jsonSerialization['id'] as int?,
+      tenantId: jsonSerialization['tenantId'] as int,
       name: jsonSerialization['name'] as String,
       addressId: jsonSerialization['addressId'] as int,
       address: jsonSerialization['address'] == null
           ? null
-          : _i2.Address.fromJson(
+          : _i3.Address.fromJson(
               (jsonSerialization['address'] as Map<String, dynamic>)),
     );
   }
@@ -50,24 +52,26 @@ abstract class Store implements _i1.TableRow, _i1.ProtocolSerialization {
 
   int addressId;
 
-  _i2.Address? address;
+  _i3.Address? address;
 
   @override
-  _i1.Table get table => t;
+  _i2.Table get table => t;
 
   /// Returns a shallow copy of this [Store]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_i2.useResult
   Store copyWith({
     int? id,
+    int? tenantId,
     String? name,
     int? addressId,
-    _i2.Address? address,
+    _i3.Address? address,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      'tenantId': tenantId,
       'name': name,
       'addressId': addressId,
       if (address != null) 'address': address?.toJson(),
@@ -78,23 +82,24 @@ abstract class Store implements _i1.TableRow, _i1.ProtocolSerialization {
   Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
+      'tenantId': tenantId,
       'name': name,
       'addressId': addressId,
       if (address != null) 'address': address?.toJsonForProtocol(),
     };
   }
 
-  static StoreInclude include({_i2.AddressInclude? address}) {
+  static StoreInclude include({_i3.AddressInclude? address}) {
     return StoreInclude._(address: address);
   }
 
   static StoreIncludeList includeList({
-    _i1.WhereExpressionBuilder<StoreTable>? where,
+    _i2.WhereExpressionBuilder<StoreTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<StoreTable>? orderBy,
+    _i2.OrderByBuilder<StoreTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<StoreTable>? orderByList,
+    _i2.OrderByListBuilder<StoreTable>? orderByList,
     StoreInclude? include,
   }) {
     return StoreIncludeList._(
@@ -110,20 +115,20 @@ abstract class Store implements _i1.TableRow, _i1.ProtocolSerialization {
 
   @override
   String toString() {
-    return _i1.SerializationManager.encode(this);
+    return _i2.SerializationManager.encode(this);
   }
 }
-
-class _Undefined {}
 
 class _StoreImpl extends Store {
   _StoreImpl({
     int? id,
+    required int tenantId,
     required String name,
     required int addressId,
-    _i2.Address? address,
+    _i3.Address? address,
   }) : super._(
           id: id,
+          tenantId: tenantId,
           name: name,
           addressId: addressId,
           address: address,
@@ -131,63 +136,72 @@ class _StoreImpl extends Store {
 
   /// Returns a shallow copy of this [Store]
   /// with some or all fields replaced by the given arguments.
-  @_i1.useResult
+  @_i2.useResult
   @override
   Store copyWith({
     Object? id = _Undefined,
+    int? tenantId,
     String? name,
     int? addressId,
     Object? address = _Undefined,
   }) {
     return Store(
       id: id is int? ? id : this.id,
+      tenantId: tenantId ?? this.tenantId,
       name: name ?? this.name,
       addressId: addressId ?? this.addressId,
-      address: address is _i2.Address? ? address : this.address?.copyWith(),
+      address: address is _i3.Address? ? address : this.address?.copyWith(),
     );
   }
 }
 
-class StoreTable extends _i1.Table {
+class StoreTable extends _i2.Table {
   StoreTable({super.tableRelation}) : super(tableName: 'store') {
-    name = _i1.ColumnString(
+    tenantId = _i2.ColumnInt(
+      'tenantId',
+      this,
+    );
+    name = _i2.ColumnString(
       'name',
       this,
     );
-    addressId = _i1.ColumnInt(
+    addressId = _i2.ColumnInt(
       'addressId',
       this,
     );
   }
 
-  late final _i1.ColumnString name;
+  late final _i2.ColumnInt tenantId;
 
-  late final _i1.ColumnInt addressId;
+  late final _i2.ColumnString name;
 
-  _i2.AddressTable? _address;
+  late final _i2.ColumnInt addressId;
 
-  _i2.AddressTable get address {
+  _i3.AddressTable? _address;
+
+  _i3.AddressTable get address {
     if (_address != null) return _address!;
-    _address = _i1.createRelationTable(
+    _address = _i2.createRelationTable(
       relationFieldName: 'address',
       field: Store.t.addressId,
-      foreignField: _i2.Address.t.id,
+      foreignField: _i3.Address.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.AddressTable(tableRelation: foreignTableRelation),
+          _i3.AddressTable(tableRelation: foreignTableRelation),
     );
     return _address!;
   }
 
   @override
-  List<_i1.Column> get columns => [
+  List<_i2.Column> get columns => [
         id,
+        tenantId,
         name,
         addressId,
       ];
 
   @override
-  _i1.Table? getRelationTable(String relationField) {
+  _i2.Table? getRelationTable(String relationField) {
     if (relationField == 'address') {
       return address;
     }
@@ -195,23 +209,23 @@ class StoreTable extends _i1.Table {
   }
 }
 
-class StoreInclude extends _i1.IncludeObject {
-  StoreInclude._({_i2.AddressInclude? address}) {
+class StoreInclude extends _i2.IncludeObject {
+  StoreInclude._({_i3.AddressInclude? address}) {
     _address = address;
   }
 
-  _i2.AddressInclude? _address;
+  _i3.AddressInclude? _address;
 
   @override
-  Map<String, _i1.Include?> get includes => {'address': _address};
+  Map<String, _i2.Include?> get includes => {'address': _address};
 
   @override
-  _i1.Table get table => Store.t;
+  _i2.Table get table => Store.t;
 }
 
-class StoreIncludeList extends _i1.IncludeList {
+class StoreIncludeList extends _i2.IncludeList {
   StoreIncludeList._({
-    _i1.WhereExpressionBuilder<StoreTable>? where,
+    _i2.WhereExpressionBuilder<StoreTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -223,10 +237,10 @@ class StoreIncludeList extends _i1.IncludeList {
   }
 
   @override
-  Map<String, _i1.Include?> get includes => include?.includes ?? {};
+  Map<String, _i2.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Store.t;
+  _i2.Table get table => Store.t;
 }
 
 class StoreRepository {
@@ -257,14 +271,14 @@ class StoreRepository {
   /// );
   /// ```
   Future<List<Store>> find(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<StoreTable>? where,
+    _i2.Session session, {
+    _i2.WhereExpressionBuilder<StoreTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<StoreTable>? orderBy,
+    _i2.OrderByBuilder<StoreTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<StoreTable>? orderByList,
-    _i1.Transaction? transaction,
+    _i2.OrderByListBuilder<StoreTable>? orderByList,
+    _i2.Transaction? transaction,
     StoreInclude? include,
   }) async {
     return session.db.find<Store>(
@@ -297,13 +311,13 @@ class StoreRepository {
   /// );
   /// ```
   Future<Store?> findFirstRow(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<StoreTable>? where,
+    _i2.Session session, {
+    _i2.WhereExpressionBuilder<StoreTable>? where,
     int? offset,
-    _i1.OrderByBuilder<StoreTable>? orderBy,
+    _i2.OrderByBuilder<StoreTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<StoreTable>? orderByList,
-    _i1.Transaction? transaction,
+    _i2.OrderByListBuilder<StoreTable>? orderByList,
+    _i2.Transaction? transaction,
     StoreInclude? include,
   }) async {
     return session.db.findFirstRow<Store>(
@@ -319,9 +333,9 @@ class StoreRepository {
 
   /// Finds a single [Store] by its [id] or null if no such row exists.
   Future<Store?> findById(
-    _i1.Session session,
+    _i2.Session session,
     int id, {
-    _i1.Transaction? transaction,
+    _i2.Transaction? transaction,
     StoreInclude? include,
   }) async {
     return session.db.findById<Store>(
@@ -338,9 +352,9 @@ class StoreRepository {
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// insert, none of the rows will be inserted.
   Future<List<Store>> insert(
-    _i1.Session session,
+    _i2.Session session,
     List<Store> rows, {
-    _i1.Transaction? transaction,
+    _i2.Transaction? transaction,
   }) async {
     return session.db.insert<Store>(
       rows,
@@ -352,9 +366,9 @@ class StoreRepository {
   ///
   /// The returned [Store] will have its `id` field set.
   Future<Store> insertRow(
-    _i1.Session session,
+    _i2.Session session,
     Store row, {
-    _i1.Transaction? transaction,
+    _i2.Transaction? transaction,
   }) async {
     return session.db.insertRow<Store>(
       row,
@@ -368,10 +382,10 @@ class StoreRepository {
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// update, none of the rows will be updated.
   Future<List<Store>> update(
-    _i1.Session session,
+    _i2.Session session,
     List<Store> rows, {
-    _i1.ColumnSelections<StoreTable>? columns,
-    _i1.Transaction? transaction,
+    _i2.ColumnSelections<StoreTable>? columns,
+    _i2.Transaction? transaction,
   }) async {
     return session.db.update<Store>(
       rows,
@@ -384,10 +398,10 @@ class StoreRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<Store> updateRow(
-    _i1.Session session,
+    _i2.Session session,
     Store row, {
-    _i1.ColumnSelections<StoreTable>? columns,
-    _i1.Transaction? transaction,
+    _i2.ColumnSelections<StoreTable>? columns,
+    _i2.Transaction? transaction,
   }) async {
     return session.db.updateRow<Store>(
       row,
@@ -400,9 +414,9 @@ class StoreRepository {
   /// This is an atomic operation, meaning that if one of the rows fail to
   /// be deleted, none of the rows will be deleted.
   Future<List<Store>> delete(
-    _i1.Session session,
+    _i2.Session session,
     List<Store> rows, {
-    _i1.Transaction? transaction,
+    _i2.Transaction? transaction,
   }) async {
     return session.db.delete<Store>(
       rows,
@@ -412,9 +426,9 @@ class StoreRepository {
 
   /// Deletes a single [Store].
   Future<Store> deleteRow(
-    _i1.Session session,
+    _i2.Session session,
     Store row, {
-    _i1.Transaction? transaction,
+    _i2.Transaction? transaction,
   }) async {
     return session.db.deleteRow<Store>(
       row,
@@ -424,9 +438,9 @@ class StoreRepository {
 
   /// Deletes all rows matching the [where] expression.
   Future<List<Store>> deleteWhere(
-    _i1.Session session, {
-    required _i1.WhereExpressionBuilder<StoreTable> where,
-    _i1.Transaction? transaction,
+    _i2.Session session, {
+    required _i2.WhereExpressionBuilder<StoreTable> where,
+    _i2.Transaction? transaction,
   }) async {
     return session.db.deleteWhere<Store>(
       where: where(Store.t),
@@ -437,10 +451,10 @@ class StoreRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i1.Session session, {
-    _i1.WhereExpressionBuilder<StoreTable>? where,
+    _i2.Session session, {
+    _i2.WhereExpressionBuilder<StoreTable>? where,
     int? limit,
-    _i1.Transaction? transaction,
+    _i2.Transaction? transaction,
   }) async {
     return session.db.count<Store>(
       where: where?.call(Store.t),
@@ -456,10 +470,10 @@ class StoreAttachRowRepository {
   /// Creates a relation between the given [Store] and [Address]
   /// by setting the [Store]'s foreign key `addressId` to refer to the [Address].
   Future<void> address(
-    _i1.Session session,
+    _i2.Session session,
     Store store,
-    _i2.Address address, {
-    _i1.Transaction? transaction,
+    _i3.Address address, {
+    _i2.Transaction? transaction,
   }) async {
     if (store.id == null) {
       throw ArgumentError.notNull('store.id');

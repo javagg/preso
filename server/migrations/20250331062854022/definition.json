@@ -131,6 +131,99 @@
       "managed": true
     },
     {
+      "name": "card",
+      "dartName": "Card",
+      "module": "preso",
+      "schema": "public",
+      "columns": [
+        {
+          "name": "id",
+          "columnType": 6,
+          "isNullable": false,
+          "columnDefault": "nextval('card_id_seq'::regclass)",
+          "dartType": "int?"
+        },
+        {
+          "name": "tenantId",
+          "columnType": 6,
+          "isNullable": false,
+          "dartType": "int"
+        },
+        {
+          "name": "name",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "name": "description",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "name": "price",
+          "columnType": 3,
+          "isNullable": false,
+          "dartType": "double"
+        },
+        {
+          "name": "coverImage",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "name": "duration",
+          "columnType": 6,
+          "isNullable": false,
+          "dartType": "int"
+        },
+        {
+          "name": "type",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "protocol:CardType?"
+        },
+        {
+          "name": "_storeCardsStoreId",
+          "columnType": 6,
+          "isNullable": true,
+          "dartType": "int?"
+        }
+      ],
+      "foreignKeys": [
+        {
+          "constraintName": "card_fk_0",
+          "columns": [
+            "_storeCardsStoreId"
+          ],
+          "referenceTable": "store",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 3
+        }
+      ],
+      "indexes": [
+        {
+          "indexName": "card_pkey",
+          "elements": [
+            {
+              "type": 0,
+              "definition": "id"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": true
+        }
+      ],
+      "managed": true
+    },
+    {
       "name": "coupon",
       "dartName": "Coupon",
       "module": "preso",
@@ -179,12 +272,6 @@
           "isNullable": false,
           "columnDefault": "nextval('invoice_id_seq'::regclass)",
           "dartType": "int?"
-        },
-        {
-          "name": "tenantId",
-          "columnType": 6,
-          "isNullable": false,
-          "dartType": "int"
         },
         {
           "name": "name",
@@ -400,6 +487,42 @@
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
+        },
+        {
+          "name": "city",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "name": "province",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
+        },
+        {
+          "name": "longitude",
+          "columnType": 3,
+          "isNullable": false,
+          "dartType": "double"
+        },
+        {
+          "name": "latitude",
+          "columnType": 3,
+          "isNullable": false,
+          "dartType": "double"
+        },
+        {
+          "name": "tags",
+          "columnType": 8,
+          "isNullable": false,
+          "dartType": "List<String>"
+        },
+        {
+          "name": "equipment",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "String"
         }
       ],
       "foreignKeys": [
@@ -2226,7 +2349,7 @@
   "installedModules": [
     {
       "module": "preso",
-      "version": "20250330125508492"
+      "version": "20250331062854022"
     },
     {
       "module": "serverpod",

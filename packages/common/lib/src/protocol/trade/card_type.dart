@@ -12,15 +12,15 @@
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
 enum CardType implements _i1.SerializableModel {
-  user,
-  global;
+  periodical,
+  count;
 
   static CardType fromJson(String name) {
     switch (name) {
-      case 'user':
-        return CardType.user;
-      case 'global':
-        return CardType.global;
+      case 'periodical':
+        return CardType.periodical;
+      case 'count':
+        return CardType.count;
       default:
         throw ArgumentError('Value "$name" cannot be converted to "CardType"');
     }

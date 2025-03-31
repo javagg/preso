@@ -1,0 +1,9 @@
+class: Serving
+table: serving
+fields:
+  trainer: Trainer?, relation(name=trainer_serving)
+  store: Store?, relation(name=store_serving)
+indexes:
+  serving_index_idx:
+    fields: trainerId, storeId
+    unique: true

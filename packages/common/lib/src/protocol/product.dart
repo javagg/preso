@@ -11,21 +11,24 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 
-abstract class Invoice implements _i1.SerializableModel {
-  Invoice._({
+abstract class Product implements _i1.SerializableModel {
+  Product._({
     this.id,
     required this.name,
+    required this.description,
   });
 
-  factory Invoice({
+  factory Product({
     int? id,
     required String name,
-  }) = _InvoiceImpl;
+    required String description,
+  }) = _ProductImpl;
 
-  factory Invoice.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Invoice(
+  factory Product.fromJson(Map<String, dynamic> jsonSerialization) {
+    return Product(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
+      description: jsonSerialization['description'] as String,
     );
   }
 
@@ -36,18 +39,22 @@ abstract class Invoice implements _i1.SerializableModel {
 
   String name;
 
-  /// Returns a shallow copy of this [Invoice]
+  String description;
+
+  /// Returns a shallow copy of this [Product]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
-  Invoice copyWith({
+  Product copyWith({
     int? id,
     String? name,
+    String? description,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'name': name,
+      'description': description,
     };
   }
 
@@ -59,26 +66,30 @@ abstract class Invoice implements _i1.SerializableModel {
 
 class _Undefined {}
 
-class _InvoiceImpl extends Invoice {
-  _InvoiceImpl({
+class _ProductImpl extends Product {
+  _ProductImpl({
     int? id,
     required String name,
+    required String description,
   }) : super._(
           id: id,
           name: name,
+          description: description,
         );
 
-  /// Returns a shallow copy of this [Invoice]
+  /// Returns a shallow copy of this [Product]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   @override
-  Invoice copyWith({
+  Product copyWith({
     Object? id = _Undefined,
     String? name,
+    String? description,
   }) {
-    return Invoice(
+    return Product(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
+      description: description ?? this.description,
     );
   }
 }

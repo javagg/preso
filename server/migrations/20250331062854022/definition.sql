@@ -28,6 +28,21 @@ CREATE TABLE "brand" (
 );
 
 --
+-- Class Card as table card
+--
+CREATE TABLE "card" (
+    "id" bigserial PRIMARY KEY,
+    "tenantId" bigint NOT NULL,
+    "name" text NOT NULL,
+    "description" text NOT NULL,
+    "price" double precision NOT NULL,
+    "coverImage" text NOT NULL,
+    "duration" bigint NOT NULL,
+    "type" text,
+    "_storeCardsStoreId" bigint
+);
+
+--
 -- Class Coupon as table coupon
 --
 CREATE TABLE "coupon" (
@@ -40,7 +55,6 @@ CREATE TABLE "coupon" (
 --
 CREATE TABLE "invoice" (
     "id" bigserial PRIMARY KEY,
-    "tenantId" bigint NOT NULL,
     "name" text NOT NULL
 );
 
@@ -85,7 +99,13 @@ CREATE TABLE "store" (
     "id" bigserial PRIMARY KEY,
     "tenantId" bigint NOT NULL,
     "name" text NOT NULL,
-    "addressId" bigint NOT NULL
+    "addressId" bigint NOT NULL,
+    "city" text NOT NULL,
+    "province" text NOT NULL,
+    "longitude" double precision NOT NULL,
+    "latitude" double precision NOT NULL,
+    "tags" json NOT NULL,
+    "equipment" text NOT NULL
 );
 
 --
@@ -425,6 +445,16 @@ CREATE UNIQUE INDEX "serverpod_user_info_user_identifier" ON "serverpod_user_inf
 CREATE INDEX "serverpod_user_info_email" ON "serverpod_user_info" USING btree ("email");
 
 --
+-- Foreign relations for "card" table
+--
+ALTER TABLE ONLY "card"
+    ADD CONSTRAINT "card_fk_0"
+    FOREIGN KEY("_storeCardsStoreId")
+    REFERENCES "store"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+--
 -- Foreign relations for "store" table
 --
 ALTER TABLE ONLY "store"
@@ -479,9 +509,9 @@ ALTER TABLE ONLY "serverpod_query_log"
 -- MIGRATION VERSION FOR preso
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('preso', '20250330125508492', now())
+    VALUES ('preso', '20250331062854022', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20250330125508492', "timestamp" = now();
+    DO UPDATE SET "version" = '20250331062854022', "timestamp" = now();
 
 --
 -- MIGRATION VERSION FOR serverpod

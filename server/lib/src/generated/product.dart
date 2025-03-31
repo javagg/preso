@@ -11,48 +11,55 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Invoice implements _i1.TableRow, _i1.ProtocolSerialization {
-  Invoice._({
+abstract class Product implements _i1.TableRow, _i1.ProtocolSerialization {
+  Product._({
     this.id,
     required this.name,
+    required this.description,
   });
 
-  factory Invoice({
+  factory Product({
     int? id,
     required String name,
-  }) = _InvoiceImpl;
+    required String description,
+  }) = _ProductImpl;
 
-  factory Invoice.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Invoice(
+  factory Product.fromJson(Map<String, dynamic> jsonSerialization) {
+    return Product(
       id: jsonSerialization['id'] as int?,
       name: jsonSerialization['name'] as String,
+      description: jsonSerialization['description'] as String,
     );
   }
 
-  static final t = InvoiceTable();
+  static final t = ProductTable();
 
-  static const db = InvoiceRepository._();
+  static const db = ProductRepository._();
 
   @override
   int? id;
 
   String name;
 
+  String description;
+
   @override
   _i1.Table get table => t;
 
-  /// Returns a shallow copy of this [Invoice]
+  /// Returns a shallow copy of this [Product]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
-  Invoice copyWith({
+  Product copyWith({
     int? id,
     String? name,
+    String? description,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
       'name': name,
+      'description': description,
     };
   }
 
@@ -61,29 +68,30 @@ abstract class Invoice implements _i1.TableRow, _i1.ProtocolSerialization {
     return {
       if (id != null) 'id': id,
       'name': name,
+      'description': description,
     };
   }
 
-  static InvoiceInclude include() {
-    return InvoiceInclude._();
+  static ProductInclude include() {
+    return ProductInclude._();
   }
 
-  static InvoiceIncludeList includeList({
-    _i1.WhereExpressionBuilder<InvoiceTable>? where,
+  static ProductIncludeList includeList({
+    _i1.WhereExpressionBuilder<ProductTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<InvoiceTable>? orderBy,
+    _i1.OrderByBuilder<ProductTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<InvoiceTable>? orderByList,
-    InvoiceInclude? include,
+    _i1.OrderByListBuilder<ProductTable>? orderByList,
+    ProductInclude? include,
   }) {
-    return InvoiceIncludeList._(
+    return ProductIncludeList._(
       where: where,
       limit: limit,
       offset: offset,
-      orderBy: orderBy?.call(Invoice.t),
+      orderBy: orderBy?.call(Product.t),
       orderDescending: orderDescending,
-      orderByList: orderByList?.call(Invoice.t),
+      orderByList: orderByList?.call(Product.t),
       include: include,
     );
   }
@@ -96,60 +104,71 @@ abstract class Invoice implements _i1.TableRow, _i1.ProtocolSerialization {
 
 class _Undefined {}
 
-class _InvoiceImpl extends Invoice {
-  _InvoiceImpl({
+class _ProductImpl extends Product {
+  _ProductImpl({
     int? id,
     required String name,
+    required String description,
   }) : super._(
           id: id,
           name: name,
+          description: description,
         );
 
-  /// Returns a shallow copy of this [Invoice]
+  /// Returns a shallow copy of this [Product]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   @override
-  Invoice copyWith({
+  Product copyWith({
     Object? id = _Undefined,
     String? name,
+    String? description,
   }) {
-    return Invoice(
+    return Product(
       id: id is int? ? id : this.id,
       name: name ?? this.name,
+      description: description ?? this.description,
     );
   }
 }
 
-class InvoiceTable extends _i1.Table {
-  InvoiceTable({super.tableRelation}) : super(tableName: 'invoice') {
+class ProductTable extends _i1.Table {
+  ProductTable({super.tableRelation}) : super(tableName: 'product') {
     name = _i1.ColumnString(
       'name',
+      this,
+    );
+    description = _i1.ColumnString(
+      'description',
       this,
     );
   }
 
   late final _i1.ColumnString name;
 
+  late final _i1.ColumnString description;
+
   @override
   List<_i1.Column> get columns => [
         id,
         name,
+        description,
       ];
 }
 
-class InvoiceInclude extends _i1.IncludeObject {
-  InvoiceInclude._();
+class ProductInclude extends _i1.IncludeObject {
+  ProductInclude._();
 
   @override
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Invoice.t;
+  _i1.Table get table => Product.t;
 }
 
-class InvoiceIncludeList extends _i1.IncludeList {
-  InvoiceIncludeList._({
-    _i1.WhereExpressionBuilder<InvoiceTable>? where,
+class ProductIncludeList extends _i1.IncludeList {
+  ProductIncludeList._({
+    _i1.WhereExpressionBuilder<ProductTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -157,20 +176,20 @@ class InvoiceIncludeList extends _i1.IncludeList {
     super.orderByList,
     super.include,
   }) {
-    super.where = where?.call(Invoice.t);
+    super.where = where?.call(Product.t);
   }
 
   @override
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Invoice.t;
+  _i1.Table get table => Product.t;
 }
 
-class InvoiceRepository {
-  const InvoiceRepository._();
+class ProductRepository {
+  const ProductRepository._();
 
-  /// Returns a list of [Invoice]s matching the given query parameters.
+  /// Returns a list of [Product]s matching the given query parameters.
   ///
   /// Use [where] to specify which items to include in the return value.
   /// If none is specified, all items will be returned.
@@ -192,20 +211,20 @@ class InvoiceRepository {
   ///   limit: 100,
   /// );
   /// ```
-  Future<List<Invoice>> find(
+  Future<List<Product>> find(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<InvoiceTable>? where,
+    _i1.WhereExpressionBuilder<ProductTable>? where,
     int? limit,
     int? offset,
-    _i1.OrderByBuilder<InvoiceTable>? orderBy,
+    _i1.OrderByBuilder<ProductTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<InvoiceTable>? orderByList,
+    _i1.OrderByListBuilder<ProductTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.find<Invoice>(
-      where: where?.call(Invoice.t),
-      orderBy: orderBy?.call(Invoice.t),
-      orderByList: orderByList?.call(Invoice.t),
+    return session.db.find<Product>(
+      where: where?.call(Product.t),
+      orderBy: orderBy?.call(Product.t),
+      orderByList: orderByList?.call(Product.t),
       orderDescending: orderDescending,
       limit: limit,
       offset: offset,
@@ -213,7 +232,7 @@ class InvoiceRepository {
     );
   }
 
-  /// Returns the first matching [Invoice] matching the given query parameters.
+  /// Returns the first matching [Product] matching the given query parameters.
   ///
   /// Use [where] to specify which items to include in the return value.
   /// If none is specified, all items will be returned.
@@ -230,136 +249,136 @@ class InvoiceRepository {
   ///   orderBy: (t) => t.age,
   /// );
   /// ```
-  Future<Invoice?> findFirstRow(
+  Future<Product?> findFirstRow(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<InvoiceTable>? where,
+    _i1.WhereExpressionBuilder<ProductTable>? where,
     int? offset,
-    _i1.OrderByBuilder<InvoiceTable>? orderBy,
+    _i1.OrderByBuilder<ProductTable>? orderBy,
     bool orderDescending = false,
-    _i1.OrderByListBuilder<InvoiceTable>? orderByList,
+    _i1.OrderByListBuilder<ProductTable>? orderByList,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.findFirstRow<Invoice>(
-      where: where?.call(Invoice.t),
-      orderBy: orderBy?.call(Invoice.t),
-      orderByList: orderByList?.call(Invoice.t),
+    return session.db.findFirstRow<Product>(
+      where: where?.call(Product.t),
+      orderBy: orderBy?.call(Product.t),
+      orderByList: orderByList?.call(Product.t),
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
     );
   }
 
-  /// Finds a single [Invoice] by its [id] or null if no such row exists.
-  Future<Invoice?> findById(
+  /// Finds a single [Product] by its [id] or null if no such row exists.
+  Future<Product?> findById(
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.findById<Invoice>(
+    return session.db.findById<Product>(
       id,
       transaction: transaction,
     );
   }
 
-  /// Inserts all [Invoice]s in the list and returns the inserted rows.
+  /// Inserts all [Product]s in the list and returns the inserted rows.
   ///
-  /// The returned [Invoice]s will have their `id` fields set.
+  /// The returned [Product]s will have their `id` fields set.
   ///
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// insert, none of the rows will be inserted.
-  Future<List<Invoice>> insert(
+  Future<List<Product>> insert(
     _i1.Session session,
-    List<Invoice> rows, {
+    List<Product> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.insert<Invoice>(
+    return session.db.insert<Product>(
       rows,
       transaction: transaction,
     );
   }
 
-  /// Inserts a single [Invoice] and returns the inserted row.
+  /// Inserts a single [Product] and returns the inserted row.
   ///
-  /// The returned [Invoice] will have its `id` field set.
-  Future<Invoice> insertRow(
+  /// The returned [Product] will have its `id` field set.
+  Future<Product> insertRow(
     _i1.Session session,
-    Invoice row, {
+    Product row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.insertRow<Invoice>(
+    return session.db.insertRow<Product>(
       row,
       transaction: transaction,
     );
   }
 
-  /// Updates all [Invoice]s in the list and returns the updated rows. If
+  /// Updates all [Product]s in the list and returns the updated rows. If
   /// [columns] is provided, only those columns will be updated. Defaults to
   /// all columns.
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// update, none of the rows will be updated.
-  Future<List<Invoice>> update(
+  Future<List<Product>> update(
     _i1.Session session,
-    List<Invoice> rows, {
-    _i1.ColumnSelections<InvoiceTable>? columns,
+    List<Product> rows, {
+    _i1.ColumnSelections<ProductTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.update<Invoice>(
+    return session.db.update<Product>(
       rows,
-      columns: columns?.call(Invoice.t),
+      columns: columns?.call(Product.t),
       transaction: transaction,
     );
   }
 
-  /// Updates a single [Invoice]. The row needs to have its id set.
+  /// Updates a single [Product]. The row needs to have its id set.
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
-  Future<Invoice> updateRow(
+  Future<Product> updateRow(
     _i1.Session session,
-    Invoice row, {
-    _i1.ColumnSelections<InvoiceTable>? columns,
+    Product row, {
+    _i1.ColumnSelections<ProductTable>? columns,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.updateRow<Invoice>(
+    return session.db.updateRow<Product>(
       row,
-      columns: columns?.call(Invoice.t),
+      columns: columns?.call(Product.t),
       transaction: transaction,
     );
   }
 
-  /// Deletes all [Invoice]s in the list and returns the deleted rows.
+  /// Deletes all [Product]s in the list and returns the deleted rows.
   /// This is an atomic operation, meaning that if one of the rows fail to
   /// be deleted, none of the rows will be deleted.
-  Future<List<Invoice>> delete(
+  Future<List<Product>> delete(
     _i1.Session session,
-    List<Invoice> rows, {
+    List<Product> rows, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.delete<Invoice>(
+    return session.db.delete<Product>(
       rows,
       transaction: transaction,
     );
   }
 
-  /// Deletes a single [Invoice].
-  Future<Invoice> deleteRow(
+  /// Deletes a single [Product].
+  Future<Product> deleteRow(
     _i1.Session session,
-    Invoice row, {
+    Product row, {
     _i1.Transaction? transaction,
   }) async {
-    return session.db.deleteRow<Invoice>(
+    return session.db.deleteRow<Product>(
       row,
       transaction: transaction,
     );
   }
 
   /// Deletes all rows matching the [where] expression.
-  Future<List<Invoice>> deleteWhere(
+  Future<List<Product>> deleteWhere(
     _i1.Session session, {
-    required _i1.WhereExpressionBuilder<InvoiceTable> where,
+    required _i1.WhereExpressionBuilder<ProductTable> where,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.deleteWhere<Invoice>(
-      where: where(Invoice.t),
+    return session.db.deleteWhere<Product>(
+      where: where(Product.t),
       transaction: transaction,
     );
   }
@@ -368,12 +387,12 @@ class InvoiceRepository {
   /// will return the count of all rows in the table.
   Future<int> count(
     _i1.Session session, {
-    _i1.WhereExpressionBuilder<InvoiceTable>? where,
+    _i1.WhereExpressionBuilder<ProductTable>? where,
     int? limit,
     _i1.Transaction? transaction,
   }) async {
-    return session.db.count<Invoice>(
-      where: where?.call(Invoice.t),
+    return session.db.count<Product>(
+      where: where?.call(Product.t),
       limit: limit,
       transaction: transaction,
     );

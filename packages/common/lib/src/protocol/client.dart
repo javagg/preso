@@ -11,8 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
 import 'dart:async' as _i2;
-import 'package:preso_common/src/protocol/node.dart' as _i3;
-import 'package:preso_common/src/protocol/tenantable.dart' as _i4;
+import 'package:preso_common/src/protocol/note.dart' as _i3;
+import 'package:preso_common/src/protocol/store.dart' as _i4;
 import 'package:preso_common/src/protocol/tenant.dart' as _i5;
 import 'package:preso_common/src/protocol/user.dart' as _i6;
 import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i7;

@@ -1,7 +1,21 @@
 class: Store
-extends: Tenantable
 table: store
 fields:
+  tenantId: int
   name: String
   address: Address?, relation
-
+  city: String
+  province: String
+  longitude: double
+  area: int
+  businessHours: String
+  latitude: double
+  tags: String
+  equipment: String
+  cards: List<Card>?, relation
+  services: String
+  facilities: String
+  equipments: String
+  serving: List<Serving>?, relation(name=store_serving)
+  wifi: String
+  membership: List<Membership>?, relation(name=store_membership)

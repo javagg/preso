@@ -15,7 +15,7 @@ import '../endpoints/notes_endpoint.dart' as _i3;
 import '../endpoints/store_endpoint.dart' as _i4;
 import '../endpoints/tenant_endpoint.dart' as _i5;
 import '../endpoints/user_endpoint.dart' as _i6;
-import 'package:preso_server/src/generated/node.dart' as _i7;
+import 'package:preso_server/src/generated/note.dart' as _i7;
 import 'package:preso_server/src/generated/user.dart' as _i8;
 import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i9;
 

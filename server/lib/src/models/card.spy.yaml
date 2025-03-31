@@ -1,0 +1,10 @@
+class: Card
+table: card
+fields:
+  tenantId: int
+  name: String
+  description: String
+  price: double
+  coverImage: String
+  duration: int
+  type: CardType?

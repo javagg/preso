@@ -1,0 +1,18 @@
+class: Trainer
+table: trainer
+fields:
+  name: String
+  description: String
+  gender: String
+  age: int
+  headshot: String
+  photos: String
+  videos: String
+  servingCity: String
+  servingHours: String
+  serving: List<Serving>?, relation(name=trainer_serving)
+  appointments: List<Appointment>?, relation(name=trainer_appointment)
+  classFee: double
+  phone: String
+  hotness: int, default=0
+  rating: double, default=0.0

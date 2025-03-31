@@ -8,16 +8,35 @@
 // ignore_for_file: type_literal_in_constant_pattern
 // ignore_for_file: use_super_parameters
 
-part of 'tenantable.dart';
+// ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:serverpod/serverpod.dart' as _i1;
+import 'address.dart' as _i2;
+import 'card.dart' as _i3;
+import 'serving.dart' as _i4;
+import 'membership.dart' as _i5;
 
-abstract class Store extends _i1.Tenantable
-    implements _i2.TableRow, _i2.ProtocolSerialization {
+abstract class Store implements _i1.TableRow, _i1.ProtocolSerialization {
   Store._({
     this.id,
-    required super.tenantId,
+    required this.tenantId,
     required this.name,
     required this.addressId,
     this.address,
+    required this.city,
+    required this.province,
+    required this.longitude,
+    required this.area,
+    required this.businessHours,
+    required this.latitude,
+    required this.tags,
+    required this.equipment,
+    this.cards,
+    required this.services,
+    required this.facilities,
+    required this.equipments,
+    this.serving,
+    required this.wifi,
+    this.membership,
   });
 
   factory Store({
@@ -25,7 +44,22 @@ abstract class Store extends _i1.Tenantable
     required int tenantId,
     required String name,
     required int addressId,
-    _i3.Address? address,
+    _i2.Address? address,
+    required String city,
+    required String province,
+    required double longitude,
+    required int area,
+    required String businessHours,
+    required double latitude,
+    required String tags,
+    required String equipment,
+    List<_i3.Card>? cards,
+    required String services,
+    required String facilities,
+    required String equipments,
+    List<_i4.Serving>? serving,
+    required String wifi,
+    List<_i5.Membership>? membership,
   }) = _StoreImpl;
 
   factory Store.fromJson(Map<String, dynamic> jsonSerialization) {
@@ -36,8 +70,29 @@ abstract class Store extends _i1.Tenantable
       addressId: jsonSerialization['addressId'] as int,
       address: jsonSerialization['address'] == null
           ? null
-          : _i3.Address.fromJson(
+          : _i2.Address.fromJson(
               (jsonSerialization['address'] as Map<String, dynamic>)),
+      city: jsonSerialization['city'] as String,
+      province: jsonSerialization['province'] as String,
+      longitude: (jsonSerialization['longitude'] as num).toDouble(),
+      area: jsonSerialization['area'] as int,
+      businessHours: jsonSerialization['businessHours'] as String,
+      latitude: (jsonSerialization['latitude'] as num).toDouble(),
+      tags: jsonSerialization['tags'] as String,
+      equipment: jsonSerialization['equipment'] as String,
+      cards: (jsonSerialization['cards'] as List?)
+          ?.map((e) => _i3.Card.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      services: jsonSerialization['services'] as String,
+      facilities: jsonSerialization['facilities'] as String,
+      equipments: jsonSerialization['equipments'] as String,
+      serving: (jsonSerialization['serving'] as List?)
+          ?.map((e) => _i4.Serving.fromJson((e as Map<String, dynamic>)))
+          .toList(),
+      wifi: jsonSerialization['wifi'] as String,
+      membership: (jsonSerialization['membership'] as List?)
+          ?.map((e) => _i5.Membership.fromJson((e as Map<String, dynamic>)))
+          .toList(),
     );
   }
 
@@ -48,24 +103,71 @@ abstract class Store extends _i1.Tenantable
   @override
   int? id;
 
+  int tenantId;
+
   String name;
 
   int addressId;
 
-  _i3.Address? address;
+  _i2.Address? address;
+
+  String city;
+
+  String province;
+
+  double longitude;
+
+  int area;
+
+  String businessHours;
+
+  double latitude;
+
+  String tags;
+
+  String equipment;
+
+  List<_i3.Card>? cards;
+
+  String services;
+
+  String facilities;
+
+  String equipments;
+
+  List<_i4.Serving>? serving;
+
+  String wifi;
+
+  List<_i5.Membership>? membership;
 
   @override
-  _i2.Table get table => t;
+  _i1.Table get table => t;
 
   /// Returns a shallow copy of this [Store]
   /// with some or all fields replaced by the given arguments.
-  @_i2.useResult
+  @_i1.useResult
   Store copyWith({
     int? id,
     int? tenantId,
     String? name,
     int? addressId,
-    _i3.Address? address,
+    _i2.Address? address,
+    String? city,
+    String? province,
+    double? longitude,
+    int? area,
+    String? businessHours,
+    double? latitude,
+    String? tags,
+    String? equipment,
+    List<_i3.Card>? cards,
+    String? services,
+    String? facilities,
+    String? equipments,
+    List<_i4.Serving>? serving,
+    String? wifi,
+    List<_i5.Membership>? membership,
   });
   @override
   Map<String, dynamic> toJson() {
@@ -75,6 +177,23 @@ abstract class Store extends _i1.Tenantable
       'name': name,
       'addressId': addressId,
       if (address != null) 'address': address?.toJson(),
+      'city': city,
+      'province': province,
+      'longitude': longitude,
+      'area': area,
+      'businessHours': businessHours,
+      'latitude': latitude,
+      'tags': tags,
+      'equipment': equipment,
+      if (cards != null) 'cards': cards?.toJson(valueToJson: (v) => v.toJson()),
+      'services': services,
+      'facilities': facilities,
+      'equipments': equipments,
+      if (serving != null)
+        'serving': serving?.toJson(valueToJson: (v) => v.toJson()),
+      'wifi': wifi,
+      if (membership != null)
+        'membership': membership?.toJson(valueToJson: (v) => v.toJson()),
     };
   }
 
@@ -86,20 +205,49 @@ abstract class Store extends _i1.Tenantable
       'name': name,
       'addressId': addressId,
       if (address != null) 'address': address?.toJsonForProtocol(),
+      'city': city,
+      'province': province,
+      'longitude': longitude,
+      'area': area,
+      'businessHours': businessHours,
+      'latitude': latitude,
+      'tags': tags,
+      'equipment': equipment,
+      if (cards != null)
+        'cards': cards?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
+      'services': services,
+      'facilities': facilities,
+      'equipments': equipments,
+      if (serving != null)
+        'serving': serving?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
+      'wifi': wifi,
+      if (membership != null)
+        'membership':
+            membership?.toJson(valueToJson: (v) => v.toJsonForProtocol()),
     };
   }
 
-  static StoreInclude include({_i3.AddressInclude? address}) {
-    return StoreInclude._(address: address);
+  static StoreInclude include({
+    _i2.AddressInclude? address,
+    _i3.CardIncludeList? cards,
+    _i4.ServingIncludeList? serving,
+    _i5.MembershipIncludeList? membership,
+  }) {
+    return StoreInclude._(
+      address: address,
+      cards: cards,
+      serving: serving,
+      membership: membership,
+    );
   }
 
   static StoreIncludeList includeList({
-    _i2.WhereExpressionBuilder<StoreTable>? where,
+    _i1.WhereExpressionBuilder<StoreTable>? where,
     int? limit,
     int? offset,
-    _i2.OrderByBuilder<StoreTable>? orderBy,
+    _i1.OrderByBuilder<StoreTable>? orderBy,
     bool orderDescending = false,
-    _i2.OrderByListBuilder<StoreTable>? orderByList,
+    _i1.OrderByListBuilder<StoreTable>? orderByList,
     StoreInclude? include,
   }) {
     return StoreIncludeList._(
@@ -115,9 +263,11 @@ abstract class Store extends _i1.Tenantable
 
   @override
   String toString() {
-    return _i2.SerializationManager.encode(this);
+    return _i1.SerializationManager.encode(this);
   }
 }
+
+class _Undefined {}
 
 class _StoreImpl extends Store {
   _StoreImpl({
@@ -125,18 +275,48 @@ class _StoreImpl extends Store {
     required int tenantId,
     required String name,
     required int addressId,
-    _i3.Address? address,
+    _i2.Address? address,
+    required String city,
+    required String province,
+    required double longitude,
+    required int area,
+    required String businessHours,
+    required double latitude,
+    required String tags,
+    required String equipment,
+    List<_i3.Card>? cards,
+    required String services,
+    required String facilities,
+    required String equipments,
+    List<_i4.Serving>? serving,
+    required String wifi,
+    List<_i5.Membership>? membership,
   }) : super._(
           id: id,
           tenantId: tenantId,
           name: name,
           addressId: addressId,
           address: address,
+          city: city,
+          province: province,
+          longitude: longitude,
+          area: area,
+          businessHours: businessHours,
+          latitude: latitude,
+          tags: tags,
+          equipment: equipment,
+          cards: cards,
+          services: services,
+          facilities: facilities,
+          equipments: equipments,
+          serving: serving,
+          wifi: wifi,
+          membership: membership,
         );
 
   /// Returns a shallow copy of this [Store]
   /// with some or all fields replaced by the given arguments.
-  @_i2.useResult
+  @_i1.useResult
   @override
   Store copyWith({
     Object? id = _Undefined,
@@ -144,88 +324,341 @@ class _StoreImpl extends Store {
     String? name,
     int? addressId,
     Object? address = _Undefined,
+    String? city,
+    String? province,
+    double? longitude,
+    int? area,
+    String? businessHours,
+    double? latitude,
+    String? tags,
+    String? equipment,
+    Object? cards = _Undefined,
+    String? services,
+    String? facilities,
+    String? equipments,
+    Object? serving = _Undefined,
+    String? wifi,
+    Object? membership = _Undefined,
   }) {
     return Store(
       id: id is int? ? id : this.id,
       tenantId: tenantId ?? this.tenantId,
       name: name ?? this.name,
       addressId: addressId ?? this.addressId,
-      address: address is _i3.Address? ? address : this.address?.copyWith(),
+      address: address is _i2.Address? ? address : this.address?.copyWith(),
+      city: city ?? this.city,
+      province: province ?? this.province,
+      longitude: longitude ?? this.longitude,
+      area: area ?? this.area,
+      businessHours: businessHours ?? this.businessHours,
+      latitude: latitude ?? this.latitude,
+      tags: tags ?? this.tags,
+      equipment: equipment ?? this.equipment,
+      cards: cards is List<_i3.Card>?
+          ? cards
+          : this.cards?.map((e0) => e0.copyWith()).toList(),
+      services: services ?? this.services,
+      facilities: facilities ?? this.facilities,
+      equipments: equipments ?? this.equipments,
+      serving: serving is List<_i4.Serving>?
+          ? serving
+          : this.serving?.map((e0) => e0.copyWith()).toList(),
+      wifi: wifi ?? this.wifi,
+      membership: membership is List<_i5.Membership>?
+          ? membership
+          : this.membership?.map((e0) => e0.copyWith()).toList(),
     );
   }
 }
 
-class StoreTable extends _i2.Table {
+class StoreTable extends _i1.Table {
   StoreTable({super.tableRelation}) : super(tableName: 'store') {
-    tenantId = _i2.ColumnInt(
+    tenantId = _i1.ColumnInt(
       'tenantId',
       this,
     );
-    name = _i2.ColumnString(
+    name = _i1.ColumnString(
       'name',
       this,
     );
-    addressId = _i2.ColumnInt(
+    addressId = _i1.ColumnInt(
       'addressId',
+      this,
+    );
+    city = _i1.ColumnString(
+      'city',
+      this,
+    );
+    province = _i1.ColumnString(
+      'province',
+      this,
+    );
+    longitude = _i1.ColumnDouble(
+      'longitude',
+      this,
+    );
+    area = _i1.ColumnInt(
+      'area',
+      this,
+    );
+    businessHours = _i1.ColumnString(
+      'businessHours',
+      this,
+    );
+    latitude = _i1.ColumnDouble(
+      'latitude',
+      this,
+    );
+    tags = _i1.ColumnString(
+      'tags',
+      this,
+    );
+    equipment = _i1.ColumnString(
+      'equipment',
+      this,
+    );
+    services = _i1.ColumnString(
+      'services',
+      this,
+    );
+    facilities = _i1.ColumnString(
+      'facilities',
+      this,
+    );
+    equipments = _i1.ColumnString(
+      'equipments',
+      this,
+    );
+    wifi = _i1.ColumnString(
+      'wifi',
       this,
     );
   }
 
-  late final _i2.ColumnInt tenantId;
+  late final _i1.ColumnInt tenantId;
 
-  late final _i2.ColumnString name;
+  late final _i1.ColumnString name;
 
-  late final _i2.ColumnInt addressId;
+  late final _i1.ColumnInt addressId;
 
-  _i3.AddressTable? _address;
+  _i2.AddressTable? _address;
 
-  _i3.AddressTable get address {
+  late final _i1.ColumnString city;
+
+  late final _i1.ColumnString province;
+
+  late final _i1.ColumnDouble longitude;
+
+  late final _i1.ColumnInt area;
+
+  late final _i1.ColumnString businessHours;
+
+  late final _i1.ColumnDouble latitude;
+
+  late final _i1.ColumnString tags;
+
+  late final _i1.ColumnString equipment;
+
+  _i3.CardTable? ___cards;
+
+  _i1.ManyRelation<_i3.CardTable>? _cards;
+
+  late final _i1.ColumnString services;
+
+  late final _i1.ColumnString facilities;
+
+  late final _i1.ColumnString equipments;
+
+  _i4.ServingTable? ___serving;
+
+  _i1.ManyRelation<_i4.ServingTable>? _serving;
+
+  late final _i1.ColumnString wifi;
+
+  _i5.MembershipTable? ___membership;
+
+  _i1.ManyRelation<_i5.MembershipTable>? _membership;
+
+  _i2.AddressTable get address {
     if (_address != null) return _address!;
-    _address = _i2.createRelationTable(
+    _address = _i1.createRelationTable(
       relationFieldName: 'address',
       field: Store.t.addressId,
-      foreignField: _i3.Address.t.id,
+      foreignField: _i2.Address.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i3.AddressTable(tableRelation: foreignTableRelation),
+          _i2.AddressTable(tableRelation: foreignTableRelation),
     );
     return _address!;
   }
 
+  _i3.CardTable get __cards {
+    if (___cards != null) return ___cards!;
+    ___cards = _i1.createRelationTable(
+      relationFieldName: '__cards',
+      field: Store.t.id,
+      foreignField: _i3.Card.t.$_storeCardsStoreId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i3.CardTable(tableRelation: foreignTableRelation),
+    );
+    return ___cards!;
+  }
+
+  _i4.ServingTable get __serving {
+    if (___serving != null) return ___serving!;
+    ___serving = _i1.createRelationTable(
+      relationFieldName: '__serving',
+      field: Store.t.id,
+      foreignField: _i4.Serving.t.storeId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i4.ServingTable(tableRelation: foreignTableRelation),
+    );
+    return ___serving!;
+  }
+
+  _i5.MembershipTable get __membership {
+    if (___membership != null) return ___membership!;
+    ___membership = _i1.createRelationTable(
+      relationFieldName: '__membership',
+      field: Store.t.id,
+      foreignField: _i5.Membership.t.storeId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i5.MembershipTable(tableRelation: foreignTableRelation),
+    );
+    return ___membership!;
+  }
+
+  _i1.ManyRelation<_i3.CardTable> get cards {
+    if (_cards != null) return _cards!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'cards',
+      field: Store.t.id,
+      foreignField: _i3.Card.t.$_storeCardsStoreId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i3.CardTable(tableRelation: foreignTableRelation),
+    );
+    _cards = _i1.ManyRelation<_i3.CardTable>(
+      tableWithRelations: relationTable,
+      table: _i3.CardTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _cards!;
+  }
+
+  _i1.ManyRelation<_i4.ServingTable> get serving {
+    if (_serving != null) return _serving!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'serving',
+      field: Store.t.id,
+      foreignField: _i4.Serving.t.storeId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i4.ServingTable(tableRelation: foreignTableRelation),
+    );
+    _serving = _i1.ManyRelation<_i4.ServingTable>(
+      tableWithRelations: relationTable,
+      table: _i4.ServingTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _serving!;
+  }
+
+  _i1.ManyRelation<_i5.MembershipTable> get membership {
+    if (_membership != null) return _membership!;
+    var relationTable = _i1.createRelationTable(
+      relationFieldName: 'membership',
+      field: Store.t.id,
+      foreignField: _i5.Membership.t.storeId,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i5.MembershipTable(tableRelation: foreignTableRelation),
+    );
+    _membership = _i1.ManyRelation<_i5.MembershipTable>(
+      tableWithRelations: relationTable,
+      table: _i5.MembershipTable(
+          tableRelation: relationTable.tableRelation!.lastRelation),
+    );
+    return _membership!;
+  }
+
   @override
-  List<_i2.Column> get columns => [
+  List<_i1.Column> get columns => [
         id,
         tenantId,
         name,
         addressId,
+        city,
+        province,
+        longitude,
+        area,
+        businessHours,
+        latitude,
+        tags,
+        equipment,
+        services,
+        facilities,
+        equipments,
+        wifi,
       ];
 
   @override
-  _i2.Table? getRelationTable(String relationField) {
+  _i1.Table? getRelationTable(String relationField) {
     if (relationField == 'address') {
       return address;
+    }
+    if (relationField == 'cards') {
+      return __cards;
+    }
+    if (relationField == 'serving') {
+      return __serving;
+    }
+    if (relationField == 'membership') {
+      return __membership;
     }
     return null;
   }
 }
 
-class StoreInclude extends _i2.IncludeObject {
-  StoreInclude._({_i3.AddressInclude? address}) {
+class StoreInclude extends _i1.IncludeObject {
+  StoreInclude._({
+    _i2.AddressInclude? address,
+    _i3.CardIncludeList? cards,
+    _i4.ServingIncludeList? serving,
+    _i5.MembershipIncludeList? membership,
+  }) {
     _address = address;
+    _cards = cards;
+    _serving = serving;
+    _membership = membership;
   }
 
-  _i3.AddressInclude? _address;
+  _i2.AddressInclude? _address;
+
+  _i3.CardIncludeList? _cards;
+
+  _i4.ServingIncludeList? _serving;
+
+  _i5.MembershipIncludeList? _membership;
 
   @override
-  Map<String, _i2.Include?> get includes => {'address': _address};
+  Map<String, _i1.Include?> get includes => {
+        'address': _address,
+        'cards': _cards,
+        'serving': _serving,
+        'membership': _membership,
+      };
 
   @override
-  _i2.Table get table => Store.t;
+  _i1.Table get table => Store.t;
 }
 
-class StoreIncludeList extends _i2.IncludeList {
+class StoreIncludeList extends _i1.IncludeList {
   StoreIncludeList._({
-    _i2.WhereExpressionBuilder<StoreTable>? where,
+    _i1.WhereExpressionBuilder<StoreTable>? where,
     super.limit,
     super.offset,
     super.orderBy,
@@ -237,16 +670,22 @@ class StoreIncludeList extends _i2.IncludeList {
   }
 
   @override
-  Map<String, _i2.Include?> get includes => include?.includes ?? {};
+  Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i2.Table get table => Store.t;
+  _i1.Table get table => Store.t;
 }
 
 class StoreRepository {
   const StoreRepository._();
 
+  final attach = const StoreAttachRepository._();
+
   final attachRow = const StoreAttachRowRepository._();
+
+  final detach = const StoreDetachRepository._();
+
+  final detachRow = const StoreDetachRowRepository._();
 
   /// Returns a list of [Store]s matching the given query parameters.
   ///
@@ -271,14 +710,14 @@ class StoreRepository {
   /// );
   /// ```
   Future<List<Store>> find(
-    _i2.Session session, {
-    _i2.WhereExpressionBuilder<StoreTable>? where,
+    _i1.Session session, {
+    _i1.WhereExpressionBuilder<StoreTable>? where,
     int? limit,
     int? offset,
-    _i2.OrderByBuilder<StoreTable>? orderBy,
+    _i1.OrderByBuilder<StoreTable>? orderBy,
     bool orderDescending = false,
-    _i2.OrderByListBuilder<StoreTable>? orderByList,
-    _i2.Transaction? transaction,
+    _i1.OrderByListBuilder<StoreTable>? orderByList,
+    _i1.Transaction? transaction,
     StoreInclude? include,
   }) async {
     return session.db.find<Store>(
@@ -311,13 +750,13 @@ class StoreRepository {
   /// );
   /// ```
   Future<Store?> findFirstRow(
-    _i2.Session session, {
-    _i2.WhereExpressionBuilder<StoreTable>? where,
+    _i1.Session session, {
+    _i1.WhereExpressionBuilder<StoreTable>? where,
     int? offset,
-    _i2.OrderByBuilder<StoreTable>? orderBy,
+    _i1.OrderByBuilder<StoreTable>? orderBy,
     bool orderDescending = false,
-    _i2.OrderByListBuilder<StoreTable>? orderByList,
-    _i2.Transaction? transaction,
+    _i1.OrderByListBuilder<StoreTable>? orderByList,
+    _i1.Transaction? transaction,
     StoreInclude? include,
   }) async {
     return session.db.findFirstRow<Store>(
@@ -333,9 +772,9 @@ class StoreRepository {
 
   /// Finds a single [Store] by its [id] or null if no such row exists.
   Future<Store?> findById(
-    _i2.Session session,
+    _i1.Session session,
     int id, {
-    _i2.Transaction? transaction,
+    _i1.Transaction? transaction,
     StoreInclude? include,
   }) async {
     return session.db.findById<Store>(
@@ -352,9 +791,9 @@ class StoreRepository {
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// insert, none of the rows will be inserted.
   Future<List<Store>> insert(
-    _i2.Session session,
+    _i1.Session session,
     List<Store> rows, {
-    _i2.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.insert<Store>(
       rows,
@@ -366,9 +805,9 @@ class StoreRepository {
   ///
   /// The returned [Store] will have its `id` field set.
   Future<Store> insertRow(
-    _i2.Session session,
+    _i1.Session session,
     Store row, {
-    _i2.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.insertRow<Store>(
       row,
@@ -382,10 +821,10 @@ class StoreRepository {
   /// This is an atomic operation, meaning that if one of the rows fails to
   /// update, none of the rows will be updated.
   Future<List<Store>> update(
-    _i2.Session session,
+    _i1.Session session,
     List<Store> rows, {
-    _i2.ColumnSelections<StoreTable>? columns,
-    _i2.Transaction? transaction,
+    _i1.ColumnSelections<StoreTable>? columns,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.update<Store>(
       rows,
@@ -398,10 +837,10 @@ class StoreRepository {
   /// Optionally, a list of [columns] can be provided to only update those
   /// columns. Defaults to all columns.
   Future<Store> updateRow(
-    _i2.Session session,
+    _i1.Session session,
     Store row, {
-    _i2.ColumnSelections<StoreTable>? columns,
-    _i2.Transaction? transaction,
+    _i1.ColumnSelections<StoreTable>? columns,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.updateRow<Store>(
       row,
@@ -414,9 +853,9 @@ class StoreRepository {
   /// This is an atomic operation, meaning that if one of the rows fail to
   /// be deleted, none of the rows will be deleted.
   Future<List<Store>> delete(
-    _i2.Session session,
+    _i1.Session session,
     List<Store> rows, {
-    _i2.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.delete<Store>(
       rows,
@@ -426,9 +865,9 @@ class StoreRepository {
 
   /// Deletes a single [Store].
   Future<Store> deleteRow(
-    _i2.Session session,
+    _i1.Session session,
     Store row, {
-    _i2.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.deleteRow<Store>(
       row,
@@ -438,9 +877,9 @@ class StoreRepository {
 
   /// Deletes all rows matching the [where] expression.
   Future<List<Store>> deleteWhere(
-    _i2.Session session, {
-    required _i2.WhereExpressionBuilder<StoreTable> where,
-    _i2.Transaction? transaction,
+    _i1.Session session, {
+    required _i1.WhereExpressionBuilder<StoreTable> where,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.deleteWhere<Store>(
       where: where(Store.t),
@@ -451,14 +890,93 @@ class StoreRepository {
   /// Counts the number of rows matching the [where] expression. If omitted,
   /// will return the count of all rows in the table.
   Future<int> count(
-    _i2.Session session, {
-    _i2.WhereExpressionBuilder<StoreTable>? where,
+    _i1.Session session, {
+    _i1.WhereExpressionBuilder<StoreTable>? where,
     int? limit,
-    _i2.Transaction? transaction,
+    _i1.Transaction? transaction,
   }) async {
     return session.db.count<Store>(
       where: where?.call(Store.t),
       limit: limit,
+      transaction: transaction,
+    );
+  }
+}
+
+class StoreAttachRepository {
+  const StoreAttachRepository._();
+
+  /// Creates a relation between this [Store] and the given [Card]s
+  /// by setting each [Card]'s foreign key `_storeCardsStoreId` to refer to this [Store].
+  Future<void> cards(
+    _i1.Session session,
+    Store store,
+    List<_i3.Card> card, {
+    _i1.Transaction? transaction,
+  }) async {
+    if (card.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('card.id');
+    }
+    if (store.id == null) {
+      throw ArgumentError.notNull('store.id');
+    }
+
+    var $card = card
+        .map((e) => _i3.CardImplicit(
+              e,
+              $_storeCardsStoreId: store.id,
+            ))
+        .toList();
+    await session.db.update<_i3.Card>(
+      $card,
+      columns: [_i3.Card.t.$_storeCardsStoreId],
+      transaction: transaction,
+    );
+  }
+
+  /// Creates a relation between this [Store] and the given [Serving]s
+  /// by setting each [Serving]'s foreign key `storeId` to refer to this [Store].
+  Future<void> serving(
+    _i1.Session session,
+    Store store,
+    List<_i4.Serving> serving, {
+    _i1.Transaction? transaction,
+  }) async {
+    if (serving.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('serving.id');
+    }
+    if (store.id == null) {
+      throw ArgumentError.notNull('store.id');
+    }
+
+    var $serving = serving.map((e) => e.copyWith(storeId: store.id)).toList();
+    await session.db.update<_i4.Serving>(
+      $serving,
+      columns: [_i4.Serving.t.storeId],
+      transaction: transaction,
+    );
+  }
+
+  /// Creates a relation between this [Store] and the given [Membership]s
+  /// by setting each [Membership]'s foreign key `storeId` to refer to this [Store].
+  Future<void> membership(
+    _i1.Session session,
+    Store store,
+    List<_i5.Membership> membership, {
+    _i1.Transaction? transaction,
+  }) async {
+    if (membership.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('membership.id');
+    }
+    if (store.id == null) {
+      throw ArgumentError.notNull('store.id');
+    }
+
+    var $membership =
+        membership.map((e) => e.copyWith(storeId: store.id)).toList();
+    await session.db.update<_i5.Membership>(
+      $membership,
+      columns: [_i5.Membership.t.storeId],
       transaction: transaction,
     );
   }
@@ -470,10 +988,10 @@ class StoreAttachRowRepository {
   /// Creates a relation between the given [Store] and [Address]
   /// by setting the [Store]'s foreign key `addressId` to refer to the [Address].
   Future<void> address(
-    _i2.Session session,
+    _i1.Session session,
     Store store,
-    _i3.Address address, {
-    _i2.Transaction? transaction,
+    _i2.Address address, {
+    _i1.Transaction? transaction,
   }) async {
     if (store.id == null) {
       throw ArgumentError.notNull('store.id');
@@ -486,6 +1004,138 @@ class StoreAttachRowRepository {
     await session.db.updateRow<Store>(
       $store,
       columns: [Store.t.addressId],
+      transaction: transaction,
+    );
+  }
+
+  /// Creates a relation between this [Store] and the given [Card]
+  /// by setting the [Card]'s foreign key `_storeCardsStoreId` to refer to this [Store].
+  Future<void> cards(
+    _i1.Session session,
+    Store store,
+    _i3.Card card, {
+    _i1.Transaction? transaction,
+  }) async {
+    if (card.id == null) {
+      throw ArgumentError.notNull('card.id');
+    }
+    if (store.id == null) {
+      throw ArgumentError.notNull('store.id');
+    }
+
+    var $card = _i3.CardImplicit(
+      card,
+      $_storeCardsStoreId: store.id,
+    );
+    await session.db.updateRow<_i3.Card>(
+      $card,
+      columns: [_i3.Card.t.$_storeCardsStoreId],
+      transaction: transaction,
+    );
+  }
+
+  /// Creates a relation between this [Store] and the given [Serving]
+  /// by setting the [Serving]'s foreign key `storeId` to refer to this [Store].
+  Future<void> serving(
+    _i1.Session session,
+    Store store,
+    _i4.Serving serving, {
+    _i1.Transaction? transaction,
+  }) async {
+    if (serving.id == null) {
+      throw ArgumentError.notNull('serving.id');
+    }
+    if (store.id == null) {
+      throw ArgumentError.notNull('store.id');
+    }
+
+    var $serving = serving.copyWith(storeId: store.id);
+    await session.db.updateRow<_i4.Serving>(
+      $serving,
+      columns: [_i4.Serving.t.storeId],
+      transaction: transaction,
+    );
+  }
+
+  /// Creates a relation between this [Store] and the given [Membership]
+  /// by setting the [Membership]'s foreign key `storeId` to refer to this [Store].
+  Future<void> membership(
+    _i1.Session session,
+    Store store,
+    _i5.Membership membership, {
+    _i1.Transaction? transaction,
+  }) async {
+    if (membership.id == null) {
+      throw ArgumentError.notNull('membership.id');
+    }
+    if (store.id == null) {
+      throw ArgumentError.notNull('store.id');
+    }
+
+    var $membership = membership.copyWith(storeId: store.id);
+    await session.db.updateRow<_i5.Membership>(
+      $membership,
+      columns: [_i5.Membership.t.storeId],
+      transaction: transaction,
+    );
+  }
+}
+
+class StoreDetachRepository {
+  const StoreDetachRepository._();
+
+  /// Detaches the relation between this [Store] and the given [Card]
+  /// by setting the [Card]'s foreign key `_storeCardsStoreId` to `null`.
+  ///
+  /// This removes the association between the two models without deleting
+  /// the related record.
+  Future<void> cards(
+    _i1.Session session,
+    List<_i3.Card> card, {
+    _i1.Transaction? transaction,
+  }) async {
+    if (card.any((e) => e.id == null)) {
+      throw ArgumentError.notNull('card.id');
+    }
+
+    var $card = card
+        .map((e) => _i3.CardImplicit(
+              e,
+              $_storeCardsStoreId: null,
+            ))
+        .toList();
+    await session.db.update<_i3.Card>(
+      $card,
+      columns: [_i3.Card.t.$_storeCardsStoreId],
+      transaction: transaction,
+    );
+  }
+}
+
+class StoreDetachRowRepository {
+  const StoreDetachRowRepository._();
+
+  /// Detaches the relation between this [Store] and the given [Card]
+  /// by setting the [Card]'s foreign key `_storeCardsStoreId` to `null`.
+  ///
+  /// This removes the association between the two models without deleting
+  /// the related record.
+  Future<void> cards(
+    _i1.Session session,
+    _i3.Card card, {
+    _i1.Transaction? transaction,
+  }) async {
+    if (card.id == null) {
+      throw ArgumentError.notNull('card.id');
+    }
+
+    var $card = _i3.CardImplicit(
+      card,
+      $_storeCardsStoreId: null,
+    );
+    await session.db.updateRow<_i3.Card>(
+      $card,
+      columns: [_i3.Card.t.$_storeCardsStoreId],
       transaction: transaction,
     );
   }

@@ -18,18 +18,16 @@ import 'membership.dart' as _i5;
 abstract class Store implements _i1.SerializableModel {
   Store._({
     this.id,
-    required this.tenantId,
+    int? tenantId,
     required this.name,
+    String? description,
     required this.addressId,
     this.address,
-    required this.city,
-    required this.province,
     required this.longitude,
     required this.area,
     required this.businessHours,
     required this.latitude,
     required this.tags,
-    required this.equipment,
     this.cards,
     required this.services,
     required this.facilities,
@@ -37,22 +35,21 @@ abstract class Store implements _i1.SerializableModel {
     this.serving,
     required this.wifi,
     this.membership,
-  });
+  })  : tenantId = tenantId ?? 1,
+        description = description ?? '';
 
   factory Store({
     int? id,
-    required int tenantId,
+    int? tenantId,
     required String name,
+    String? description,
     required int addressId,
     _i2.Address? address,
-    required String city,
-    required String province,
     required double longitude,
     required int area,
     required String businessHours,
     required double latitude,
     required String tags,
-    required String equipment,
     List<_i3.Card>? cards,
     required String services,
     required String facilities,
@@ -67,19 +64,17 @@ abstract class Store implements _i1.SerializableModel {
       id: jsonSerialization['id'] as int?,
       tenantId: jsonSerialization['tenantId'] as int,
       name: jsonSerialization['name'] as String,
+      description: jsonSerialization['description'] as String,
       addressId: jsonSerialization['addressId'] as int,
       address: jsonSerialization['address'] == null
           ? null
           : _i2.Address.fromJson(
               (jsonSerialization['address'] as Map<String, dynamic>)),
-      city: jsonSerialization['city'] as String,
-      province: jsonSerialization['province'] as String,
       longitude: (jsonSerialization['longitude'] as num).toDouble(),
       area: jsonSerialization['area'] as int,
       businessHours: jsonSerialization['businessHours'] as String,
       latitude: (jsonSerialization['latitude'] as num).toDouble(),
       tags: jsonSerialization['tags'] as String,
-      equipment: jsonSerialization['equipment'] as String,
       cards: (jsonSerialization['cards'] as List?)
           ?.map((e) => _i3.Card.fromJson((e as Map<String, dynamic>)))
           .toList(),
@@ -105,13 +100,11 @@ abstract class Store implements _i1.SerializableModel {
 
   String name;
 
+  String description;
+
   int addressId;
 
   _i2.Address? address;
-
-  String city;
-
-  String province;
 
   double longitude;
 
@@ -122,8 +115,6 @@ abstract class Store implements _i1.SerializableModel {
   double latitude;
 
   String tags;
-
-  String equipment;
 
   List<_i3.Card>? cards;
 
@@ -146,16 +137,14 @@ abstract class Store implements _i1.SerializableModel {
     int? id,
     int? tenantId,
     String? name,
+    String? description,
     int? addressId,
     _i2.Address? address,
-    String? city,
-    String? province,
     double? longitude,
     int? area,
     String? businessHours,
     double? latitude,
     String? tags,
-    String? equipment,
     List<_i3.Card>? cards,
     String? services,
     String? facilities,
@@ -170,16 +159,14 @@ abstract class Store implements _i1.SerializableModel {
       if (id != null) 'id': id,
       'tenantId': tenantId,
       'name': name,
+      'description': description,
       'addressId': addressId,
       if (address != null) 'address': address?.toJson(),
-      'city': city,
-      'province': province,
       'longitude': longitude,
       'area': area,
       'businessHours': businessHours,
       'latitude': latitude,
       'tags': tags,
-      'equipment': equipment,
       if (cards != null) 'cards': cards?.toJson(valueToJson: (v) => v.toJson()),
       'services': services,
       'facilities': facilities,
@@ -203,18 +190,16 @@ class _Undefined {}
 class _StoreImpl extends Store {
   _StoreImpl({
     int? id,
-    required int tenantId,
+    int? tenantId,
     required String name,
+    String? description,
     required int addressId,
     _i2.Address? address,
-    required String city,
-    required String province,
     required double longitude,
     required int area,
     required String businessHours,
     required double latitude,
     required String tags,
-    required String equipment,
     List<_i3.Card>? cards,
     required String services,
     required String facilities,
@@ -226,16 +211,14 @@ class _StoreImpl extends Store {
           id: id,
           tenantId: tenantId,
           name: name,
+          description: description,
           addressId: addressId,
           address: address,
-          city: city,
-          province: province,
           longitude: longitude,
           area: area,
           businessHours: businessHours,
           latitude: latitude,
           tags: tags,
-          equipment: equipment,
           cards: cards,
           services: services,
           facilities: facilities,
@@ -253,16 +236,14 @@ class _StoreImpl extends Store {
     Object? id = _Undefined,
     int? tenantId,
     String? name,
+    String? description,
     int? addressId,
     Object? address = _Undefined,
-    String? city,
-    String? province,
     double? longitude,
     int? area,
     String? businessHours,
     double? latitude,
     String? tags,
-    String? equipment,
     Object? cards = _Undefined,
     String? services,
     String? facilities,
@@ -275,16 +256,14 @@ class _StoreImpl extends Store {
       id: id is int? ? id : this.id,
       tenantId: tenantId ?? this.tenantId,
       name: name ?? this.name,
+      description: description ?? this.description,
       addressId: addressId ?? this.addressId,
       address: address is _i2.Address? ? address : this.address?.copyWith(),
-      city: city ?? this.city,
-      province: province ?? this.province,
       longitude: longitude ?? this.longitude,
       area: area ?? this.area,
       businessHours: businessHours ?? this.businessHours,
       latitude: latitude ?? this.latitude,
       tags: tags ?? this.tags,
-      equipment: equipment ?? this.equipment,
       cards: cards is List<_i3.Card>?
           ? cards
           : this.cards?.map((e0) => e0.copyWith()).toList(),

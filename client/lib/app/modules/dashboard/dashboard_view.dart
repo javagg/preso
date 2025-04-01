@@ -38,23 +38,23 @@ class DashboardView extends GetView<DashboardController> {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              height: 300,
-              child: Swiper(
-                itemBuilder: (context, index) {
-                  final image = images[index];
-                  return Image.asset(
-                    image,
-                    fit: BoxFit.fill,
-                  );
-                },
-                indicatorLayout: PageIndicatorLayout.COLOR,
-                autoplay: true,
-                itemCount: images.length,
-                pagination: const SwiperPagination(),
-                control: const SwiperControl(),
-              ),
-            ),
+            // SizedBox(
+            //   height: 300,
+            //   child: Swiper(
+            //     itemBuilder: (context, index) {
+            //       final image = images[index];
+            //       return Image.asset(
+            //         image,
+            //         fit: BoxFit.fill,
+            //       );
+            //     },
+            //     indicatorLayout: PageIndicatorLayout.COLOR,
+            //     autoplay: true,
+            //     itemCount: images.length,
+            //     pagination: const SwiperPagination(),
+            //     control: const SwiperControl(),
+            //   ),
+            // ),
             const Text(
               'DashboardView is working',
               style: TextStyle(fontSize: 20),

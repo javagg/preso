@@ -101,11 +101,41 @@ class EndpointTenant extends _i1.EndpointRef {
   @override
   String get name => 'tenant';
 
-  _i2.Future<List<_i5.Tenant>> all() =>
+  _i2.Future<List<_i5.Tenant>> all(
+    int? limit,
+    int? offset,
+  ) =>
       caller.callServerEndpoint<List<_i5.Tenant>>(
         'tenant',
         'all',
-        {},
+        {
+          'limit': limit,
+          'offset': offset,
+        },
+      );
+
+  _i2.Future<_i5.Tenant?> get(int id) => caller.callServerEndpoint<_i5.Tenant?>(
+        'tenant',
+        'get',
+        {'id': id},
+      );
+
+  _i2.Future<void> update(_i5.Tenant tenant) => caller.callServerEndpoint<void>(
+        'tenant',
+        'update',
+        {'tenant': tenant},
+      );
+
+  _i2.Future<void> create(_i5.Tenant tenant) => caller.callServerEndpoint<void>(
+        'tenant',
+        'create',
+        {'tenant': tenant},
+      );
+
+  _i2.Future<void> delete(_i5.Tenant tenant) => caller.callServerEndpoint<void>(
+        'tenant',
+        'delete',
+        {'tenant': tenant},
       );
 }
 

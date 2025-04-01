@@ -18,6 +18,8 @@ import '../../modules/settings/settings_binding.dart';
 import '../../modules/settings/settings_view.dart';
 import '../../modules/web/home/home_binding.dart';
 import '../../modules/web/home/home_view.dart';
+import '../../modules/tenant/tenant_binding.dart';
+import '../../modules/tenant/tenant_view.dart';
 import '../app_routes.dart';
 export '../app_routes.dart';
 
@@ -69,6 +71,17 @@ class AppPages {
                 title: 'Members',
                 transition: Transition.noTransition,
                 bindings: [MemberBinding()],
+              ),
+              GetPage(
+                middlewares: [
+                  EnsureAuthMiddleware(),
+                ],
+                name: Paths.tenants,
+                page: () => const TenantView(),
+                transition: Transition.noTransition,
+                title: 'Tenant',
+                // transition: Transition.size,
+                bindings: [TenantBinding()],
               ),
               GetPage(
                 middlewares: [

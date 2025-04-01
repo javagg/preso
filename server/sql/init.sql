@@ -1,4 +1,4 @@
--- Active: 1743494241905@@127.0.0.1@5432@preso
+-- Active: 1743508596469@@127.0.0.1@5432@preso
 INSERT INTO "tenant" ("id", "name", "description")
 VALUES (1, 'master', 'master')
 

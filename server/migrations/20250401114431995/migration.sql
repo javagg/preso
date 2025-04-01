@@ -5,6 +5,9 @@ BEGIN;
 --
 CREATE TABLE "address" (
     "id" bigserial PRIMARY KEY,
+    "province" text NOT NULL,
+    "city" text NOT NULL,
+    "district" text NOT NULL,
     "street" text NOT NULL
 );
 
@@ -159,17 +162,15 @@ CREATE UNIQUE INDEX "serving_index_idx" ON "serving" USING btree ("trainerId", "
 --
 CREATE TABLE "store" (
     "id" bigserial PRIMARY KEY,
-    "tenantId" bigint NOT NULL,
+    "tenantId" bigint NOT NULL DEFAULT 1,
     "name" text NOT NULL,
+    "description" text NOT NULL DEFAULT ''::text,
     "addressId" bigint NOT NULL,
-    "city" text NOT NULL,
-    "province" text NOT NULL,
     "longitude" double precision NOT NULL,
     "area" bigint NOT NULL,
     "businessHours" text NOT NULL,
     "latitude" double precision NOT NULL,
     "tags" text NOT NULL,
-    "equipment" text NOT NULL,
     "services" text NOT NULL,
     "facilities" text NOT NULL,
     "equipments" text NOT NULL,
@@ -297,9 +298,9 @@ ALTER TABLE ONLY "user"
 -- MIGRATION VERSION FOR preso
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('preso', '20250401071729746', now())
+    VALUES ('preso', '20250401114431995', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20250401071729746', "timestamp" = now();
+    DO UPDATE SET "version" = '20250401114431995', "timestamp" = now();
 
 --
 -- MIGRATION VERSION FOR serverpod

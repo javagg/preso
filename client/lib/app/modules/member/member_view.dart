@@ -83,41 +83,37 @@ class MemberView extends GetView<MemberViewController> {
           IconButton(onPressed: () async {}, icon: Icon(Icons.import_export))
         ],
       ),
-      body: Center(
-        child: Expanded(
-          child: SfDataGrid(
-            source: employeeDataSource,
-            columns: <GridColumn>[
-              GridColumn(
-                  columnName: 'id',
-                  label: Container(
-                      padding: EdgeInsets.all(16.0),
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        'ID',
-                      ))),
-              GridColumn(
-                  columnName: 'name',
-                  label: Container(
-                      padding: EdgeInsets.all(16.0),
-                      alignment: Alignment.centerLeft,
-                      child: Text('Name'))),
-              GridColumn(
-                  columnName: 'designation',
-                  width: 120,
-                  label: Container(
-                      padding: EdgeInsets.all(16.0),
-                      alignment: Alignment.centerLeft,
-                      child: Text('Designation'))),
-              GridColumn(
-                  columnName: 'salary',
-                  label: Container(
-                      padding: EdgeInsets.all(16.0),
-                      alignment: Alignment.centerRight,
-                      child: Text('Salary'))),
-            ],
-          ),
-        ),
+      body: SfDataGrid(
+        source: employeeDataSource,
+        columns: <GridColumn>[
+          GridColumn(
+              columnName: 'id',
+              label: Container(
+                  padding: EdgeInsets.all(16.0),
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    'ID',
+                  ))),
+          GridColumn(
+              columnName: 'name',
+              label: Container(
+                  padding: EdgeInsets.all(16.0),
+                  alignment: Alignment.centerLeft,
+                  child: Text('Name'))),
+          GridColumn(
+              columnName: 'designation',
+              width: 120,
+              label: Container(
+                  padding: EdgeInsets.all(16.0),
+                  alignment: Alignment.centerLeft,
+                  child: Text('Designation'))),
+          GridColumn(
+              columnName: 'salary',
+              label: Container(
+                  padding: EdgeInsets.all(16.0),
+                  alignment: Alignment.centerRight,
+                  child: Text('Salary'))),
+        ],
       ),
     );
   }

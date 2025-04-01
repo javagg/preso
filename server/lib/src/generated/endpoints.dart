@@ -16,8 +16,9 @@ import '../endpoints/store_endpoint.dart' as _i4;
 import '../endpoints/tenant_endpoint.dart' as _i5;
 import '../endpoints/user_endpoint.dart' as _i6;
 import 'package:preso_server/src/generated/note.dart' as _i7;
-import 'package:preso_server/src/generated/user.dart' as _i8;
-import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i9;
+import 'package:preso_server/src/generated/tenant.dart' as _i8;
+import 'package:preso_server/src/generated/user.dart' as _i9;
+import 'package:serverpod_auth_server/serverpod_auth_server.dart' as _i10;
 
 class Endpoints extends _i1.EndpointDispatch {
   @override
@@ -197,13 +198,100 @@ class Endpoints extends _i1.EndpointDispatch {
       methodConnectors: {
         'all': _i1.MethodConnector(
           name: 'all',
-          params: {},
+          params: {
+            'limit': _i1.ParameterDescription(
+              name: 'limit',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+            'offset': _i1.ParameterDescription(
+              name: 'offset',
+              type: _i1.getType<int?>(),
+              nullable: true,
+            ),
+          },
           call: (
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['tenant'] as _i5.TenantEndpoint).all(session),
-        )
+              (endpoints['tenant'] as _i5.TenantEndpoint).all(
+            session,
+            params['limit'],
+            params['offset'],
+          ),
+        ),
+        'get': _i1.MethodConnector(
+          name: 'get',
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['tenant'] as _i5.TenantEndpoint).get(
+            session,
+            params['id'],
+          ),
+        ),
+        'update': _i1.MethodConnector(
+          name: 'update',
+          params: {
+            'tenant': _i1.ParameterDescription(
+              name: 'tenant',
+              type: _i1.getType<_i8.Tenant>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['tenant'] as _i5.TenantEndpoint).update(
+            session,
+            params['tenant'],
+          ),
+        ),
+        'create': _i1.MethodConnector(
+          name: 'create',
+          params: {
+            'tenant': _i1.ParameterDescription(
+              name: 'tenant',
+              type: _i1.getType<_i8.Tenant>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['tenant'] as _i5.TenantEndpoint).create(
+            session,
+            params['tenant'],
+          ),
+        ),
+        'delete': _i1.MethodConnector(
+          name: 'delete',
+          params: {
+            'tenant': _i1.ParameterDescription(
+              name: 'tenant',
+              type: _i1.getType<_i8.Tenant>(),
+              nullable: false,
+            )
+          },
+          call: (
+            _i1.Session session,
+            Map<String, dynamic> params,
+          ) async =>
+              (endpoints['tenant'] as _i5.TenantEndpoint).delete(
+            session,
+            params['tenant'],
+          ),
+        ),
       },
     );
     connectors['user'] = _i1.EndpointConnector(
@@ -215,7 +303,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'user': _i1.ParameterDescription(
               name: 'user',
-              type: _i1.getType<_i8.User>(),
+              type: _i1.getType<_i9.User>(),
               nullable: false,
             )
           },
@@ -233,7 +321,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'data': _i1.ParameterDescription(
               name: 'data',
-              type: _i1.getType<_i8.User>(),
+              type: _i1.getType<_i9.User>(),
               nullable: false,
             )
           },
@@ -251,7 +339,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'data': _i1.ParameterDescription(
               name: 'data',
-              type: _i1.getType<_i8.User>(),
+              type: _i1.getType<_i9.User>(),
               nullable: false,
             )
           },
@@ -329,7 +417,7 @@ class Endpoints extends _i1.EndpointDispatch {
           params: {
             'data': _i1.ParameterDescription(
               name: 'data',
-              type: _i1.getType<_i8.User>(),
+              type: _i1.getType<_i9.User>(),
               nullable: false,
             )
           },
@@ -344,6 +432,6 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
       },
     );
-    modules['serverpod_auth'] = _i9.Endpoints()..initializeEndpoints(server);
+    modules['serverpod_auth'] = _i10.Endpoints()..initializeEndpoints(server);
   }
 }

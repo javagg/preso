@@ -14,17 +14,26 @@ import 'package:serverpod/serverpod.dart' as _i1;
 abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
   Address._({
     this.id,
+    required this.province,
+    required this.city,
+    required this.district,
     required this.street,
   });
 
   factory Address({
     int? id,
+    required String province,
+    required String city,
+    required String district,
     required String street,
   }) = _AddressImpl;
 
   factory Address.fromJson(Map<String, dynamic> jsonSerialization) {
     return Address(
       id: jsonSerialization['id'] as int?,
+      province: jsonSerialization['province'] as String,
+      city: jsonSerialization['city'] as String,
+      district: jsonSerialization['district'] as String,
       street: jsonSerialization['street'] as String,
     );
   }
@@ -36,6 +45,12 @@ abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
   @override
   int? id;
 
+  String province;
+
+  String city;
+
+  String district;
+
   String street;
 
   @override
@@ -46,12 +61,18 @@ abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
   @_i1.useResult
   Address copyWith({
     int? id,
+    String? province,
+    String? city,
+    String? district,
     String? street,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      'province': province,
+      'city': city,
+      'district': district,
       'street': street,
     };
   }
@@ -60,6 +81,9 @@ abstract class Address implements _i1.TableRow, _i1.ProtocolSerialization {
   Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
+      'province': province,
+      'city': city,
+      'district': district,
       'street': street,
     };
   }
@@ -99,9 +123,15 @@ class _Undefined {}
 class _AddressImpl extends Address {
   _AddressImpl({
     int? id,
+    required String province,
+    required String city,
+    required String district,
     required String street,
   }) : super._(
           id: id,
+          province: province,
+          city: city,
+          district: district,
           street: street,
         );
 
@@ -111,10 +141,16 @@ class _AddressImpl extends Address {
   @override
   Address copyWith({
     Object? id = _Undefined,
+    String? province,
+    String? city,
+    String? district,
     String? street,
   }) {
     return Address(
       id: id is int? ? id : this.id,
+      province: province ?? this.province,
+      city: city ?? this.city,
+      district: district ?? this.district,
       street: street ?? this.street,
     );
   }
@@ -122,17 +158,38 @@ class _AddressImpl extends Address {
 
 class AddressTable extends _i1.Table {
   AddressTable({super.tableRelation}) : super(tableName: 'address') {
+    province = _i1.ColumnString(
+      'province',
+      this,
+    );
+    city = _i1.ColumnString(
+      'city',
+      this,
+    );
+    district = _i1.ColumnString(
+      'district',
+      this,
+    );
     street = _i1.ColumnString(
       'street',
       this,
     );
   }
 
+  late final _i1.ColumnString province;
+
+  late final _i1.ColumnString city;
+
+  late final _i1.ColumnString district;
+
   late final _i1.ColumnString street;
 
   @override
   List<_i1.Column> get columns => [
         id,
+        province,
+        city,
+        district,
         street,
       ];
 }

@@ -85,6 +85,24 @@ class Protocol extends _i1.SerializationManagerServer {
           columnDefault: 'nextval(\'address_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
+          name: 'province',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'city',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
+          name: 'district',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+        ),
+        _i2.ColumnDefinition(
           name: 'street',
           columnType: _i2.ColumnType.text,
           isNullable: false,
@@ -936,6 +954,7 @@ class Protocol extends _i1.SerializationManagerServer {
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
+          columnDefault: '1',
         ),
         _i2.ColumnDefinition(
           name: 'name',
@@ -944,22 +963,17 @@ class Protocol extends _i1.SerializationManagerServer {
           dartType: 'String',
         ),
         _i2.ColumnDefinition(
+          name: 'description',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'String',
+          columnDefault: '\'\'::text',
+        ),
+        _i2.ColumnDefinition(
           name: 'addressId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
-        ),
-        _i2.ColumnDefinition(
-          name: 'city',
-          columnType: _i2.ColumnType.text,
-          isNullable: false,
-          dartType: 'String',
-        ),
-        _i2.ColumnDefinition(
-          name: 'province',
-          columnType: _i2.ColumnType.text,
-          isNullable: false,
-          dartType: 'String',
         ),
         _i2.ColumnDefinition(
           name: 'longitude',
@@ -987,12 +1001,6 @@ class Protocol extends _i1.SerializationManagerServer {
         ),
         _i2.ColumnDefinition(
           name: 'tags',
-          columnType: _i2.ColumnType.text,
-          isNullable: false,
-          dartType: 'String',
-        ),
-        _i2.ColumnDefinition(
-          name: 'equipment',
           columnType: _i2.ColumnType.text,
           isNullable: false,
           dartType: 'String',

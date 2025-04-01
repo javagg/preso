@@ -4,7 +4,7 @@ fields:
   tenantId: int, default=1
   name: String
   description: String, default=""
-  address: Address, relation
+  address: Address?, relation
   longitude: double
   area: int
   businessHours: String

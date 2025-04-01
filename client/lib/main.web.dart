@@ -32,7 +32,6 @@ class SettingsService extends GetxService {
   }
 }
 
-
 class MainMiddleware extends GetMiddleware {
   @override
   void onPageDispose() {
@@ -65,8 +64,6 @@ class MainMiddleware extends GetMiddleware {
     return super.onPageBuildStart(page);
   }
 }
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

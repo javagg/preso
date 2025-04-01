@@ -9,7 +9,8 @@ abstract class Routes {
 
   static const login = Paths.login;
   static const dashboard = Paths.home + Paths.dashboard;
-  static const mebmers = Paths.home + Paths.members;
+  static const members = Paths.home + Paths.members;
+  static const tanents = Paths.home + Paths.tenants;
 
   static String LOGIN_THEN(String afterSuccessfulLogin) =>
       '$login?then=${Uri.encodeQueryComponent(afterSuccessfulLogin)}';
@@ -25,4 +26,5 @@ abstract class Paths {
   static const login = '/login';
   static const dashboard = '/dashboard';
   static const members = '/members';
+  static const tenants = '/tenants';
 }

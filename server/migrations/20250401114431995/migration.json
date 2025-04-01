@@ -16,6 +16,24 @@
             "dartType": "int?"
           },
           {
+            "name": "province",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          },
+          {
+            "name": "city",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          },
+          {
+            "name": "district",
+            "columnType": 0,
+            "isNullable": false,
+            "dartType": "String"
+          },
+          {
             "name": "street",
             "columnType": 0,
             "isNullable": false,
@@ -914,6 +932,7 @@
             "name": "tenantId",
             "columnType": 6,
             "isNullable": false,
+            "columnDefault": "1",
             "dartType": "int"
           },
           {
@@ -923,22 +942,17 @@
             "dartType": "String"
           },
           {
+            "name": "description",
+            "columnType": 0,
+            "isNullable": false,
+            "columnDefault": "''::text",
+            "dartType": "String"
+          },
+          {
             "name": "addressId",
             "columnType": 6,
             "isNullable": false,
             "dartType": "int"
-          },
-          {
-            "name": "city",
-            "columnType": 0,
-            "isNullable": false,
-            "dartType": "String"
-          },
-          {
-            "name": "province",
-            "columnType": 0,
-            "isNullable": false,
-            "dartType": "String"
           },
           {
             "name": "longitude",
@@ -966,12 +980,6 @@
           },
           {
             "name": "tags",
-            "columnType": 0,
-            "isNullable": false,
-            "dartType": "String"
-          },
-          {
-            "name": "equipment",
             "columnType": 0,
             "isNullable": false,
             "dartType": "String"

@@ -11,6 +11,10 @@ store:
   - get:
 tenant:
   - all:
+  - get:
+  - update:
+  - create:
+  - delete:
 user:
   - userInfoUpdate:
   - add:

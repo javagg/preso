@@ -91,7 +91,7 @@ class HomeView extends GetView<HomeController> {
                                 ListTile(
                                   title: Text("Members"),
                                   onTap: () =>
-                                      Get.offAndToNamed(Routes.mebmers),
+                                      Get.offAndToNamed(Routes.members),
                                 ),
                                 ListTile(
                                   title: Text("Profile"),
@@ -101,41 +101,28 @@ class HomeView extends GetView<HomeController> {
                               ],
                             ),
                             ExpansionTile(
-                              title: Text("main"),
+                              leading: Icon(Icons.offline_pin),
+                              title: Text("Tenant"),
                               children: [
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 24.0),
+                                  child: ListTile(
+                                    title: Text("tenant list"),
+                                    onTap: () =>
+                                        Get.offAndToNamed(Routes.tanents),
+                                  ),
+                                ),
                               ],
                             ),
                             ExpansionTile(
                               title: Text("main"),
                               children: [
                                 ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
                               ],
                             ),
                             ExpansionTile(
                               title: Text("main"),
                               children: [
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
-                                ListTile(title: Text("Home")),
                                 ListTile(title: Text("Home")),
                               ],
                             ),

@@ -1,17 +1,15 @@
 class: Store
 table: store
 fields:
-  tenantId: int
+  tenantId: int, default=1
   name: String
-  address: Address?, relation
-  city: String
-  province: String
+  description: String, default=""
+  address: Address, relation
   longitude: double
   area: int
   businessHours: String
   latitude: double
   tags: String
-  equipment: String
   cards: List<Card>?, relation
   services: String
   facilities: String

@@ -1,4 +1,7 @@
 class: Address
 table: address
 fields:
+  province: String
+  city: String
+  district: String
   street: String

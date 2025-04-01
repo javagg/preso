@@ -9,6 +9,20 @@ CREATE TABLE "address" (
 );
 
 --
+-- Class Appointment as table appointment
+--
+CREATE TABLE "appointment" (
+    "id" bigserial PRIMARY KEY,
+    "memberId" bigint NOT NULL,
+    "trainerId" bigint NOT NULL,
+    "startTime" timestamp without time zone NOT NULL,
+    "endTime" timestamp without time zone NOT NULL
+);
+
+-- Indexes
+CREATE UNIQUE INDEX "appointment_index_idx" ON "appointment" USING btree ("trainerId", "memberId");
+
+--
 -- Class Bargain as table bargain
 --
 CREATE TABLE "bargain" (
@@ -59,6 +73,33 @@ CREATE TABLE "invoice" (
 );
 
 --
+-- Class Member as table member
+--
+CREATE TABLE "member" (
+    "id" bigserial PRIMARY KEY,
+    "name" text NOT NULL,
+    "gender" text NOT NULL,
+    "age" bigint NOT NULL,
+    "mobile" text NOT NULL,
+    "suspended" boolean NOT NULL DEFAULT false,
+    "headshot" text NOT NULL,
+    "face" text NOT NULL
+);
+
+--
+-- Class Membership as table membership
+--
+CREATE TABLE "membership" (
+    "id" bigserial PRIMARY KEY,
+    "memberId" bigint NOT NULL,
+    "storeId" bigint NOT NULL,
+    "active" boolean NOT NULL DEFAULT false
+);
+
+-- Indexes
+CREATE UNIQUE INDEX "membership_index_idx" ON "membership" USING btree ("storeId", "memberId");
+
+--
 -- Class Note as table note
 --
 CREATE TABLE "note" (
@@ -84,6 +125,15 @@ CREATE TABLE "permission" (
 );
 
 --
+-- Class Product as table product
+--
+CREATE TABLE "product" (
+    "id" bigserial PRIMARY KEY,
+    "name" text NOT NULL,
+    "description" text NOT NULL
+);
+
+--
 -- Class Role as table role
 --
 CREATE TABLE "role" (
@@ -91,6 +141,18 @@ CREATE TABLE "role" (
     "name" text NOT NULL,
     "description" text NOT NULL
 );
+
+--
+-- Class Serving as table serving
+--
+CREATE TABLE "serving" (
+    "id" bigserial PRIMARY KEY,
+    "trainerId" bigint NOT NULL,
+    "storeId" bigint NOT NULL
+);
+
+-- Indexes
+CREATE UNIQUE INDEX "serving_index_idx" ON "serving" USING btree ("trainerId", "storeId");
 
 --
 -- Class Store as table store
@@ -103,9 +165,15 @@ CREATE TABLE "store" (
     "city" text NOT NULL,
     "province" text NOT NULL,
     "longitude" double precision NOT NULL,
+    "area" bigint NOT NULL,
+    "businessHours" text NOT NULL,
     "latitude" double precision NOT NULL,
-    "tags" json NOT NULL,
-    "equipment" text NOT NULL
+    "tags" text NOT NULL,
+    "equipment" text NOT NULL,
+    "services" text NOT NULL,
+    "facilities" text NOT NULL,
+    "equipments" text NOT NULL,
+    "wifi" text NOT NULL
 );
 
 --
@@ -115,6 +183,26 @@ CREATE TABLE "tenant" (
     "id" bigserial PRIMARY KEY,
     "name" text NOT NULL,
     "description" text NOT NULL
+);
+
+--
+-- Class Trainer as table trainer
+--
+CREATE TABLE "trainer" (
+    "id" bigserial PRIMARY KEY,
+    "name" text NOT NULL,
+    "description" text NOT NULL,
+    "gender" text NOT NULL,
+    "age" bigint NOT NULL,
+    "headshot" text NOT NULL,
+    "photos" text NOT NULL,
+    "videos" text NOT NULL,
+    "servingCity" text NOT NULL,
+    "servingHours" text NOT NULL,
+    "classFee" double precision NOT NULL,
+    "phone" text NOT NULL,
+    "hotness" bigint NOT NULL DEFAULT 0,
+    "rating" double precision NOT NULL DEFAULT 0.0
 );
 
 --
@@ -445,11 +533,59 @@ CREATE UNIQUE INDEX "serverpod_user_info_user_identifier" ON "serverpod_user_inf
 CREATE INDEX "serverpod_user_info_email" ON "serverpod_user_info" USING btree ("email");
 
 --
+-- Foreign relations for "appointment" table
+--
+ALTER TABLE ONLY "appointment"
+    ADD CONSTRAINT "appointment_fk_0"
+    FOREIGN KEY("memberId")
+    REFERENCES "member"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+ALTER TABLE ONLY "appointment"
+    ADD CONSTRAINT "appointment_fk_1"
+    FOREIGN KEY("trainerId")
+    REFERENCES "trainer"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+--
 -- Foreign relations for "card" table
 --
 ALTER TABLE ONLY "card"
     ADD CONSTRAINT "card_fk_0"
     FOREIGN KEY("_storeCardsStoreId")
+    REFERENCES "store"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+--
+-- Foreign relations for "membership" table
+--
+ALTER TABLE ONLY "membership"
+    ADD CONSTRAINT "membership_fk_0"
+    FOREIGN KEY("memberId")
+    REFERENCES "member"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+ALTER TABLE ONLY "membership"
+    ADD CONSTRAINT "membership_fk_1"
+    FOREIGN KEY("storeId")
+    REFERENCES "store"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+--
+-- Foreign relations for "serving" table
+--
+ALTER TABLE ONLY "serving"
+    ADD CONSTRAINT "serving_fk_0"
+    FOREIGN KEY("trainerId")
+    REFERENCES "trainer"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+ALTER TABLE ONLY "serving"
+    ADD CONSTRAINT "serving_fk_1"
+    FOREIGN KEY("storeId")
     REFERENCES "store"("id")
     ON DELETE NO ACTION
     ON UPDATE NO ACTION;
@@ -509,9 +645,9 @@ ALTER TABLE ONLY "serverpod_query_log"
 -- MIGRATION VERSION FOR preso
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('preso', '20250331062854022', now())
+    VALUES ('preso', '20250401071729746', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20250331062854022', "timestamp" = now();
+    DO UPDATE SET "version" = '20250401071729746', "timestamp" = now();
 
 --
 -- MIGRATION VERSION FOR serverpod

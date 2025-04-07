@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:json_theme/json_theme.dart';
+import 'package:preso_client/languages.dart';
 
 import 'app/routes/web/app_pages.dart';
 import 'app/pages/not_found/not_found.dart';
@@ -8,12 +13,6 @@ import 'generated/locales.g.dart';
 import 'services/auth_service.dart';
 import 'dart:developer';
 import 'serverpod_client.dart';
-
-Future<void> init() async {
-  await Get.put(DbService()).init();
-  await Get.put(SettingsService()).init();
-  await GetStorage.init();
-}
 
 class DbService extends GetxService {
   Future<DbService> init() async {
@@ -67,14 +66,25 @@ class MainMiddleware extends GetMiddleware {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await initializeServerpodClient();
+  await Get.put(DbService()).init();
+  await Get.put(SettingsService()).init();
+  await GetStorage.init();
+  await Languages.instance.init();
 
-  await init();
+  final theme = ThemeDecoder.decodeThemeData(
+        json.decode((await rootBundle.loadString('assets/themes/web.json'))),
+        validate: true,
+      ) ??
+      ThemeData();
   runApp(
     GetMaterialApp(
       key: UniqueKey(),
+      debugShowCheckedModeBanner: false,
       title: "Application",
+      translations: Languages.instance,
+      locale: Get.deviceLocale,
+      fallbackLocale: const Locale('en', 'US'),
       binds: [
         Bind.put(AuthService()),
       ],
@@ -82,6 +92,7 @@ void main() async {
       initialRoute: AppPages.initial,
       translationsKeys: AppTranslation.translations,
       unknownRoute: GetPage(name: '/not-found', page: () => const NotFound()),
+      theme: theme,
       // builder: (context, child) {
       //   return FutureBuilder<void>(
       //     key: ValueKey('initFuture'),

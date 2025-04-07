@@ -10,13 +10,6 @@ class RootView extends GetView<RootController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: RouterListener(builder: (context) {
-      //     final title = context.location;
-      //     return Text(title);
-      //   }),
-      //   centerTitle: true,
-      // ),
       body: GetRouterOutlet(
         initialRoute: Routes.home,
         anchorRoute: '/',

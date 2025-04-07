@@ -11,6 +11,7 @@ resolution: workspace
 dependencies:
   flutter:
     sdk: flutter
+  intl: ^0.20.2 
   serverpod_flutter: 2.4.0
   serverpod_auth_email_flutter: 2.4.0
   serverpod_auth_shared_flutter: 2.4.0
@@ -25,6 +26,13 @@ dependencies:
   flutter_dropzone: ^4.2.1
   dotted_border: ^2.1.0
 
+  json_theme: 8.0.0+2
+  dropdown_button2: ^2.3.9
+  easy_sidemenu: ^0.6.1
+  json_path: ^0.7.5
+  trina_grid: ^1.6.6
+  faker: ^2.2.0
+
 dev_dependencies:
   flutter_lints: '>=3.0.0 <6.0.0'
   flutter_test:
@@ -32,3 +40,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/themes/
+    - assets/locales/

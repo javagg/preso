@@ -27,7 +27,7 @@ export '../app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const initial = Routes.home;
+  static const initial = Routes.root;
 
   static final routes = [
     GetPage(
@@ -48,7 +48,7 @@ class AppPages {
         ),
         GetPage(
           preventDuplicates: true,
-          name: Paths.home,
+          name: Paths.root,
           page: () => const HomeView(),
           bindings: [
             HomeBinding(),

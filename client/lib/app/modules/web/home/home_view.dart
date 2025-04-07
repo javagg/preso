@@ -85,7 +85,7 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     var sideMenu = controller.sideMenu;
     return GetRouterOutlet.builder(
-      route: Routes.home,
+      route: Routes.root,
       builder: (context) {
         return Scaffold(
           key: controller.scaffoldKey,
@@ -258,7 +258,7 @@ class HomeView extends GetView<HomeController> {
                   color: Colors.teal,
                   child: GetRouterOutlet(
                     initialRoute: Routes.dashboard,
-                    anchorRoute: Routes.home,
+                    anchorRoute: Routes.root,
                   ),
                 ),
               )

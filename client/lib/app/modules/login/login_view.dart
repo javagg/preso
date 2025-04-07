@@ -49,7 +49,7 @@ class LoginView extends GetView<LoginController> {
                   onSignedIn: () {
                     AuthService.to.login();
                     final thenTo = context.params['then'];
-                    Get.offNamed(thenTo ?? Routes.home);
+                    Get.offNamed(thenTo ?? Routes.root);
                   },
                 );
               },

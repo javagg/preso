@@ -3,6 +3,9 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:preso_client/app/modules/login/login_view.dart';
+import 'package:preso_client/app/modules/store/store_binding.dart';
+import 'package:preso_client/app/modules/store/store_view.dart';
+import 'package:preso_client/app/modules/web/admin.dart';
 
 import '../../middleware/auth_middleware.dart';
 import '../../modules/login/login_binding.dart';
@@ -18,8 +21,8 @@ import '../../modules/profile/profile_binding.dart';
 import '../../modules/profile/profile_view.dart';
 import '../../modules/settings/settings_binding.dart';
 import '../../modules/settings/settings_view.dart';
-import '../../modules/web/home/home_binding.dart';
-import '../../modules/web/home/home_view.dart';
+// import '../../modules/web/home/home_binding.dart';
+// import '../../modules/web/home/home_view.dart';
 import '../../modules/tenant/tenant_binding.dart';
 import '../../modules/tenant/tenant_view.dart';
 import '../app_routes.dart';
@@ -28,94 +31,97 @@ export '../app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const initial = Routes.home;
+  static const initial = Routes.root;
 
   static final routes = [
     GetPage(
-      name: '/',
-      page: () => const RootView(),
-      bindings: [RootBinding()],
-      participatesInRootNavigator: true,
-      preventDuplicates: true,
-      children: [
-        GetPage(
-          middlewares: [
-            //only enter this route when not authed
-            EnsureNotAuthedMiddleware(),
-          ],
-          name: Paths.login,
-          page: () => const LoginView(),
-          bindings: [LoginBinding()],
-        ),
-        GetPage(
-            preventDuplicates: true,
-            name: Paths.home,
-            page: () => const HomeView(),
+        name: Paths.root,
+        page: () => const RootView(),
+        bindings: [RootBinding()],
+        participatesInRootNavigator: true,
+        preventDuplicates: true,
+        children: [
+          GetPage(
+            name: Paths.dashboard,
+            page: () => const DashboardView(),
+            transition: Transition.noTransition,
             bindings: [
-              HomeBinding(),
+              DashboardBinding(),
             ],
-            title: null,
+          ),
+          GetPage(
+            middlewares: [
+              // EnsureAuthMiddleware(),
+            ],
+            name: Paths.members,
+            page: () => const MemberView(),
+            title: 'Members',
+            transition: Transition.noTransition,
+            bindings: [MemberBinding()],
+          ),
+          GetPage(
+            middlewares: [
+              EnsureAuthMiddleware(),
+            ],
+            name: Paths.tenants,
+            page: () => const TenantView(),
+            transition: Transition.noTransition,
+            title: 'Tenant',
+            // transition: Transition.size,
+            bindings: [TenantBinding()],
+          ),
+          GetPage(
+            middlewares: [
+              // EnsureAuthMiddleware(),
+            ],
+            name: Paths.orders,
+            page: () => const OrderView(),
+            transition: Transition.noTransition,
+            title: 'orders'.tr,
+            // transition: Transition.size,
+            bindings: [OrderBinding()],
+          ),
+          GetPage(
+            middlewares: [
+              EnsureAuthMiddleware(),
+            ],
+            name: Paths.profile,
+            page: () => const ProfileView(),
+            transition: Transition.noTransition,
+            title: 'Profile',
+            // transition: Transition.size,
+            bindings: [ProfileBinding()],
+          ),
+                    GetPage(
+            middlewares: [
+              // EnsureAuthMiddleware(),
+            ],
+            name: Paths.admin,
+            page: () => const AdminView(),
+            transition: Transition.noTransition,
+            title: 'admin'.tr,
+            // transition: Transition.size,
+            bindings: [AdminBinding()],
             children: [
               GetPage(
-                name: Paths.dashboard,
-                page: () => const DashboardView(),
+                name: Paths.stores,
+                page: () => const StoreView(),
                 transition: Transition.noTransition,
-                bindings: [
-                  DashboardBinding(),
-                ],
+                title: 'stores'.tr ,
+                bindings: [StoreBinding()],
               ),
-              GetPage(
-                middlewares: [
-                  // EnsureAuthMiddleware(),
-                ],
-                name: Paths.members,
-                page: () => const MemberView(),
-                title: 'Members',
-                transition: Transition.noTransition,
-                bindings: [MemberBinding()],
-              ),
-              GetPage(
-                middlewares: [
-                  EnsureAuthMiddleware(),
-                ],
-                name: Paths.tenants,
-                page: () => const TenantView(),
-                transition: Transition.noTransition,
-                title: 'Tenant',
-                // transition: Transition.size,
-                bindings: [TenantBinding()],
-              ),
-              GetPage(
-                middlewares: [
-                  // EnsureAuthMiddleware(),
-                ],
-                name: Paths.orders,
-                page: () => const OrderView(),
-                transition: Transition.noTransition,
-                title: 'orders'.tr,
-                // transition: Transition.size,
-                bindings: [OrderBinding()],
-              ),
-              GetPage(
-                middlewares: [
-                  EnsureAuthMiddleware(),
-                ],
-                name: Paths.profile,
-                page: () => const ProfileView(),
-                transition: Transition.noTransition,
-                title: 'Profile',
-                // transition: Transition.size,
-                bindings: [ProfileBinding()],
-              ),
-            ]),
-        GetPage(
-          name: Paths.settings,
-          page: () => const SettingsView(),
-          bindings: [
-            SettingsBinding(),
-          ],
-        ),
+            ]
+          ),
+        ]),
+    GetPage(
+      middlewares: [
+        //only enter this route when not authed
+        EnsureNotAuthedMiddleware(),
       ],
+      participatesInRootNavigator: true,
+      name: Paths.login,
+      page: () => const LoginView(),
+      bindings: [LoginBinding()],
     ),
   ];
 }

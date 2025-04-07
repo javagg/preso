@@ -10,12 +10,12 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return GetRouterOutlet.builder(
-      route: Routes.home,
+      route: Routes.root,
       builder: (context) {
         return Scaffold(
           body: GetRouterOutlet(
             initialRoute: Routes.dashboard,
-            anchorRoute: Routes.home,
+            anchorRoute: Routes.root,
           ),
           bottomNavigationBar: IndexedRouteBuilder(
               routes: const [

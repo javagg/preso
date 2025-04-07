@@ -198,6 +198,14 @@ class HomeView extends GetView<HomeController> {
                       },
                       icon: const Icon(Icons.supervisor_account),
                     ),
+                    SideMenuItem(
+                      title: 'orders'.tr,
+                      onTap: (index, _) {
+                        sideMenu.changePage(index);
+                        Get.offAndToNamed(Routes.orders);
+                      },
+                      icon: const Icon(Icons.battery_unknown),
+                    ),
                     SideMenuExpansionItem(
                       title: "Expansion Item",
                       icon: const Icon(Icons.kitchen),

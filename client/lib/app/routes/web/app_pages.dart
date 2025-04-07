@@ -8,6 +8,8 @@ import '../../middleware/auth_middleware.dart';
 import '../../modules/login/login_binding.dart';
 import '../../modules/member/member_binding.dart';
 import '../../modules/member/member_view.dart';
+import '../../modules/order/order_binding.dart';
+import '../../modules/order/order_view.dart';
 import '../../modules/web/root/root_binding.dart';
 import '../../modules/web/root/root_view.dart';
 import '../../modules/dashboard/dashboard_binding.dart';
@@ -82,6 +84,17 @@ class AppPages {
                 title: 'Tenant',
                 // transition: Transition.size,
                 bindings: [TenantBinding()],
+              ),
+              GetPage(
+                middlewares: [
+                  // EnsureAuthMiddleware(),
+                ],
+                name: Paths.orders,
+                page: () => const OrderView(),
+                transition: Transition.noTransition,
+                title: 'orders'.tr,
+                // transition: Transition.size,
+                bindings: [OrderBinding()],
               ),
               GetPage(
                 middlewares: [

@@ -8,11 +8,14 @@ import 'package:preso_client/app/modules/store/store_view.dart';
 import 'package:preso_client/app/modules/web/admin.dart';
 
 import '../../middleware/auth_middleware.dart';
+import '../../modules/log.dart';
 import '../../modules/login/login_binding.dart';
 import '../../modules/member/member_binding.dart';
 import '../../modules/member/member_view.dart';
 import '../../modules/order/order_binding.dart';
 import '../../modules/order/order_view.dart';
+import '../../modules/reports/report.dart';
+import '../../modules/reports/sale.dart';
 import '../../modules/web/root/root_binding.dart';
 import '../../modules/web/root/root_view.dart';
 import '../../modules/dashboard/dashboard_binding.dart';
@@ -21,8 +24,6 @@ import '../../modules/profile/profile_binding.dart';
 import '../../modules/profile/profile_view.dart';
 import '../../modules/settings/settings_binding.dart';
 import '../../modules/settings/settings_view.dart';
-// import '../../modules/web/home/home_binding.dart';
-// import '../../modules/web/home/home_view.dart';
 import '../../modules/tenant/tenant_binding.dart';
 import '../../modules/tenant/tenant_view.dart';
 import '../app_routes.dart';
@@ -83,17 +84,6 @@ class AppPages {
           ),
           GetPage(
             middlewares: [
-              EnsureAuthMiddleware(),
-            ],
-            name: Paths.profile,
-            page: () => const ProfileView(),
-            transition: Transition.noTransition,
-            title: 'Profile',
-            // transition: Transition.size,
-            bindings: [ProfileBinding()],
-          ),
-                    GetPage(
-            middlewares: [
               // EnsureAuthMiddleware(),
             ],
             name: Paths.admin,
@@ -107,10 +97,39 @@ class AppPages {
                 name: Paths.stores,
                 page: () => const StoreView(),
                 transition: Transition.noTransition,
-                title: 'stores'.tr ,
+                title: 'stores'.tr,
                 bindings: [StoreBinding()],
               ),
-            ]
+            ],
+          ),
+          GetPage(
+            middlewares: [
+              // EnsureAuthMiddleware(),
+            ],
+            name: Paths.reports,
+            page: () => const ReportView(),
+            transition: Transition.noTransition,
+            title: 'reports'.tr,
+            bindings: [ReportBinding()],
+            children: [
+              GetPage(
+                name: Paths.sales,
+                page: () => const SaleView(),
+                transition: Transition.noTransition,
+                title: 'sales'.tr,
+                bindings: [SaleBinding()],
+              ),
+            ],
+          ),
+          GetPage(
+            middlewares: [
+              // EnsureAuthMiddleware(),
+            ],
+            name: Paths.logs,
+            page: () => const LogView(),
+            transition: Transition.noTransition,
+            title: 'log'.tr,
+            bindings: [LogBinding()],
           ),
         ]),
     GetPage(

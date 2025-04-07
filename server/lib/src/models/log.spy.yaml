@@ -1,0 +1,9 @@
+class: Log
+table: log
+fields:
+  tenantId: int
+  operationTime: Date
+  operator: int, relation(user)
+  type: OpType
+  operatee: String
+

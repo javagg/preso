@@ -1,0 +1,5 @@
+enum: OpType
+serialized: byName
+values:
+  - read
+  - write

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../routes/app_routes.dart';
 import 'root_controller.dart';
@@ -10,21 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:preso_client/serverpod_client.dart';
 
 import '../../../../services/auth_service.dart';
-
-// class RootView extends GetView<RootController> {
-//   const RootView({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: GetRouterOutlet(
-//         initialRoute: Routes.home,
-//         anchorRoute: '/',
-//       ),
-//     );
-//   }
-// }
-
 
 class MenuItem {
   const MenuItem({
@@ -240,25 +226,46 @@ class RootView extends GetView<RootController> {
                             width: 16,
                           ),
                           icon: const Icon(Icons.storage),
-                          // badgeContent: const Text(
-                          //   '3',
-                          //   style: TextStyle(color: Colors.white),
-                          // ),
-                          // tooltipContent: "Expansion Item 1",
+                        ),
+                      ],
+                    ),
+                    SideMenuExpansionItem(
+                      title: "reports".tr,
+                      icon: const Icon(Icons.kitchen),
+                      children: [
+                        SideMenuItem(
+                          title: 'sales'.tr,
+                          onTap: (index, _) {
+                            sideMenu.changePage(index);
+                            Get.offAndToNamed(Routes.sales);
+                          },
+                          iconWidget: SizedBox(
+                            width: 16,
+                          ),
+                          icon: const Icon(Icons.shop),
                         ),
                       ],
                     ),
                     SideMenuItem(
-                      title: 'Download',
+                      title: 'log'.tr,
                       onTap: (index, _) {
                         sideMenu.changePage(index);
+                        Get.offAndToNamed(Routes.logs);
                       },
-                      icon: const Icon(Icons.download),
+                      icon: const Icon(Icons.ad_units),
                     ),
                     SideMenuItem(
                       builder: (context, displayMode) {
                         return const Divider(endIndent: 8, indent: 8);
                       },
+                    ),
+                    SideMenuItem(
+                      title: 'help'.tr,
+                      onTap: (index, _) async {
+                        // sideMenu.changePage(index);
+                        await launchUrl(Uri.parse("https://sohu.com"));
+                      },
+                      icon: const Icon(Icons.help),
                     ),
                   ],
                 ),

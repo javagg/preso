@@ -16,6 +16,7 @@ class ReportBinding extends Binding {
 
 class ReportController extends GetxController {}
 
+
 class ReportView extends GetView<ReportController> {
   const ReportView({super.key});
 

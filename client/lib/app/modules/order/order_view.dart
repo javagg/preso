@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'order_controller.dart';
 import 'package:data_table_2/data_table_2.dart';
 
-
 class OrderView extends GetView<OrderViewController> {
   const OrderView({super.key});
 
@@ -15,7 +14,8 @@ class OrderView extends GetView<OrderViewController> {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: controller.isLoading.value ? null : controller.refreshData,
+            onPressed:
+                controller.isLoading.value ? null : controller.refreshData,
             tooltip: '刷新数据',
           ),
         ],
@@ -30,7 +30,7 @@ class OrderView extends GetView<OrderViewController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(controller.errorMessage.value, 
+                Text(controller.errorMessage.value,
                     style: const TextStyle(color: Colors.red)),
                 const SizedBox(height: 16),
                 ElevatedButton(
@@ -93,6 +93,12 @@ class OrderView extends GetView<OrderViewController> {
                     numeric: true,
                     onSort: controller.sort,
                   ),
+                  DataColumn2(
+                    label: const Text('操作'),
+                    size: ColumnSize.M,
+                    // numeric: true,
+                    // onSort: controller.sort,
+                  ),
                 ],
                 rows: controller.paginatedData
                     .map((employee) => DataRow2(
@@ -111,7 +117,24 @@ class OrderView extends GetView<OrderViewController> {
                             DataCell(Text(employee.name)),
                             DataCell(Text(employee.age.toString())),
                             DataCell(Text(employee.department)),
-                            DataCell(Text('\$${employee.salary.toStringAsFixed(2)}')),
+                            DataCell(Text(
+                                '\$${employee.salary.toStringAsFixed(2)}')),
+                            DataCell(Row(
+                              children: [
+                                IconButton.outlined(
+                                  onPressed: () {
+                                    Get.snackbar("edit", "edit");
+                                  },
+                                  icon: Icon(Icons.edit),
+                                ),
+                                IconButton.outlined(
+                                  onPressed: () {
+                                    Get.snackbar("delete", "deleted");
+                                  },
+                                  icon: Icon(Icons.delete),
+                                ),
+                              ],
+                            )),
                           ],
                         ))
                     .toList(),
@@ -126,10 +149,12 @@ class OrderView extends GetView<OrderViewController> {
 
   Widget _buildPaginationControls(OrderViewController controller) {
     return Obx(() {
-      final startItem = controller.currentPage.value * controller.rowsPerPage.value + 1;
-      final endItem = (controller.currentPage.value + 1) * controller.rowsPerPage.value;
+      final startItem =
+          controller.currentPage.value * controller.rowsPerPage.value + 1;
+      final endItem =
+          (controller.currentPage.value + 1) * controller.rowsPerPage.value;
       final totalItems = controller.employees.length;
-      
+
       return Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -145,7 +170,8 @@ class OrderView extends GetView<OrderViewController> {
             onChanged: controller.changeRowsPerPage,
           ),
           const SizedBox(width: 16),
-          Text('$startItem-${endItem > totalItems ? totalItems : endItem} of $totalItems'),
+          Text(
+              '$startItem-${endItem > totalItems ? totalItems : endItem} of $totalItems'),
           IconButton(
             icon: const Icon(Icons.chevron_left),
             onPressed: controller.currentPage.value > 0
@@ -154,7 +180,8 @@ class OrderView extends GetView<OrderViewController> {
           ),
           IconButton(
             icon: const Icon(Icons.chevron_right),
-            onPressed: (controller.currentPage.value + 1) * controller.rowsPerPage.value < 
+            onPressed: (controller.currentPage.value + 1) *
+                        controller.rowsPerPage.value <
                     controller.employees.length
                 ? controller.nextPage
                 : null,

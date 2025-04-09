@@ -1,10 +1,13 @@
 {
-    "buttons": {
-      "login": "Login",
-      "sign_in": "Sign-in",
-      "logout": "Logout",
-      "sign_in_fb": "Sign-in with Facebook",
-      "sign_in_google": "Sign-in with Google",
-      "sign_in_apple": "Sign-in with Apple"
-    }
+  "app": {
+    "title": "来运动",
+    "description": "来运动是一个健身场馆运行系统"
+  },
+  "menu": {
+    "dashboard": "仪表盘",
+    "admin": "高级管理",
+    "stores": "门店管理",
+    "tenants": "租户管理",
+    "members": "会员管理"
   }
+}

@@ -67,8 +67,7 @@ class AppPages {
             name: Paths.tenants,
             page: () => const TenantView(),
             transition: Transition.noTransition,
-            title: 'Tenant',
-            // transition: Transition.size,
+            title: 'menu.tenants'.tr,
             bindings: [TenantBinding()],
           ),
           GetPage(
@@ -89,7 +88,7 @@ class AppPages {
             name: Paths.admin,
             page: () => const AdminView(),
             transition: Transition.noTransition,
-            title: 'admin'.tr,
+            title: 'menu.admin'.tr,
             // transition: Transition.size,
             bindings: [AdminBinding()],
             children: [
@@ -97,7 +96,7 @@ class AppPages {
                 name: Paths.stores,
                 page: () => const StoreView(),
                 transition: Transition.noTransition,
-                title: 'stores'.tr,
+                title: 'menu.stores'.tr,
                 bindings: [StoreBinding()],
               ),
             ],

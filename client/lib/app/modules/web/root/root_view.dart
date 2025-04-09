@@ -179,7 +179,7 @@ class RootView extends GetView<RootController> {
                   controller: sideMenu,
                   items: [
                     SideMenuItem(
-                      title: 'dashboard'.tr,
+                      title: 'menu.dashboard'.tr,
                       onTap: (index, _) {
                         sideMenu.changePage(index);
                         Get.offAndToNamed(Routes.dashboard);
@@ -187,7 +187,7 @@ class RootView extends GetView<RootController> {
                       icon: const Icon(Icons.dashboard),
                     ),
                     SideMenuItem(
-                      title: 'members'.tr,
+                      title: 'menu.members'.tr,
                       onTap: (index, _) {
                         sideMenu.changePage(index);
                         Get.offAndToNamed(Routes.members);
@@ -195,7 +195,7 @@ class RootView extends GetView<RootController> {
                       icon: const Icon(Icons.account_box),
                     ),
                     SideMenuItem(
-                      title: 'tenants'.tr,
+                      title: 'menu.tenants'.tr,
                       onTap: (index, _) {
                         sideMenu.changePage(index);
                         Get.offAndToNamed(Routes.tanents);
@@ -211,13 +211,13 @@ class RootView extends GetView<RootController> {
                       icon: const Icon(Icons.battery_unknown),
                     ),
                     SideMenuExpansionItem(
-                      title: "admin".tr,
+                      title: "menu.admin".tr,
                       icon: const Icon(Icons.kitchen),
                       // onTap: (index, _, isExpanded) =>
                       //     {print('$index, expanded $isExpanded')},
                       children: [
                         SideMenuItem(
-                          title: 'stores'.tr,
+                          title: 'menu.stores'.tr,
                           onTap: (index, _) {
                             sideMenu.changePage(index);
                             Get.offAndToNamed(Routes.stores);
@@ -260,7 +260,7 @@ class RootView extends GetView<RootController> {
                       },
                     ),
                     SideMenuItem(
-                      title: 'help'.tr,
+                      title: 'menu.help'.tr,
                       onTap: (index, _) async {
                         // sideMenu.changePage(index);
                         await launchUrl(Uri.parse("https://sohu.com"));

@@ -1,6 +1,7 @@
 abstract class Routes {
   Routes._();
   static const root = Paths.root;
+  static const home = Paths.home;
   static const admin = Paths.admin;
   static const reports = Paths.reports;
 
@@ -30,13 +31,14 @@ abstract class Paths {
 
   static const root = '/';
   static const admin = '/admin';
+  static const home = '/home'; // only for mobile
 
   static const products = '/products';
   static const profile = '/profile';
   static const settings = '/settings';
   static const productDetails = '/:productId';
   static const login = '/login';
-  static const dashboard = '/dashboard';
+  static const dashboard = '/dashboard'; // only for web
   static const members = '/members';
   static const orders = '/orders';
   static const logs = '/logs';

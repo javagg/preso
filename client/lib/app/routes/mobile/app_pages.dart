@@ -37,15 +37,15 @@ class AppPages {
       participatesInRootNavigator: true,
       preventDuplicates: true,
       children: [
-        GetPage(
-          middlewares: [
-            //only enter this route when not authed
-            EnsureNotAuthedMiddleware(),
-          ],
-          name: Paths.login,
-          page: () => const LoginView(),
-          bindings: [LoginBinding()],
-        ),
+        // GetPage(
+        //   middlewares: [
+        //     //only enter this route when not authed
+        //     EnsureNotAuthedMiddleware(),
+        //   ],
+        //   name: Paths.login,
+        //   page: () => const LoginView(),
+        //   bindings: [LoginBinding()],
+        // ),
         GetPage(
           preventDuplicates: true,
           name: Paths.root,
@@ -96,7 +96,7 @@ class AppPages {
               ],
             ),
           ],
-        ),   
+        ),
         GetPage(
           name: Paths.settings,
           page: () => const SettingsView(),
@@ -105,6 +105,16 @@ class AppPages {
           ],
         ),
       ],
+    ),
+    GetPage(
+      middlewares: [
+        //only enter this route when not authed
+        EnsureNotAuthedMiddleware(),
+      ],
+      name: Paths.login,
+      page: () => const LoginView(),
+      participatesInRootNavigator: true,
+      bindings: [LoginBinding()],
     ),
   ];
 }

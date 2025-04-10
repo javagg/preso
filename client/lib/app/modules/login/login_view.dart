@@ -7,7 +7,17 @@ import 'package:serverpod_auth_email_flutter/src/signin_dialog.dart';
 
 import '../../../services/auth_service.dart';
 import '../../routes/app_routes.dart';
-import 'login_controller.dart';
+
+class LoginController extends GetxController {}
+
+class LoginBinding extends Binding {
+  @override
+  List<Bind> dependencies() {
+    return [
+      Bind.lazyPut(() => LoginController()),
+    ];
+  }
+}
 
 class LoginView extends GetView<LoginController> {
   const LoginView({super.key});

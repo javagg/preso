@@ -1,10 +1,13 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:preso_client/serverpod_client.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:preso_common/preso_common.dart';
 
 import '../../../services/auth_service.dart';
 import '../../routes/app_routes.dart';
+import '../../../serverpod_client.dart' as pod;
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({
@@ -75,15 +78,29 @@ class DrawerWidget extends StatelessWidget {
 }
 
 class RootController extends GetxController {
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+  var tabIndex = 0.obs;
+
+  // var store = null.obs;
+
+  void changePage(int index) {
+    tabIndex.value = index;
   }
 
   @override
-  void onClose() {}
-  void increment() => count.value++;
+  void onReady() {}
+
+  Future init() async {
+    var storeId = 1;
+    var tenants = await pod.client.store.get(storeId);
+  }
+
+  final List<String> imageUrls = [
+    'https://picsum.photos/id/10/800/600',
+    'https://picsum.photos/id/11/800/600',
+    'https://picsum.photos/id/12/800/600',
+    'https://picsum.photos/id/13/800/600',
+    'https://picsum.photos/id/14/800/600',
+  ];
 }
 
 class RootBinding extends Binding {
@@ -98,72 +115,138 @@ class RootBinding extends Binding {
 }
 
 class RootView extends GetView<RootController> {
-  const RootView({super.key});
+  RootView({super.key});
+
+  final List<Widget> pages = [
+    HomePage(),
+    Page2(),
+    Page3(),
+    MyPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    // var sideMenu = controller.sideMenu;
-    return GetRouterOutlet.builder(
-      route: Routes.root, //'/', //Routes.home,
-      // initialRoute: Routes.root,// '/',// Routes.root,
-      builder: (context) {
-        return Scaffold(
-          // key: controller.scaffoldKey,
-          appBar: AppBar(
-            leading: Hero(tag: "logo", child: FlutterLogo()),
-            // title: RouterListener(builder: (context) {
-            //   final title = context.location;
-            //   return Text(title);
-            // }),
-            centerTitle: true,
-            actions: [
-              sessionManager.isSignedIn // AuthService.to.isLoggedInValue
-                  ? IconButton(
-                      icon: const Icon(Icons.logout),
-                      onPressed: () {
-                        sessionManager.signOutDevice();
-                        AuthService.to.logout();
-                        Get.toNamed(Routes.login);
-                      },
-                    )
-                  : IconButton(
-                      icon: const Icon(Icons.login),
-                      onPressed: () => Get.toNamed(Routes.login),
+    return Scaffold(
+      // drawer: const DrawerWidget(),
+      // appBar: AppBar(
+      //   title: RouterListener(builder: (context) {
+      //     final title = context.location;
+      //     return Text(title);
+      //   }),
+      //   centerTitle: true,
+      // ),
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.red,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: OutlinedButton(
+              onPressed: () {}, child: Icon(Icons.select_all_sharp)),
+        ),
+      ),
+      body: Obx(() => pages[controller.tabIndex.value]),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
+          currentIndex: controller.tabIndex.value,
+          onTap: (index) => controller.changePage(index),
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'nav.home'.tr,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.business),
+              label: '业务',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.school),
+              label: '学校',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_box),
+              label: 'nav.my'.tr,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// 页面1
+class HomePage extends StatelessWidget {
+  final controller = Get.find<RootController>();
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        children: [
+          SizedBox(
+            height: 240,
+            child: Swiper(
+              itemBuilder: (context, index) {
+                return ClipRRect(
+                  // borderRadius: BorderRadius.circular(8),
+                  child: CachedNetworkImage(
+                    imageUrl: controller.imageUrls[index],
+                    fit: BoxFit.cover,
+                    placeholder: (context, url) => Center(
+                      child: CircularProgressIndicator(),
                     ),
-            ],
-          ),
-          body: GetRouterOutlet(
-            initialRoute: Routes.home,
-            anchorRoute: Routes.root,
-          ),
-          bottomNavigationBar: IndexedRouteBuilder(
-              routes: const [Routes.home, Routes.profile, Routes.products],
-              builder: (context, routes, index) {
-                final delegate = context.delegate;
-                return BottomNavigationBar(
-                  currentIndex: index,
-                  onTap: (value) => delegate.toNamed(routes[value]),
-                  items: const [
-                    // _Paths.HOME + [Empty]
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.home),
-                      label: 'Home',
-                    ),
-                    // _Paths.HOME + Routes.PROFILE
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.account_box_rounded),
-                      label: 'Profile',
-                    ),
-                    // _Paths.HOME + _Paths.PRODUCTS
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.account_box_rounded),
-                      label: 'Products',
-                    ),
-                  ],
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
                 );
-              }),
-        );
-      },
+              },
+              itemCount: controller.imageUrls.length,
+              pagination: SwiperPagination(
+                builder: DotSwiperPaginationBuilder(
+                  color: Colors.grey,
+                  activeColor: Colors.blue,
+                ),
+              ),
+              // pagination: SwiperPagination(),
+              control: SwiperControl(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Page2 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        '业务页面',
+        style: TextStyle(fontSize: 30),
+      ),
+    );
+  }
+}
+
+class Page3 extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        '学校页面',
+        style: TextStyle(fontSize: 30),
+      ),
+    );
+  }
+}
+
+class MyPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        '我的',
+        style: TextStyle(fontSize: 30),
+      ),
     );
   }
 }

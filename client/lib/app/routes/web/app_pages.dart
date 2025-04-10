@@ -9,15 +9,14 @@ import 'package:preso_client/app/modules/web/admin.dart';
 
 import '../../middleware/auth_middleware.dart';
 import '../../modules/log.dart';
-import '../../modules/login/login_binding.dart';
+import '../../modules/login/login_view.dart';
 import '../../modules/member/member_binding.dart';
 import '../../modules/member/member_view.dart';
 import '../../modules/order/order_binding.dart';
 import '../../modules/order/order_view.dart';
 import '../../modules/reports/report.dart';
 import '../../modules/reports/sale.dart';
-import '../../modules/web/root/root_binding.dart';
-import '../../modules/web/root/root_view.dart';
+import '../../modules/web/root.dart';
 import '../../modules/dashboard/dashboard_binding.dart';
 import '../../modules/dashboard/dashboard_view.dart';
 import '../../modules/profile/profile_binding.dart';

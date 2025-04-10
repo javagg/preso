@@ -7,7 +7,7 @@ class StoreEndpoint extends Endpoint {
     return await Store.db.find(session);
   }
 
-  Future<Store?> get(Session session) async {
-    return await Store.db.findById(session, 1);
+  Future<Store?> get(Session session, int id) async {
+    return await Store.db.findById(session, id);
   }
 }

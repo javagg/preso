@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../routes/app_routes.dart';
-import 'root_controller.dart';
+import '../../routes/app_routes.dart';
 
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
@@ -11,6 +10,38 @@ import 'package:flutter/cupertino.dart';
 import 'package:preso_client/serverpod_client.dart';
 
 import '../../../../services/auth_service.dart';
+
+
+class RootController extends GetxController {
+    var scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final sideMenu = SideMenuController();
+
+  void openDrawer() {
+    scaffoldKey.currentState?.openEndDrawer();
+  }
+
+  void closeDrawer() {
+    scaffoldKey.currentState?.closeEndDrawer();
+  }
+
+  void changePage(int index) {
+    sideMenu.changePage(index);
+  }
+}
+
+
+class RootBinding extends Binding {
+  @override
+  List<Bind> dependencies() {
+    return [
+      Bind.lazyPut<RootController>(
+        () => RootController(),
+      )
+    ];
+  }
+}
+
 
 class MenuItem {
   const MenuItem({

@@ -4,16 +4,14 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../routes/app_routes.dart';
 
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:preso_client/serverpod_client.dart';
 
 import '../../../../services/auth_service.dart';
 
-
 class RootController extends GetxController {
-    var scaffoldKey = GlobalKey<ScaffoldState>();
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   final sideMenu = SideMenuController();
 
@@ -28,8 +26,43 @@ class RootController extends GetxController {
   void changePage(int index) {
     sideMenu.changePage(index);
   }
-}
 
+  var selectedItem = '未选择'.obs;
+  var backgroundColor = Colors.white.obs;
+  var textSize = 16.0.obs;
+
+  final MenuController menuController = MenuController(); // MenuAnchor的控制器
+
+  void selectItem(String value) {
+    selectedItem.value = value;
+
+    // 根据选择执行不同操作
+    switch (value) {
+      case '红色背景':
+        backgroundColor.value = Colors.red[200]!;
+        break;
+      case '绿色背景':
+        backgroundColor.value = Colors.green[200]!;
+        break;
+      case '蓝色背景':
+        backgroundColor.value = Colors.blue[200]!;
+        break;
+      case '增大文字':
+        textSize.value += 2;
+        break;
+      case '减小文字':
+        textSize.value = textSize.value > 12 ? textSize.value - 2 : 12;
+        break;
+    }
+
+    Get.snackbar(
+      '菜单操作',
+      '已选择: $value',
+      snackPosition: SnackPosition.bottom,
+      duration: Duration(seconds: 1),
+    );
+  }
+}
 
 class RootBinding extends Binding {
   @override
@@ -41,7 +74,6 @@ class RootBinding extends Binding {
     ];
   }
 }
-
 
 class MenuItem {
   const MenuItem({
@@ -154,48 +186,43 @@ class RootView extends GetView<RootController> {
                   onPressed: () => controller.openDrawer(),
                 ),
               ),
-              DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  customButton: Icon(Icons.headphones_rounded),
-                  // isExpanded: true,
-                  items: [
-                    ...MenuItems.firstItems.map(
-                      (item) => DropdownMenuItem<MenuItem>(
-                        value: item,
-                        child: MenuItems.buildItem(item),
-                      ),
+              MenuAnchor(
+                controller: controller.menuController,
+                style: MenuStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.white),
+                  elevation: MaterialStateProperty.all(10),
+                ),
+                menuChildren: [
+                  MenuItemButton(
+                    onPressed: () {
+                      controller.selectItem('关于应用');
+                      controller.menuController.close();
+                    },
+                    child: const ListTile(
+                      leading: Icon(Icons.info),
+                      title: Text('关于应用'),
                     ),
-                    // const DropdownMenuItem<Divider>(
-                    //     enabled: false, child: Divider()),
-                    ...MenuItems.secondItems.map(
-                      (item) => DropdownMenuItem<MenuItem>(
-                        value: item,
-                        child: MenuItems.buildItem(item),
-                      ),
-                    ),
-                  ],
-                  onChanged: (value) {
-                    // MenuItems.onChanged(context, value! as MenuItem);
-                  },
-                  // buttonStyleData: ButtonStyleData(
-                  //   // This is necessary for the ink response to match our customButton radius.
-                  //   decoration: BoxDecoration(
-                  //     borderRadius: BorderRadius.circular(56),
-                  //   ),
-                  // ),
-                  dropdownStyleData: DropdownStyleData(
-                    width: 160,
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    offset: const Offset(40, -8),
                   ),
-                  // menuItemStyleData: MenuItemStyleData(
-                  //   customHeights: [
-                  //     ...List<double>.filled(MenuItems.firstItems.length, 48),
-                  //     8,
-                  //     ...List<double>.filled(MenuItems.secondItems.length, 48),
-                  //   ],
-                  //   padding: const EdgeInsets.only(left: 16, right: 16),
-                  // ),
+                  MenuItemButton(
+                    onPressed: () {
+                      controller.selectItem('设置');
+                      controller.menuController.close();
+                    },
+                    child: const ListTile(
+                      leading: Icon(Icons.settings),
+                      title: Text('设置'),
+                    ),
+                  ),
+                ],
+                child: IconButton(
+                  icon: const Icon(Icons.add_a_photo),
+                  onPressed: () {
+                    if (controller.menuController.isOpen) {
+                      controller.menuController.close();
+                    } else {
+                      controller.menuController.open();
+                    }
+                  },
                 ),
               ),
             ],

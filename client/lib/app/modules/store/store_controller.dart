@@ -9,7 +9,7 @@ class StoreController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchEmployees();
+    // fetchEmployees();
   }
 
   void previousPage() {
@@ -19,8 +19,8 @@ class StoreController extends GetxController {
   }
 
   void nextPage() {
-    if ((page.value + 1) * limit.value < employees.length) {
-      page(page.value + 1);
-    }
+    // if ((page.value + 1) * limit.value < employees.length) {
+    //   page(page.value + 1);
+    // }
   }
 }

@@ -376,7 +376,10 @@ class _StoreEndpoint {
     });
   }
 
-  _i3.Future<_i5.Store?> get(_i1.TestSessionBuilder sessionBuilder) async {
+  _i3.Future<_i5.Store?> get(
+    _i1.TestSessionBuilder sessionBuilder,
+    int id,
+  ) async {
     return _i1.callAwaitableFunctionAndHandleExceptions(() async {
       var _localUniqueSession =
           (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
@@ -388,7 +391,7 @@ class _StoreEndpoint {
           createSessionCallback: (_) => _localUniqueSession,
           endpointPath: 'store',
           methodName: 'get',
-          parameters: _i1.testObjectToJson({}),
+          parameters: _i1.testObjectToJson({'id': id}),
           serializationManager: _serializationManager,
         );
         var _localReturnValue = await (_localCallContext.method.call(

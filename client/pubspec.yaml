@@ -27,7 +27,6 @@ dependencies:
   dotted_border: ^2.1.0
 
   json_theme: 8.0.0+2
-  dropdown_button2: ^2.3.9
   easy_sidemenu: ^0.6.1
   trina_grid: ^1.6.6
   faker: ^2.2.0

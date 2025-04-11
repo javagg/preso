@@ -2,8 +2,8 @@ class: Log
 table: log
 fields:
   tenantId: int
-  operationTime: Date
-  operator: int, relation(user)
+  operationTime: DateTime
+  creater: User?, relation
   type: OpType
   operatee: String
 

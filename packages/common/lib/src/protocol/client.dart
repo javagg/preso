@@ -87,10 +87,10 @@ class EndpointStore extends _i1.EndpointRef {
         {},
       );
 
-  _i2.Future<_i4.Store?> get() => caller.callServerEndpoint<_i4.Store?>(
+  _i2.Future<_i4.Store?> get(int id) => caller.callServerEndpoint<_i4.Store?>(
         'store',
         'get',
-        {},
+        {'id': id},
       );
 }
 

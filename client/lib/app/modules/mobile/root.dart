@@ -127,14 +127,6 @@ class RootView extends GetView<RootController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // drawer: const DrawerWidget(),
-      // appBar: AppBar(
-      //   title: RouterListener(builder: (context) {
-      //     final title = context.location;
-      //     return Text(title);
-      //   }),
-      //   centerTitle: true,
-      // ),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,

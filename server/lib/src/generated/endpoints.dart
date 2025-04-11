@@ -183,12 +183,21 @@ class Endpoints extends _i1.EndpointDispatch {
         ),
         'get': _i1.MethodConnector(
           name: 'get',
-          params: {},
+          params: {
+            'id': _i1.ParameterDescription(
+              name: 'id',
+              type: _i1.getType<int>(),
+              nullable: false,
+            )
+          },
           call: (
             _i1.Session session,
             Map<String, dynamic> params,
           ) async =>
-              (endpoints['store'] as _i4.StoreEndpoint).get(session),
+              (endpoints['store'] as _i4.StoreEndpoint).get(
+            session,
+            params['id'],
+          ),
         ),
       },
     );

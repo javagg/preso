@@ -1,7 +1,28 @@
 {
+  "common": {
+    "create": "创建",
+    "update": "更新",
+    "edit": "编辑",
+    "delete": "删除",
+    "save": "保存",
+    "cancel": "取消",
+    "more": "更多",
+    "search": "搜索",
+    "reset": "重置",
+    "confirm": "确认",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "loading": "加载中..."
+  },
   "app": {
     "title": "来运动",
-    "description": "来运动是一个健身场馆运行系统"
+    "description": "来运动是一个健身场馆运行系统",
+    "card": "会籍卡",
+    "trainer": "教练",
+    "class": "课程",
+    "member": "会员",
+    "store": "门店"
   },
   "menu": {
     "dashboard": "仪表盘",

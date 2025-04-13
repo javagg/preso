@@ -1,13 +1,14 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:preso_client/serverpod_client.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:preso_common/preso_common.dart';
+// import 'package:preso_common/preso_common.dart';
+// import 'package:preso_common/preso_common.dart';
 
 import '../../../services/auth_service.dart';
 import '../../routes/app_routes.dart';
-import '../../../serverpod_client.dart' as pod;
+import 'root/controller.dart';
+export 'root/controller.dart';
 
 class DrawerWidget extends StatelessWidget {
   const DrawerWidget({
@@ -77,42 +78,57 @@ class DrawerWidget extends StatelessWidget {
   }
 }
 
-class RootController extends GetxController {
-  var tabIndex = 0.obs;
+// class RootController extends GetxController {
+//   var tabIndex = 0.obs;
 
-  // var store = null.obs;
+//   // var store = null.obs;
 
-  void changePage(int index) {
-    tabIndex.value = index;
-  }
+//   var trainers = [
+//     Trainer(
+//         name: "trainer",
+//         description: "",
+//         gender: "male",
+//         age: 20,
+//         headshot: "",
+//         photos: "",
+//         videos: "",
+//         servingCity: "",
+//         servingHours: "",
+//         classFee: 199,
+//         phone: "110")
+//   ].obs;
 
-  @override
-  void onReady() {}
+//   void changePage(int index) {
+//     tabIndex.value = index;
+//   }
 
-  Future init() async {
-    var storeId = 1;
-    var tenants = await pod.client.store.get(storeId);
-  }
+//   @override
+//   void onReady() {}
 
-  final List<String> imageUrls = [
-    'https://picsum.photos/id/10/800/600',
-    'https://picsum.photos/id/11/800/600',
-    'https://picsum.photos/id/12/800/600',
-    'https://picsum.photos/id/13/800/600',
-    'https://picsum.photos/id/14/800/600',
-  ];
-}
+//   Future init() async {
+//     var storeId = 1;
+//     var tenants = await pod.client.store.get(storeId);
+//   }
 
-class RootBinding extends Binding {
-  @override
-  List<Bind> dependencies() {
-    return [
-      Bind.lazyPut<RootController>(
-        () => RootController(),
-      )
-    ];
-  }
-}
+//   final List<String> imageUrls = [
+//     'https://picsum.photos/id/10/800/600',
+//     'https://picsum.photos/id/11/800/600',
+//     'https://picsum.photos/id/12/800/600',
+//     'https://picsum.photos/id/13/800/600',
+//     'https://picsum.photos/id/14/800/600',
+//   ];
+// }
+
+// class RootBinding extends Binding {
+//   @override
+//   List<Bind> dependencies() {
+//     return [
+//       Bind.lazyPut<RootController>(
+//         () => RootController(),
+//       )
+//     ];
+//   }
+// }
 
 class RootView extends GetView<RootController> {
   RootView({super.key});
@@ -127,16 +143,6 @@ class RootView extends GetView<RootController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.red,
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: OutlinedButton(
-              onPressed: () {}, child: Icon(Icons.select_all_sharp)),
-        ),
-      ),
       body: Obx(() => pages[controller.tabIndex.value]),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
@@ -171,37 +177,166 @@ class HomePage extends StatelessWidget {
   final controller = Get.find<RootController>();
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          SizedBox(
-            height: 240,
-            child: Swiper(
-              itemBuilder: (context, index) {
-                return ClipRRect(
-                  // borderRadius: BorderRadius.circular(8),
-                  child: CachedNetworkImage(
-                    imageUrl: controller.imageUrls[index],
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Center(
-                      child: CircularProgressIndicator(),
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.red,
+        centerTitle: false,
+        leadingWidth: 0,
+        title: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              backgroundColor:
+                  Colors.transparent.withAlpha((255.0 * 0.1).round()),
+            ),
+            onPressed: () {},
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              // mainAxisAlignment: MainAxisAlignment.start,
+              children: [Text("关山大道店"), Icon(Icons.arrow_drop_down_sharp)],
+            )),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 240,
+              child: Swiper(
+                itemBuilder: (context, index) {
+                  return ClipRRect(
+                    // borderRadius: BorderRadius.circular(8),
+                    child: CachedNetworkImage(
+                      imageUrl: controller.imageUrls[index],
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
                     ),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  );
+                },
+                itemCount: controller.imageUrls.length,
+                pagination: SwiperPagination(
+                  builder: DotSwiperPaginationBuilder(
+                    color: Colors.grey,
+                    activeColor: Colors.blue,
                   ),
-                );
-              },
-              itemCount: controller.imageUrls.length,
-              pagination: SwiperPagination(
-                builder: DotSwiperPaginationBuilder(
-                  color: Colors.grey,
-                  activeColor: Colors.blue,
+                ),
+                control: SwiperControl(),
+              ),
+            ),
+            SizedBox(
+              height: 300,
+              child: Card(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        "app.card".tr,
+                        style: Get.textTheme.titleMedium,
+                      ),
+                      trailing: Text(
+                        "common.more".tr,
+                        style: Get.textTheme.titleSmall,
+                      ),
+                    ),
+                    AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Image.network(
+                        "https://www.itying.com/images/flutter/1.png",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              // pagination: SwiperPagination(),
-              control: SwiperControl(),
             ),
-          ),
-        ],
+            SizedBox(
+              height: 240,
+              child: Card(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        "app.trainer".tr,
+                        style: Get.textTheme.titleMedium,
+                      ),
+                      // trailing: Text(
+                      //   "common.more".tr,
+                      //   style: Get.textTheme.titleSmall,
+                      // ),
+                    ),
+                    Expanded(
+                      child: CarouselView(
+                        itemSnapping: true,
+                        enableSplash: false,
+                        itemExtent: 180,
+                        padding: EdgeInsets.all(8.0),
+                        children: [
+                          Column(children: [
+                            CircleAvatar(
+                              radius: 48,
+                              child: Icon(Icons.access_alarm),
+                            ),
+                            Text("孙教练"),
+                            Row(
+                              children: ["减脂", "增肌", "产后恢复"].map((ele) {
+                                return Chip(
+                                  label: Text(
+                                    ele,
+                                    style: TextStyle(fontSize: 9),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ]),
+                          Column(children: [
+                            CircleAvatar(
+                              radius: 48,
+                              child: Icon(Icons.access_alarm),
+                            ),
+                            Text("孙教练"),
+                            Row(
+                              children: ["减脂", "增肌", "产后恢复"].map((ele) {
+                                return Chip(
+                                  label: Text(
+                                    ele,
+                                    style: TextStyle(fontSize: 9),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ]),
+                          Column(children: [
+                            CircleAvatar(
+                              radius: 48,
+                              child: Icon(Icons.access_alarm),
+                            ),
+                            Text("孙教练"),
+                            Row(
+                              children: ["减脂", "增肌", "产后恢复"].map((ele) {
+                                return Chip(
+                                  label: Text(
+                                    ele,
+                                    style: TextStyle(fontSize: 9),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ]),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -232,12 +367,33 @@ class Page3 extends StatelessWidget {
 }
 
 class MyPage extends StatelessWidget {
+  var controller = Get.find<RootController>();
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        '我的',
-        style: TextStyle(fontSize: 30),
+    return Scaffold(
+      body: Obx(
+        () => GridView.builder(
+          padding: EdgeInsets.all(10),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 5, // 每行显示2个项目
+            crossAxisSpacing: 5,
+            mainAxisSpacing: 5,
+            childAspectRatio: 1.0, // 宽高比
+          ),
+          itemCount: controller.items.length,
+          itemBuilder: (context, index) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.star, size: 40, color: Colors.amber),
+                  SizedBox(height: 10),
+                  Text(controller.items[index], style: TextStyle(fontSize: 16)),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

@@ -157,156 +157,162 @@ class HomePage extends StatelessWidget {
         centerTitle: false,
         leadingWidth: 0,
         title: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              backgroundColor:
-                  Colors.transparent.withAlpha((255.0 * 0.1).round()),
+          style: ElevatedButton.styleFrom(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
-            onPressed: () {},
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              // mainAxisAlignment: MainAxisAlignment.start,
-              children: [Text("关山大道店"), Icon(Icons.arrow_drop_down_sharp)],
-            )),
+            backgroundColor:
+                Colors.transparent.withAlpha((255.0 * 0.1).round()),
+          ),
+          onPressed: () {},
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            // mainAxisAlignment: MainAxisAlignment.start,
+            children: [Text("关山大道店"), Icon(Icons.arrow_drop_down_sharp)],
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: 240,
-              child: Swiper(
-                itemBuilder: (context, index) {
-                  return ClipRRect(
-                    // borderRadius: BorderRadius.circular(8),
-                    child: CachedNetworkImage(
+            SizedOverflowBox(
+              size: Size(Get.width, 240),
+              // height: 240,
+              child: SizedBox(
+                height: 260,
+                child: Swiper(
+                  itemBuilder: (context, index) {
+                    return CachedNetworkImage(
                       imageUrl: controller.imageUrls[index],
                       fit: BoxFit.cover,
                       placeholder: (context, url) => Center(
                         child: CircularProgressIndicator(),
                       ),
                       errorWidget: (context, url, error) => Icon(Icons.error),
+                    );
+                  },
+                  itemCount: controller.imageUrls.length,
+                  pagination: SwiperPagination(
+                    builder: DotSwiperPaginationBuilder(
+                      color: Colors.grey,
+                      activeColor: Colors.blue,
                     ),
-                  );
-                },
-                itemCount: controller.imageUrls.length,
-                pagination: SwiperPagination(
-                  builder: DotSwiperPaginationBuilder(
-                    color: Colors.grey,
-                    activeColor: Colors.blue,
+                  ),
+                  control: SwiperControl(),
+                ),
+              ),
+            ),
+            Column(
+              children: [
+                SizedBox(
+                  height: 300,
+                  child: Card(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            "app.card".tr,
+                            style: Get.textTheme.titleMedium,
+                          ),
+                          trailing: Text(
+                            "common.more".tr,
+                            style: Get.textTheme.titleSmall,
+                          ),
+                        ),
+                        AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: Image.network(
+                            "https://www.itying.com/images/flutter/1.png",
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                control: SwiperControl(),
-              ),
+                SizedBox(
+                  height: 240,
+                  child: Card(
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: Text(
+                            "app.trainer".tr,
+                            style: Get.textTheme.titleMedium,
+                          ),
+                          // trailing: Text(
+                          //   "common.more".tr,
+                          //   style: Get.textTheme.titleSmall,
+                          // ),
+                        ),
+                        Expanded(
+                          child: CarouselView(
+                            itemSnapping: true,
+                            enableSplash: false,
+                            itemExtent: 180,
+                            padding: EdgeInsets.all(8.0),
+                            children: [
+                              Column(children: [
+                                CircleAvatar(
+                                  radius: 48,
+                                  child: Icon(Icons.access_alarm),
+                                ),
+                                Text("孙教练"),
+                                Row(
+                                  children: ["减脂", "增肌", "产后恢复"].map((ele) {
+                                    return Chip(
+                                      label: Text(
+                                        ele,
+                                        style: TextStyle(fontSize: 9),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ]),
+                              Column(children: [
+                                CircleAvatar(
+                                  radius: 48,
+                                  child: Icon(Icons.access_alarm),
+                                ),
+                                Text("孙教练"),
+                                Row(
+                                  children: ["减脂", "增肌", "产后恢复"].map((ele) {
+                                    return Chip(
+                                      label: Text(
+                                        ele,
+                                        style: TextStyle(fontSize: 9),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ]),
+                              Column(children: [
+                                CircleAvatar(
+                                  radius: 48,
+                                  child: Icon(Icons.access_alarm),
+                                ),
+                                Text("孙教练"),
+                                Row(
+                                  children: ["减脂", "增肌", "产后恢复"].map((ele) {
+                                    return Chip(
+                                      label: Text(
+                                        ele,
+                                        style: TextStyle(fontSize: 9),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ]),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
             ),
-            SizedBox(
-              height: 300,
-              child: Card(
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: Text(
-                        "app.card".tr,
-                        style: Get.textTheme.titleMedium,
-                      ),
-                      trailing: Text(
-                        "common.more".tr,
-                        style: Get.textTheme.titleSmall,
-                      ),
-                    ),
-                    AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: Image.network(
-                        "https://www.itying.com/images/flutter/1.png",
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 240,
-              child: Card(
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: Text(
-                        "app.trainer".tr,
-                        style: Get.textTheme.titleMedium,
-                      ),
-                      // trailing: Text(
-                      //   "common.more".tr,
-                      //   style: Get.textTheme.titleSmall,
-                      // ),
-                    ),
-                    Expanded(
-                      child: CarouselView(
-                        itemSnapping: true,
-                        enableSplash: false,
-                        itemExtent: 180,
-                        padding: EdgeInsets.all(8.0),
-                        children: [
-                          Column(children: [
-                            CircleAvatar(
-                              radius: 48,
-                              child: Icon(Icons.access_alarm),
-                            ),
-                            Text("孙教练"),
-                            Row(
-                              children: ["减脂", "增肌", "产后恢复"].map((ele) {
-                                return Chip(
-                                  label: Text(
-                                    ele,
-                                    style: TextStyle(fontSize: 9),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ]),
-                          Column(children: [
-                            CircleAvatar(
-                              radius: 48,
-                              child: Icon(Icons.access_alarm),
-                            ),
-                            Text("孙教练"),
-                            Row(
-                              children: ["减脂", "增肌", "产后恢复"].map((ele) {
-                                return Chip(
-                                  label: Text(
-                                    ele,
-                                    style: TextStyle(fontSize: 9),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ]),
-                          Column(children: [
-                            CircleAvatar(
-                              radius: 48,
-                              child: Icon(Icons.access_alarm),
-                            ),
-                            Text("孙教练"),
-                            Row(
-                              children: ["减脂", "增肌", "产后恢复"].map((ele) {
-                                return Chip(
-                                  label: Text(
-                                    ele,
-                                    style: TextStyle(fontSize: 9),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ]),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
           ],
         ),
       ),

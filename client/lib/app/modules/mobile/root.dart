@@ -168,7 +168,6 @@ class HomePage extends StatelessWidget {
           onPressed: () {},
           child: Row(
             mainAxisSize: MainAxisSize.min,
-            // mainAxisAlignment: MainAxisAlignment.start,
             children: [Text("关山大道店"), Icon(Icons.arrow_drop_down_sharp)],
           ),
         ),

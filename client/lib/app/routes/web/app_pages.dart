@@ -9,20 +9,16 @@ import 'package:preso_client/app/modules/web/admin.dart';
 
 import '../../middleware/auth_middleware.dart';
 import '../../modules/log.dart';
-import '../../modules/login/login_view.dart';
 import '../../modules/member/member_binding.dart';
 import '../../modules/member/member_view.dart';
 import '../../modules/order/order_binding.dart';
 import '../../modules/order/order_view.dart';
 import '../../modules/reports/report.dart';
 import '../../modules/reports/sale.dart';
+import '../../modules/trainer/trainer_view.dart';
 import '../../modules/web/root.dart';
 import '../../modules/dashboard/dashboard_binding.dart';
 import '../../modules/dashboard/dashboard_view.dart';
-import '../../modules/profile/profile_binding.dart';
-import '../../modules/profile/profile_view.dart';
-import '../../modules/settings/settings_binding.dart';
-import '../../modules/settings/settings_view.dart';
 import '../../modules/tenant/tenant_binding.dart';
 import '../../modules/tenant/tenant_view.dart';
 import '../app_routes.dart';
@@ -68,6 +64,14 @@ class AppPages {
             transition: Transition.noTransition,
             title: 'menu.tenants'.tr,
             bindings: [TenantBinding()],
+          ),
+          GetPage(
+            // middlewares: [EnsureAuthMiddleware()],
+            name: Paths.trainers,
+            page: () => TrainerView(),
+            transition: Transition.noTransition,
+            title: 'menu.trainers'.tr,
+            bindings: [TrainerBinding()],
           ),
           GetPage(
             middlewares: [

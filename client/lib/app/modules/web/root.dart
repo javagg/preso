@@ -189,8 +189,8 @@ class RootView extends GetView<RootController> {
               MenuAnchor(
                 controller: controller.menuController,
                 style: MenuStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.white),
-                  elevation: MaterialStateProperty.all(10),
+                  backgroundColor: WidgetStateProperty.all(Colors.white),
+                  elevation: WidgetStateProperty.all(10),
                 ),
                 menuChildren: [
                   MenuItemButton(
@@ -259,6 +259,14 @@ class RootView extends GetView<RootController> {
                         Get.offAndToNamed(Routes.tanents);
                       },
                       icon: const Icon(Icons.supervisor_account),
+                    ),
+                    SideMenuItem(
+                      title: 'menu.trainers'.tr,
+                      onTap: (index, _) {
+                        sideMenu.changePage(index);
+                        Get.offAndToNamed(Routes.trainers);
+                      },
+                      icon: const Icon(Icons.person_2),
                     ),
                     SideMenuItem(
                       title: 'orders'.tr,

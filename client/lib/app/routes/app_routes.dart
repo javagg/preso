@@ -13,6 +13,7 @@ abstract class Routes {
   static const login = Paths.login;
   static const dashboard = Paths.dashboard;
   static const members = Paths.members;
+  static const trainers = Paths.trainers;
   static const orders = Paths.orders;
   static const logs = Paths.logs;
 
@@ -40,6 +41,7 @@ abstract class Paths {
   static const login = '/login';
   static const dashboard = '/dashboard'; // only for web
   static const members = '/members';
+  static const trainers = '/trainers';
   static const orders = '/orders';
   static const logs = '/logs';
 

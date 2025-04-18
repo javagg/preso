@@ -36,6 +36,7 @@ class AppPages {
         bindings: [RootBinding()],
         participatesInRootNavigator: true,
         preventDuplicates: true,
+        transition: Transition.noTransition,
         children: [
           GetPage(
             name: Paths.dashboard,
@@ -139,6 +140,7 @@ class AppPages {
         //only enter this route when not authed
         EnsureNotAuthedMiddleware(),
       ],
+      transition: Transition.noTransition,
       participatesInRootNavigator: true,
       name: Paths.login,
       page: () => const LoginView(),

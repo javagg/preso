@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
-import 'app/controllers/theme_controller.dart';
 import 'serverpod_client.dart';
 import 'services/auth_service.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,6 @@ void main() async {
         validate: true,
       ) ??
       ThemeData();
-  final themeController = Get.put(ThemeController());
 
   runApp(
     GetMaterialApp(
@@ -35,8 +33,7 @@ void main() async {
       fallbackLocale: const Locale('en', 'US'),
       binds: [Bind.put(AuthService())],
       theme: theme,
-      darkTheme: theme,
-      themeMode: themeController.theme,
+      darkTheme: theme.copyWith(primaryColor: Colors.amber),
       getPages: AppPages.routes,
       initialRoute: AppPages.initial,
       translations: Languages.instance,

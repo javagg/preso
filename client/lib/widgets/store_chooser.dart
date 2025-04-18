@@ -102,14 +102,14 @@ class StoreList extends GetView<StoreListController> {
       children: [
         SearchBar(
           controller: TextEditingController(text: controller.searchQuery.value),
-          onChanged: controller.filterItems,
+          onChanged: controller.filter,
           leading: const Icon(Icons.search),
           trailing: [
             Obx(() => controller.isSearching.value
                 ? IconButton(
                     icon: const Icon(Icons.close),
                     onPressed: () {
-                      controller.filterItems('');
+                      controller.filter('');
                     },
                   )
                 : const SizedBox.shrink()),

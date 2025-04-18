@@ -164,6 +164,44 @@ class RootView extends GetView<RootController> {
             // }),
             centerTitle: true,
             actions: [
+              MenuAnchor(
+                  builder: (context, controller, child) {
+                    return IconButton(
+                      onPressed: () {
+                        if (controller.isOpen) {
+                          controller.close();
+                        } else {
+                          controller.open();
+                        }
+                      },
+                      icon: Get.isDarkMode
+                          ? const Icon(Icons.dark_mode_outlined)
+                          : const Icon(Icons.light_mode_outlined),
+                    );
+                  },
+                  menuChildren: [
+                    MenuItemButton(
+                      onPressed: () {
+                        Get.changeTheme(ThemeData.light());
+                        // Get.changeThemeMode(ThemeMode.light);
+                      },
+                      leadingIcon: Icon(Icons.light_mode_outlined),
+                      child: Text('Light Mode'),
+                    ),
+                    MenuItemButton(
+                      onPressed: () {
+                        Get.changeTheme(ThemeData.dark());
+                        // Get.changeThemeMode(ThemeMode.dark);
+                      },
+                      leadingIcon: Icon(Icons.dark_mode_outlined),
+                      child: Text('Dark Mode'),
+                    ),
+                    MenuItemButton(
+                      onPressed: () => Get.changeThemeMode(ThemeMode.system),
+                      leadingIcon: Icon(Icons.auto_delete_sharp),
+                      child: Text('Light Mode'),
+                    )
+                  ]),
               sessionManager.isSignedIn // AuthService.to.isLoggedInValue
                   ? IconButton(
                       icon: const Icon(Icons.logout),
@@ -235,6 +273,12 @@ class RootView extends GetView<RootController> {
                 flex: 1,
                 child: SideMenu(
                   controller: sideMenu,
+                  style: SideMenuStyle(
+                    selectedTitleTextStyle:
+                        Theme.of(context).textTheme.titleSmall,
+                    unselectedTitleTextStyle:
+                        Theme.of(context).textTheme.titleSmall,
+                  ),
                   items: [
                     SideMenuItem(
                       title: 'menu.dashboard'.tr,

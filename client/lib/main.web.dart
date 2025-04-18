@@ -93,6 +93,7 @@ void main() async {
       translationsKeys: AppTranslation.translations,
       unknownRoute: GetPage(name: '/not-found', page: () => const NotFound()),
       theme: theme,
+      darkTheme: theme.copyWith(primaryColor: Colors.teal),
       // builder: (context, child) {
       //   return FutureBuilder<void>(
       //     key: ValueKey('initFuture'),

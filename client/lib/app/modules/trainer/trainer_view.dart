@@ -266,180 +266,197 @@ class FormController extends GetxController {
 }
 
 class TrainerDialog extends GetResponsiveView<FormController> {
-  TrainerDialog({super.key, bool update = false});
+  final bool update;
+  TrainerDialog({super.key, this.update = false});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16),
-      child: FormBuilder(
-        key: controller.formKey,
-        child: Column(
-          children: [
-            FormBuilderTextField(
-              name: 'username',
-              decoration: const InputDecoration(
-                labelText: '用户名',
-                hintText: '输入3-20个字符',
-              ),
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(errorText: '用户名不能为空'),
-                FormBuilderValidators.minLength(3, errorText: '至少3个字符'),
-                FormBuilderValidators.maxLength(20, errorText: '最多20个字符'),
-                FormBuilderValidators.match(
-                  r'^[a-zA-Z0-9_]+$',
-                  errorText: '只能包含字母、数字和下划线',
+    return AlertDialog(
+      title: Text(update ? "编辑" : "创建"),
+      content: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: FormBuilder(
+          key: controller.formKey,
+          child: Column(
+            children: [
+              FormBuilderTextField(
+                name: 'username',
+                decoration: const InputDecoration(
+                  labelText: '用户名',
+                  hintText: '输入3-20个字符',
                 ),
-              ]),
-            ),
-            const SizedBox(height: 16),
-
-            // 邮箱输入
-            FormBuilderTextField(
-              name: 'email',
-              decoration: const InputDecoration(
-                labelText: '邮箱',
-                hintText: '输入有效的邮箱地址',
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(errorText: '用户名不能为空'),
+                  FormBuilderValidators.minLength(3, errorText: '至少3个字符'),
+                  FormBuilderValidators.maxLength(20, errorText: '最多20个字符'),
+                  FormBuilderValidators.match(
+                    r'^[a-zA-Z0-9_]+$',
+                    errorText: '只能包含字母、数字和下划线',
+                  ),
+                ]),
               ),
-              keyboardType: TextInputType.emailAddress,
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(errorText: '邮箱不能为空'),
-                FormBuilderValidators.email(errorText: '请输入有效的邮箱'),
-              ]),
-            ),
-            const SizedBox(height: 16),
-
-            // 密码输入
-            FormBuilderTextField(
-              name: 'password',
-              decoration: const InputDecoration(
-                labelText: '密码',
-                hintText: '至少8个字符，包含大写字母和数字',
-              ),
-              obscureText: true,
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(errorText: '密码不能为空'),
-                FormBuilderValidators.minLength(8, errorText: '至少8个字符'),
-                FormBuilderValidators.match(
-                  r'^(?=.*[A-Z])(?=.*\d).+$',
-                  errorText: '必须包含大写字母和数字',
+              const SizedBox(height: 16),
+              // 邮箱输入
+              FormBuilderTextField(
+                name: 'email',
+                decoration: const InputDecoration(
+                  labelText: '邮箱',
+                  hintText: '输入有效的邮箱地址',
                 ),
-              ]),
-            ),
-            const SizedBox(height: 16),
-
-            // 数字输入 - 年龄
-            FormBuilderTextField(
-              name: 'age',
-              decoration: const InputDecoration(
-                labelText: '年龄',
-                hintText: '输入18-120之间的数字',
+                keyboardType: TextInputType.emailAddress,
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(errorText: '邮箱不能为空'),
+                  FormBuilderValidators.email(errorText: '请输入有效的邮箱'),
+                ]),
               ),
-              keyboardType: TextInputType.number,
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(errorText: '年龄不能为空'),
-                FormBuilderValidators.numeric(errorText: '请输入数字'),
-                FormBuilderValidators.min(18, errorText: '最小年龄18岁'),
-                FormBuilderValidators.max(120, errorText: '最大年龄120岁'),
-              ]),
-            ),
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            // 日期选择
-            FormBuilderDateTimePicker(
-              name: 'birth_date',
-              decoration: const InputDecoration(
-                labelText: '出生日期',
-                hintText: '选择日期',
+              // 密码输入
+              FormBuilderTextField(
+                name: 'password',
+                decoration: const InputDecoration(
+                  labelText: '密码',
+                  hintText: '至少8个字符，包含大写字母和数字',
+                ),
+                obscureText: true,
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(errorText: '密码不能为空'),
+                  FormBuilderValidators.minLength(8, errorText: '至少8个字符'),
+                  FormBuilderValidators.match(
+                    r'^(?=.*[A-Z])(?=.*\d).+$',
+                    errorText: '必须包含大写字母和数字',
+                  ),
+                ]),
               ),
-              inputType: InputType.date,
-              format: DateFormat('yyyy-MM-dd'),
-              firstDate: DateTime(1900),
-              lastDate: DateTime.now(),
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(errorText: '请选择出生日期'),
-              ]),
-            ),
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            // 下拉选择
-            FormBuilderDropdown<String>(
-              name: 'gender',
-              decoration: const InputDecoration(
-                labelText: '性别',
-                hintText: '选择性别',
+              // 数字输入 - 年龄
+              FormBuilderTextField(
+                name: 'age',
+                decoration: const InputDecoration(
+                  labelText: '年龄',
+                  hintText: '输入18-120之间的数字',
+                ),
+                keyboardType: TextInputType.number,
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(errorText: '年龄不能为空'),
+                  FormBuilderValidators.numeric(errorText: '请输入数字'),
+                  FormBuilderValidators.min(18, errorText: '最小年龄18岁'),
+                  FormBuilderValidators.max(120, errorText: '最大年龄120岁'),
+                ]),
               ),
-              items: ['男', '女', '其他']
-                  .map((gender) => DropdownMenuItem(
-                        value: gender,
-                        child: Text(gender),
-                      ))
-                  .toList(),
-              validator: FormBuilderValidators.required(errorText: '请选择性别'),
-            ),
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            // 单选按钮
-            FormBuilderRadioGroup<String>(
-              name: 'education',
-              decoration: const InputDecoration(
-                labelText: '学历',
+              // 日期选择
+              FormBuilderDateTimePicker(
+                name: 'birth_date',
+                decoration: const InputDecoration(
+                  labelText: '出生日期',
+                  hintText: '选择日期',
+                ),
+                inputType: InputType.date,
+                format: DateFormat('yyyy-MM-dd'),
+                firstDate: DateTime(1900),
+                lastDate: DateTime.now(),
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(errorText: '请选择出生日期'),
+                ]),
               ),
-              options: ['高中', '大专', '本科', '硕士', '博士']
-                  .map((edu) => FormBuilderFieldOption(
-                        value: edu,
-                        child: Text(edu),
-                      ))
-                  .toList(),
-              validator: FormBuilderValidators.required(errorText: '请选择学历'),
-            ),
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            // 多选框
-            FormBuilderCheckboxGroup<String>(
-              name: 'hobbies',
-              decoration: const InputDecoration(
-                labelText: '兴趣爱好',
+              // 下拉选择
+              FormBuilderDropdown<String>(
+                name: 'gender',
+                decoration: const InputDecoration(
+                  labelText: '性别',
+                  hintText: '选择性别',
+                ),
+                items: ['男', '女', '其他']
+                    .map((gender) => DropdownMenuItem(
+                          value: gender,
+                          child: Text(gender),
+                        ))
+                    .toList(),
+                validator: FormBuilderValidators.required(errorText: '请选择性别'),
               ),
-              options: [
-                '阅读',
-                '运动',
-                '音乐',
-                '旅行',
-                '游戏',
-                '编程',
-              ]
-                  .map((hobby) => FormBuilderFieldOption(
-                        value: hobby,
-                        child: Text(hobby),
-                      ))
-                  .toList(),
-              validator: FormBuilderValidators.compose([
-                FormBuilderValidators.required(errorText: '请至少选择一项'),
-                FormBuilderValidators.minLength(1, errorText: '请至少选择一项'),
-              ]),
-            ),
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-            // 开关
-            FormBuilderSwitch(
-              name: 'receive_newsletter',
-              title: const Text('接收新闻邮件'),
-              initialValue: false,
-            ),
-            const SizedBox(height: 24),
+              // 单选按钮
+              FormBuilderRadioGroup<String>(
+                name: 'education',
+                decoration: const InputDecoration(
+                  labelText: '学历',
+                ),
+                options: ['高中', '大专', '本科', '硕士', '博士']
+                    .map((edu) => FormBuilderFieldOption(
+                          value: edu,
+                          child: Text(edu),
+                        ))
+                    .toList(),
+                validator: FormBuilderValidators.required(errorText: '请选择学历'),
+              ),
+              const SizedBox(height: 16),
 
-            // 提交按钮
-            Obx(() => ElevatedButton(
-                  onPressed:
-                      controller.isLoading.value ? null : controller.submitForm,
-                  child: controller.isLoading.value
-                      ? const CircularProgressIndicator()
-                      : const Text('提交'),
-                )),
-          ],
+              // 多选框
+              FormBuilderCheckboxGroup<String>(
+                name: 'hobbies',
+                decoration: const InputDecoration(
+                  labelText: '兴趣爱好',
+                ),
+                options: [
+                  '阅读',
+                  '运动',
+                  '音乐',
+                  '旅行',
+                  '游戏',
+                  '编程',
+                ]
+                    .map((hobby) => FormBuilderFieldOption(
+                          value: hobby,
+                          child: Text(hobby),
+                        ))
+                    .toList(),
+                validator: FormBuilderValidators.compose([
+                  FormBuilderValidators.required(errorText: '请至少选择一项'),
+                  FormBuilderValidators.minLength(1, errorText: '请至少选择一项'),
+                ]),
+              ),
+              const SizedBox(height: 16),
+
+              // 开关
+              FormBuilderSwitch(
+                name: 'receive_newsletter',
+                title: const Text('接收新闻邮件'),
+                initialValue: false,
+              ),
+              const SizedBox(height: 24),
+
+              // 提交按钮
+              Obx(() => ElevatedButton(
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : controller.submitForm,
+                    child: controller.isLoading.value
+                        ? const CircularProgressIndicator()
+                        : const Text('提交'),
+                  )),
+            ],
+          ),
         ),
       ),
+      actions: <Widget>[
+        TextButton(
+          child: Text("取消"),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        TextButton(
+          child: Text("确定"),
+          onPressed: () {
+            // 执行删除操作
+            // Navigator.of(context).pop(_withTree);
+          },
+        ),
+      ],
     );
   }
 }
@@ -460,23 +477,7 @@ class TrainerView extends GetView<TrainerViewController> {
                   context: context,
                   barrierDismissible: false,
                   builder: (context) {
-                    return AlertDialog(
-                      title: Text("提示"),
-                      content: TrainerDialog(),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text("取消"),
-                          onPressed: () => Navigator.of(context).pop(),
-                        ),
-                        TextButton(
-                          child: Text("删除"),
-                          onPressed: () {
-                            // 执行删除操作
-                            // Navigator.of(context).pop(_withTree);
-                          },
-                        ),
-                      ],
-                    );
+                    return TrainerDialog();
                   },
                 );
               },

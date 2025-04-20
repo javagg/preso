@@ -10,25 +10,48 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
+import 'store.dart' as _i2;
 
 abstract class Product implements _i1.TableRow, _i1.ProtocolSerialization {
   Product._({
     this.id,
+    required this.tenantId,
     required this.name,
     required this.description,
-  });
+    bool? offShelf,
+    required this.price,
+    required this.storeId,
+    this.store,
+    bool? applicableToAllStores,
+  })  : offShelf = offShelf ?? true,
+        applicableToAllStores = applicableToAllStores ?? false;
 
   factory Product({
     int? id,
+    required int tenantId,
     required String name,
     required String description,
+    bool? offShelf,
+    required double price,
+    required int storeId,
+    _i2.Store? store,
+    bool? applicableToAllStores,
   }) = _ProductImpl;
 
   factory Product.fromJson(Map<String, dynamic> jsonSerialization) {
     return Product(
       id: jsonSerialization['id'] as int?,
+      tenantId: jsonSerialization['tenantId'] as int,
       name: jsonSerialization['name'] as String,
       description: jsonSerialization['description'] as String,
+      offShelf: jsonSerialization['offShelf'] as bool,
+      price: (jsonSerialization['price'] as num).toDouble(),
+      storeId: jsonSerialization['storeId'] as int,
+      store: jsonSerialization['store'] == null
+          ? null
+          : _i2.Store.fromJson(
+              (jsonSerialization['store'] as Map<String, dynamic>)),
+      applicableToAllStores: jsonSerialization['applicableToAllStores'] as bool,
     );
   }
 
@@ -39,9 +62,21 @@ abstract class Product implements _i1.TableRow, _i1.ProtocolSerialization {
   @override
   int? id;
 
+  int tenantId;
+
   String name;
 
   String description;
+
+  bool offShelf;
+
+  double price;
+
+  int storeId;
+
+  _i2.Store? store;
+
+  bool applicableToAllStores;
 
   @override
   _i1.Table get table => t;
@@ -51,15 +86,27 @@ abstract class Product implements _i1.TableRow, _i1.ProtocolSerialization {
   @_i1.useResult
   Product copyWith({
     int? id,
+    int? tenantId,
     String? name,
     String? description,
+    bool? offShelf,
+    double? price,
+    int? storeId,
+    _i2.Store? store,
+    bool? applicableToAllStores,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
+      'tenantId': tenantId,
       'name': name,
       'description': description,
+      'offShelf': offShelf,
+      'price': price,
+      'storeId': storeId,
+      if (store != null) 'store': store?.toJson(),
+      'applicableToAllStores': applicableToAllStores,
     };
   }
 
@@ -67,13 +114,19 @@ abstract class Product implements _i1.TableRow, _i1.ProtocolSerialization {
   Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
+      'tenantId': tenantId,
       'name': name,
       'description': description,
+      'offShelf': offShelf,
+      'price': price,
+      'storeId': storeId,
+      if (store != null) 'store': store?.toJsonForProtocol(),
+      'applicableToAllStores': applicableToAllStores,
     };
   }
 
-  static ProductInclude include() {
-    return ProductInclude._();
+  static ProductInclude include({_i2.StoreInclude? store}) {
+    return ProductInclude._(store: store);
   }
 
   static ProductIncludeList includeList({
@@ -107,12 +160,24 @@ class _Undefined {}
 class _ProductImpl extends Product {
   _ProductImpl({
     int? id,
+    required int tenantId,
     required String name,
     required String description,
+    bool? offShelf,
+    required double price,
+    required int storeId,
+    _i2.Store? store,
+    bool? applicableToAllStores,
   }) : super._(
           id: id,
+          tenantId: tenantId,
           name: name,
           description: description,
+          offShelf: offShelf,
+          price: price,
+          storeId: storeId,
+          store: store,
+          applicableToAllStores: applicableToAllStores,
         );
 
   /// Returns a shallow copy of this [Product]
@@ -121,19 +186,36 @@ class _ProductImpl extends Product {
   @override
   Product copyWith({
     Object? id = _Undefined,
+    int? tenantId,
     String? name,
     String? description,
+    bool? offShelf,
+    double? price,
+    int? storeId,
+    Object? store = _Undefined,
+    bool? applicableToAllStores,
   }) {
     return Product(
       id: id is int? ? id : this.id,
+      tenantId: tenantId ?? this.tenantId,
       name: name ?? this.name,
       description: description ?? this.description,
+      offShelf: offShelf ?? this.offShelf,
+      price: price ?? this.price,
+      storeId: storeId ?? this.storeId,
+      store: store is _i2.Store? ? store : this.store?.copyWith(),
+      applicableToAllStores:
+          applicableToAllStores ?? this.applicableToAllStores,
     );
   }
 }
 
 class ProductTable extends _i1.Table {
   ProductTable({super.tableRelation}) : super(tableName: 'product') {
+    tenantId = _i1.ColumnInt(
+      'tenantId',
+      this,
+    );
     name = _i1.ColumnString(
       'name',
       this,
@@ -142,25 +224,85 @@ class ProductTable extends _i1.Table {
       'description',
       this,
     );
+    offShelf = _i1.ColumnBool(
+      'offShelf',
+      this,
+      hasDefault: true,
+    );
+    price = _i1.ColumnDouble(
+      'price',
+      this,
+    );
+    storeId = _i1.ColumnInt(
+      'storeId',
+      this,
+    );
+    applicableToAllStores = _i1.ColumnBool(
+      'applicableToAllStores',
+      this,
+      hasDefault: true,
+    );
   }
+
+  late final _i1.ColumnInt tenantId;
 
   late final _i1.ColumnString name;
 
   late final _i1.ColumnString description;
 
+  late final _i1.ColumnBool offShelf;
+
+  late final _i1.ColumnDouble price;
+
+  late final _i1.ColumnInt storeId;
+
+  _i2.StoreTable? _store;
+
+  late final _i1.ColumnBool applicableToAllStores;
+
+  _i2.StoreTable get store {
+    if (_store != null) return _store!;
+    _store = _i1.createRelationTable(
+      relationFieldName: 'store',
+      field: Product.t.storeId,
+      foreignField: _i2.Store.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.StoreTable(tableRelation: foreignTableRelation),
+    );
+    return _store!;
+  }
+
   @override
   List<_i1.Column> get columns => [
         id,
+        tenantId,
         name,
         description,
+        offShelf,
+        price,
+        storeId,
+        applicableToAllStores,
       ];
+
+  @override
+  _i1.Table? getRelationTable(String relationField) {
+    if (relationField == 'store') {
+      return store;
+    }
+    return null;
+  }
 }
 
 class ProductInclude extends _i1.IncludeObject {
-  ProductInclude._();
+  ProductInclude._({_i2.StoreInclude? store}) {
+    _store = store;
+  }
+
+  _i2.StoreInclude? _store;
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {'store': _store};
 
   @override
   _i1.Table get table => Product.t;
@@ -188,6 +330,8 @@ class ProductIncludeList extends _i1.IncludeList {
 
 class ProductRepository {
   const ProductRepository._();
+
+  final attachRow = const ProductAttachRowRepository._();
 
   /// Returns a list of [Product]s matching the given query parameters.
   ///
@@ -220,6 +364,7 @@ class ProductRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<ProductTable>? orderByList,
     _i1.Transaction? transaction,
+    ProductInclude? include,
   }) async {
     return session.db.find<Product>(
       where: where?.call(Product.t),
@@ -229,6 +374,7 @@ class ProductRepository {
       limit: limit,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -257,6 +403,7 @@ class ProductRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<ProductTable>? orderByList,
     _i1.Transaction? transaction,
+    ProductInclude? include,
   }) async {
     return session.db.findFirstRow<Product>(
       where: where?.call(Product.t),
@@ -265,6 +412,7 @@ class ProductRepository {
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -273,10 +421,12 @@ class ProductRepository {
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
+    ProductInclude? include,
   }) async {
     return session.db.findById<Product>(
       id,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -394,6 +544,33 @@ class ProductRepository {
     return session.db.count<Product>(
       where: where?.call(Product.t),
       limit: limit,
+      transaction: transaction,
+    );
+  }
+}
+
+class ProductAttachRowRepository {
+  const ProductAttachRowRepository._();
+
+  /// Creates a relation between the given [Product] and [Store]
+  /// by setting the [Product]'s foreign key `storeId` to refer to the [Store].
+  Future<void> store(
+    _i1.Session session,
+    Product product,
+    _i2.Store store, {
+    _i1.Transaction? transaction,
+  }) async {
+    if (product.id == null) {
+      throw ArgumentError.notNull('product.id');
+    }
+    if (store.id == null) {
+      throw ArgumentError.notNull('store.id');
+    }
+
+    var $product = product.copyWith(storeId: store.id);
+    await session.db.updateRow<Product>(
+      $product,
+      columns: [Product.t.storeId],
       transaction: transaction,
     );
   }

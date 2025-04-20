@@ -28,19 +28,21 @@ import 'membership.dart' as _i16;
 import 'note.dart' as _i17;
 import 'op_type.dart' as _i18;
 import 'order.dart' as _i19;
-import 'permission.dart' as _i20;
-import 'product.dart' as _i21;
-import 'role.dart' as _i22;
-import 'serving.dart' as _i23;
-import 'store.dart' as _i24;
-import 'tenant.dart' as _i25;
-import 'trade/card_type.dart' as _i26;
-import 'trainer.dart' as _i27;
-import 'user.dart' as _i28;
-import 'package:preso_server/src/generated/note.dart' as _i29;
-import 'package:preso_server/src/generated/store.dart' as _i30;
-import 'package:preso_server/src/generated/tenant.dart' as _i31;
-import 'package:preso_server/src/generated/user.dart' as _i32;
+import 'order_status.dart' as _i20;
+import 'payment_method.dart' as _i21;
+import 'permission.dart' as _i22;
+import 'product.dart' as _i23;
+import 'role.dart' as _i24;
+import 'serving.dart' as _i25;
+import 'store.dart' as _i26;
+import 'tenant.dart' as _i27;
+import 'trade/card_type.dart' as _i28;
+import 'trainer.dart' as _i29;
+import 'user.dart' as _i30;
+import 'package:preso_server/src/generated/note.dart' as _i31;
+import 'package:preso_server/src/generated/store.dart' as _i32;
+import 'package:preso_server/src/generated/tenant.dart' as _i33;
+import 'package:preso_server/src/generated/user.dart' as _i34;
 export 'address.dart';
 export 'appointment.dart';
 export 'bargain.dart';
@@ -57,6 +59,8 @@ export 'membership.dart';
 export 'note.dart';
 export 'op_type.dart';
 export 'order.dart';
+export 'order_status.dart';
+export 'payment_method.dart';
 export 'permission.dart';
 export 'product.dart';
 export 'role.dart';
@@ -775,13 +779,70 @@ class Protocol extends _i1.SerializationManagerServer {
           columnDefault: 'nextval(\'order_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
-          name: 'no',
+          name: 'price',
+          columnType: _i2.ColumnType.doublePrecision,
+          isNullable: false,
+          dartType: 'double',
+        ),
+        _i2.ColumnDefinition(
+          name: 'productId',
           columnType: _i2.ColumnType.bigint,
           isNullable: false,
           dartType: 'int',
         ),
+        _i2.ColumnDefinition(
+          name: 'createrId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'createdAt',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+        _i2.ColumnDefinition(
+          name: 'updatedAt',
+          columnType: _i2.ColumnType.timestampWithoutTimeZone,
+          isNullable: false,
+          dartType: 'DateTime',
+        ),
+        _i2.ColumnDefinition(
+          name: 'paymentMethod',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'protocol:PaymentMethod',
+        ),
+        _i2.ColumnDefinition(
+          name: 'status',
+          columnType: _i2.ColumnType.text,
+          isNullable: false,
+          dartType: 'protocol:OrderStatus',
+        ),
       ],
-      foreignKeys: [],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'order_fk_0',
+          columns: ['productId'],
+          referenceTable: 'product',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+        _i2.ForeignKeyDefinition(
+          constraintName: 'order_fk_1',
+          columns: ['createrId'],
+          referenceTable: 'user',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        ),
+      ],
       indexes: [
         _i2.IndexDefinition(
           indexName: 'order_pkey',
@@ -857,6 +918,12 @@ class Protocol extends _i1.SerializationManagerServer {
           columnDefault: 'nextval(\'product_id_seq\'::regclass)',
         ),
         _i2.ColumnDefinition(
+          name: 'tenantId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
           name: 'name',
           columnType: _i2.ColumnType.text,
           isNullable: false,
@@ -868,8 +935,45 @@ class Protocol extends _i1.SerializationManagerServer {
           isNullable: false,
           dartType: 'String',
         ),
+        _i2.ColumnDefinition(
+          name: 'offShelf',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'true',
+        ),
+        _i2.ColumnDefinition(
+          name: 'price',
+          columnType: _i2.ColumnType.doublePrecision,
+          isNullable: false,
+          dartType: 'double',
+        ),
+        _i2.ColumnDefinition(
+          name: 'storeId',
+          columnType: _i2.ColumnType.bigint,
+          isNullable: false,
+          dartType: 'int',
+        ),
+        _i2.ColumnDefinition(
+          name: 'applicableToAllStores',
+          columnType: _i2.ColumnType.boolean,
+          isNullable: false,
+          dartType: 'bool',
+          columnDefault: 'false',
+        ),
       ],
-      foreignKeys: [],
+      foreignKeys: [
+        _i2.ForeignKeyDefinition(
+          constraintName: 'product_fk_0',
+          columns: ['storeId'],
+          referenceTable: 'store',
+          referenceTableSchema: 'public',
+          referenceColumns: ['id'],
+          onUpdate: _i2.ForeignKeyAction.noAction,
+          onDelete: _i2.ForeignKeyAction.noAction,
+          matchType: null,
+        )
+      ],
       indexes: [
         _i2.IndexDefinition(
           indexName: 'product_pkey',
@@ -1405,32 +1509,38 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i19.Order) {
       return _i19.Order.fromJson(data) as T;
     }
-    if (t == _i20.Permission) {
-      return _i20.Permission.fromJson(data) as T;
+    if (t == _i20.OrderStatus) {
+      return _i20.OrderStatus.fromJson(data) as T;
     }
-    if (t == _i21.Product) {
-      return _i21.Product.fromJson(data) as T;
+    if (t == _i21.PaymentMethod) {
+      return _i21.PaymentMethod.fromJson(data) as T;
     }
-    if (t == _i22.Role) {
-      return _i22.Role.fromJson(data) as T;
+    if (t == _i22.Permission) {
+      return _i22.Permission.fromJson(data) as T;
     }
-    if (t == _i23.Serving) {
-      return _i23.Serving.fromJson(data) as T;
+    if (t == _i23.Product) {
+      return _i23.Product.fromJson(data) as T;
     }
-    if (t == _i24.Store) {
-      return _i24.Store.fromJson(data) as T;
+    if (t == _i24.Role) {
+      return _i24.Role.fromJson(data) as T;
     }
-    if (t == _i25.Tenant) {
-      return _i25.Tenant.fromJson(data) as T;
+    if (t == _i25.Serving) {
+      return _i25.Serving.fromJson(data) as T;
     }
-    if (t == _i26.CardType) {
-      return _i26.CardType.fromJson(data) as T;
+    if (t == _i26.Store) {
+      return _i26.Store.fromJson(data) as T;
     }
-    if (t == _i27.Trainer) {
-      return _i27.Trainer.fromJson(data) as T;
+    if (t == _i27.Tenant) {
+      return _i27.Tenant.fromJson(data) as T;
     }
-    if (t == _i28.User) {
-      return _i28.User.fromJson(data) as T;
+    if (t == _i28.CardType) {
+      return _i28.CardType.fromJson(data) as T;
+    }
+    if (t == _i29.Trainer) {
+      return _i29.Trainer.fromJson(data) as T;
+    }
+    if (t == _i30.User) {
+      return _i30.User.fromJson(data) as T;
     }
     if (t == _i1.getType<_i4.Address?>()) {
       return (data != null ? _i4.Address.fromJson(data) : null) as T;
@@ -1480,32 +1590,38 @@ class Protocol extends _i1.SerializationManagerServer {
     if (t == _i1.getType<_i19.Order?>()) {
       return (data != null ? _i19.Order.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i20.Permission?>()) {
-      return (data != null ? _i20.Permission.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i20.OrderStatus?>()) {
+      return (data != null ? _i20.OrderStatus.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i21.Product?>()) {
-      return (data != null ? _i21.Product.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i21.PaymentMethod?>()) {
+      return (data != null ? _i21.PaymentMethod.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i22.Role?>()) {
-      return (data != null ? _i22.Role.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i22.Permission?>()) {
+      return (data != null ? _i22.Permission.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i23.Serving?>()) {
-      return (data != null ? _i23.Serving.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i23.Product?>()) {
+      return (data != null ? _i23.Product.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i24.Store?>()) {
-      return (data != null ? _i24.Store.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i24.Role?>()) {
+      return (data != null ? _i24.Role.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i25.Tenant?>()) {
-      return (data != null ? _i25.Tenant.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i25.Serving?>()) {
+      return (data != null ? _i25.Serving.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i26.CardType?>()) {
-      return (data != null ? _i26.CardType.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i26.Store?>()) {
+      return (data != null ? _i26.Store.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i27.Trainer?>()) {
-      return (data != null ? _i27.Trainer.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i27.Tenant?>()) {
+      return (data != null ? _i27.Tenant.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i28.User?>()) {
-      return (data != null ? _i28.User.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i28.CardType?>()) {
+      return (data != null ? _i28.CardType.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i29.Trainer?>()) {
+      return (data != null ? _i29.Trainer.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i30.User?>()) {
+      return (data != null ? _i30.User.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<List<_i5.Appointment>?>()) {
       return (data != null
@@ -1522,9 +1638,9 @@ class Protocol extends _i1.SerializationManagerServer {
           ? (data as List).map((e) => deserialize<_i8.Card>(e)).toList()
           : null) as T;
     }
-    if (t == _i1.getType<List<_i23.Serving>?>()) {
+    if (t == _i1.getType<List<_i25.Serving>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i23.Serving>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i25.Serving>(e)).toList()
           : null) as T;
     }
     if (t == _i1.getType<List<_i16.Membership>?>()) {
@@ -1532,9 +1648,9 @@ class Protocol extends _i1.SerializationManagerServer {
           ? (data as List).map((e) => deserialize<_i16.Membership>(e)).toList()
           : null) as T;
     }
-    if (t == _i1.getType<List<_i23.Serving>?>()) {
+    if (t == _i1.getType<List<_i25.Serving>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i23.Serving>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i25.Serving>(e)).toList()
           : null) as T;
     }
     if (t == _i1.getType<List<_i5.Appointment>?>()) {
@@ -1542,20 +1658,20 @@ class Protocol extends _i1.SerializationManagerServer {
           ? (data as List).map((e) => deserialize<_i5.Appointment>(e)).toList()
           : null) as T;
     }
-    if (t == List<_i29.Note>) {
-      return (data as List).map((e) => deserialize<_i29.Note>(e)).toList() as T;
+    if (t == List<_i31.Note>) {
+      return (data as List).map((e) => deserialize<_i31.Note>(e)).toList() as T;
     }
-    if (t == List<_i30.Store>) {
-      return (data as List).map((e) => deserialize<_i30.Store>(e)).toList()
+    if (t == List<_i32.Store>) {
+      return (data as List).map((e) => deserialize<_i32.Store>(e)).toList()
           as T;
     }
-    if (t == List<_i31.Tenant>) {
-      return (data as List).map((e) => deserialize<_i31.Tenant>(e)).toList()
+    if (t == List<_i33.Tenant>) {
+      return (data as List).map((e) => deserialize<_i33.Tenant>(e)).toList()
           as T;
     }
-    if (t == _i1.getType<List<_i32.User>?>()) {
+    if (t == _i1.getType<List<_i34.User>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i32.User>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i34.User>(e)).toList()
           : null) as T;
     }
     try {
@@ -1619,31 +1735,37 @@ class Protocol extends _i1.SerializationManagerServer {
     if (data is _i19.Order) {
       return 'Order';
     }
-    if (data is _i20.Permission) {
+    if (data is _i20.OrderStatus) {
+      return 'OrderStatus';
+    }
+    if (data is _i21.PaymentMethod) {
+      return 'PaymentMethod';
+    }
+    if (data is _i22.Permission) {
       return 'Permission';
     }
-    if (data is _i21.Product) {
+    if (data is _i23.Product) {
       return 'Product';
     }
-    if (data is _i22.Role) {
+    if (data is _i24.Role) {
       return 'Role';
     }
-    if (data is _i23.Serving) {
+    if (data is _i25.Serving) {
       return 'Serving';
     }
-    if (data is _i24.Store) {
+    if (data is _i26.Store) {
       return 'Store';
     }
-    if (data is _i25.Tenant) {
+    if (data is _i27.Tenant) {
       return 'Tenant';
     }
-    if (data is _i26.CardType) {
+    if (data is _i28.CardType) {
       return 'CardType';
     }
-    if (data is _i27.Trainer) {
+    if (data is _i29.Trainer) {
       return 'Trainer';
     }
-    if (data is _i28.User) {
+    if (data is _i30.User) {
       return 'User';
     }
     className = _i2.Protocol().getClassNameForObject(data);
@@ -1711,32 +1833,38 @@ class Protocol extends _i1.SerializationManagerServer {
     if (dataClassName == 'Order') {
       return deserialize<_i19.Order>(data['data']);
     }
+    if (dataClassName == 'OrderStatus') {
+      return deserialize<_i20.OrderStatus>(data['data']);
+    }
+    if (dataClassName == 'PaymentMethod') {
+      return deserialize<_i21.PaymentMethod>(data['data']);
+    }
     if (dataClassName == 'Permission') {
-      return deserialize<_i20.Permission>(data['data']);
+      return deserialize<_i22.Permission>(data['data']);
     }
     if (dataClassName == 'Product') {
-      return deserialize<_i21.Product>(data['data']);
+      return deserialize<_i23.Product>(data['data']);
     }
     if (dataClassName == 'Role') {
-      return deserialize<_i22.Role>(data['data']);
+      return deserialize<_i24.Role>(data['data']);
     }
     if (dataClassName == 'Serving') {
-      return deserialize<_i23.Serving>(data['data']);
+      return deserialize<_i25.Serving>(data['data']);
     }
     if (dataClassName == 'Store') {
-      return deserialize<_i24.Store>(data['data']);
+      return deserialize<_i26.Store>(data['data']);
     }
     if (dataClassName == 'Tenant') {
-      return deserialize<_i25.Tenant>(data['data']);
+      return deserialize<_i27.Tenant>(data['data']);
     }
     if (dataClassName == 'CardType') {
-      return deserialize<_i26.CardType>(data['data']);
+      return deserialize<_i28.CardType>(data['data']);
     }
     if (dataClassName == 'Trainer') {
-      return deserialize<_i27.Trainer>(data['data']);
+      return deserialize<_i29.Trainer>(data['data']);
     }
     if (dataClassName == 'User') {
-      return deserialize<_i28.User>(data['data']);
+      return deserialize<_i30.User>(data['data']);
     }
     if (dataClassName.startsWith('serverpod.')) {
       data['className'] = dataClassName.substring(10);
@@ -1788,22 +1916,22 @@ class Protocol extends _i1.SerializationManagerServer {
         return _i17.Note.t;
       case _i19.Order:
         return _i19.Order.t;
-      case _i20.Permission:
-        return _i20.Permission.t;
-      case _i21.Product:
-        return _i21.Product.t;
-      case _i22.Role:
-        return _i22.Role.t;
-      case _i23.Serving:
-        return _i23.Serving.t;
-      case _i24.Store:
-        return _i24.Store.t;
-      case _i25.Tenant:
-        return _i25.Tenant.t;
-      case _i27.Trainer:
-        return _i27.Trainer.t;
-      case _i28.User:
-        return _i28.User.t;
+      case _i22.Permission:
+        return _i22.Permission.t;
+      case _i23.Product:
+        return _i23.Product.t;
+      case _i24.Role:
+        return _i24.Role.t;
+      case _i25.Serving:
+        return _i25.Serving.t;
+      case _i26.Store:
+        return _i26.Store.t;
+      case _i27.Tenant:
+        return _i27.Tenant.t;
+      case _i29.Trainer:
+        return _i29.Trainer.t;
+      case _i30.User:
+        return _i30.User.t;
     }
     return null;
   }

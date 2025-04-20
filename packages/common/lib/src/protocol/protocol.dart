@@ -26,20 +26,22 @@ import 'membership.dart' as _i14;
 import 'note.dart' as _i15;
 import 'op_type.dart' as _i16;
 import 'order.dart' as _i17;
-import 'permission.dart' as _i18;
-import 'product.dart' as _i19;
-import 'role.dart' as _i20;
-import 'serving.dart' as _i21;
-import 'store.dart' as _i22;
-import 'tenant.dart' as _i23;
-import 'trade/card_type.dart' as _i24;
-import 'trainer.dart' as _i25;
-import 'user.dart' as _i26;
-import 'package:preso_common/src/protocol/note.dart' as _i27;
-import 'package:preso_common/src/protocol/store.dart' as _i28;
-import 'package:preso_common/src/protocol/tenant.dart' as _i29;
-import 'package:preso_common/src/protocol/user.dart' as _i30;
-import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i31;
+import 'order_status.dart' as _i18;
+import 'payment_method.dart' as _i19;
+import 'permission.dart' as _i20;
+import 'product.dart' as _i21;
+import 'role.dart' as _i22;
+import 'serving.dart' as _i23;
+import 'store.dart' as _i24;
+import 'tenant.dart' as _i25;
+import 'trade/card_type.dart' as _i26;
+import 'trainer.dart' as _i27;
+import 'user.dart' as _i28;
+import 'package:preso_common/src/protocol/note.dart' as _i29;
+import 'package:preso_common/src/protocol/store.dart' as _i30;
+import 'package:preso_common/src/protocol/tenant.dart' as _i31;
+import 'package:preso_common/src/protocol/user.dart' as _i32;
+import 'package:serverpod_auth_client/serverpod_auth_client.dart' as _i33;
 export 'address.dart';
 export 'appointment.dart';
 export 'bargain.dart';
@@ -56,6 +58,8 @@ export 'membership.dart';
 export 'note.dart';
 export 'op_type.dart';
 export 'order.dart';
+export 'order_status.dart';
+export 'payment_method.dart';
 export 'permission.dart';
 export 'product.dart';
 export 'role.dart';
@@ -128,32 +132,38 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i17.Order) {
       return _i17.Order.fromJson(data) as T;
     }
-    if (t == _i18.Permission) {
-      return _i18.Permission.fromJson(data) as T;
+    if (t == _i18.OrderStatus) {
+      return _i18.OrderStatus.fromJson(data) as T;
     }
-    if (t == _i19.Product) {
-      return _i19.Product.fromJson(data) as T;
+    if (t == _i19.PaymentMethod) {
+      return _i19.PaymentMethod.fromJson(data) as T;
     }
-    if (t == _i20.Role) {
-      return _i20.Role.fromJson(data) as T;
+    if (t == _i20.Permission) {
+      return _i20.Permission.fromJson(data) as T;
     }
-    if (t == _i21.Serving) {
-      return _i21.Serving.fromJson(data) as T;
+    if (t == _i21.Product) {
+      return _i21.Product.fromJson(data) as T;
     }
-    if (t == _i22.Store) {
-      return _i22.Store.fromJson(data) as T;
+    if (t == _i22.Role) {
+      return _i22.Role.fromJson(data) as T;
     }
-    if (t == _i23.Tenant) {
-      return _i23.Tenant.fromJson(data) as T;
+    if (t == _i23.Serving) {
+      return _i23.Serving.fromJson(data) as T;
     }
-    if (t == _i24.CardType) {
-      return _i24.CardType.fromJson(data) as T;
+    if (t == _i24.Store) {
+      return _i24.Store.fromJson(data) as T;
     }
-    if (t == _i25.Trainer) {
-      return _i25.Trainer.fromJson(data) as T;
+    if (t == _i25.Tenant) {
+      return _i25.Tenant.fromJson(data) as T;
     }
-    if (t == _i26.User) {
-      return _i26.User.fromJson(data) as T;
+    if (t == _i26.CardType) {
+      return _i26.CardType.fromJson(data) as T;
+    }
+    if (t == _i27.Trainer) {
+      return _i27.Trainer.fromJson(data) as T;
+    }
+    if (t == _i28.User) {
+      return _i28.User.fromJson(data) as T;
     }
     if (t == _i1.getType<_i2.Address?>()) {
       return (data != null ? _i2.Address.fromJson(data) : null) as T;
@@ -203,32 +213,38 @@ class Protocol extends _i1.SerializationManager {
     if (t == _i1.getType<_i17.Order?>()) {
       return (data != null ? _i17.Order.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i18.Permission?>()) {
-      return (data != null ? _i18.Permission.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i18.OrderStatus?>()) {
+      return (data != null ? _i18.OrderStatus.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i19.Product?>()) {
-      return (data != null ? _i19.Product.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i19.PaymentMethod?>()) {
+      return (data != null ? _i19.PaymentMethod.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i20.Role?>()) {
-      return (data != null ? _i20.Role.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i20.Permission?>()) {
+      return (data != null ? _i20.Permission.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i21.Serving?>()) {
-      return (data != null ? _i21.Serving.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i21.Product?>()) {
+      return (data != null ? _i21.Product.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i22.Store?>()) {
-      return (data != null ? _i22.Store.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i22.Role?>()) {
+      return (data != null ? _i22.Role.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i23.Tenant?>()) {
-      return (data != null ? _i23.Tenant.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i23.Serving?>()) {
+      return (data != null ? _i23.Serving.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i24.CardType?>()) {
-      return (data != null ? _i24.CardType.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i24.Store?>()) {
+      return (data != null ? _i24.Store.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i25.Trainer?>()) {
-      return (data != null ? _i25.Trainer.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i25.Tenant?>()) {
+      return (data != null ? _i25.Tenant.fromJson(data) : null) as T;
     }
-    if (t == _i1.getType<_i26.User?>()) {
-      return (data != null ? _i26.User.fromJson(data) : null) as T;
+    if (t == _i1.getType<_i26.CardType?>()) {
+      return (data != null ? _i26.CardType.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i27.Trainer?>()) {
+      return (data != null ? _i27.Trainer.fromJson(data) : null) as T;
+    }
+    if (t == _i1.getType<_i28.User?>()) {
+      return (data != null ? _i28.User.fromJson(data) : null) as T;
     }
     if (t == _i1.getType<List<_i3.Appointment>?>()) {
       return (data != null
@@ -245,9 +261,9 @@ class Protocol extends _i1.SerializationManager {
           ? (data as List).map((e) => deserialize<_i6.Card>(e)).toList()
           : null) as T;
     }
-    if (t == _i1.getType<List<_i21.Serving>?>()) {
+    if (t == _i1.getType<List<_i23.Serving>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i21.Serving>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i23.Serving>(e)).toList()
           : null) as T;
     }
     if (t == _i1.getType<List<_i14.Membership>?>()) {
@@ -255,9 +271,9 @@ class Protocol extends _i1.SerializationManager {
           ? (data as List).map((e) => deserialize<_i14.Membership>(e)).toList()
           : null) as T;
     }
-    if (t == _i1.getType<List<_i21.Serving>?>()) {
+    if (t == _i1.getType<List<_i23.Serving>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i21.Serving>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i23.Serving>(e)).toList()
           : null) as T;
     }
     if (t == _i1.getType<List<_i3.Appointment>?>()) {
@@ -265,24 +281,24 @@ class Protocol extends _i1.SerializationManager {
           ? (data as List).map((e) => deserialize<_i3.Appointment>(e)).toList()
           : null) as T;
     }
-    if (t == List<_i27.Note>) {
-      return (data as List).map((e) => deserialize<_i27.Note>(e)).toList() as T;
+    if (t == List<_i29.Note>) {
+      return (data as List).map((e) => deserialize<_i29.Note>(e)).toList() as T;
     }
-    if (t == List<_i28.Store>) {
-      return (data as List).map((e) => deserialize<_i28.Store>(e)).toList()
+    if (t == List<_i30.Store>) {
+      return (data as List).map((e) => deserialize<_i30.Store>(e)).toList()
           as T;
     }
-    if (t == List<_i29.Tenant>) {
-      return (data as List).map((e) => deserialize<_i29.Tenant>(e)).toList()
+    if (t == List<_i31.Tenant>) {
+      return (data as List).map((e) => deserialize<_i31.Tenant>(e)).toList()
           as T;
     }
-    if (t == _i1.getType<List<_i30.User>?>()) {
+    if (t == _i1.getType<List<_i32.User>?>()) {
       return (data != null
-          ? (data as List).map((e) => deserialize<_i30.User>(e)).toList()
+          ? (data as List).map((e) => deserialize<_i32.User>(e)).toList()
           : null) as T;
     }
     try {
-      return _i31.Protocol().deserialize<T>(data, t);
+      return _i33.Protocol().deserialize<T>(data, t);
     } on _i1.DeserializationTypeNotFoundException catch (_) {}
     return super.deserialize<T>(data, t);
   }
@@ -339,34 +355,40 @@ class Protocol extends _i1.SerializationManager {
     if (data is _i17.Order) {
       return 'Order';
     }
-    if (data is _i18.Permission) {
+    if (data is _i18.OrderStatus) {
+      return 'OrderStatus';
+    }
+    if (data is _i19.PaymentMethod) {
+      return 'PaymentMethod';
+    }
+    if (data is _i20.Permission) {
       return 'Permission';
     }
-    if (data is _i19.Product) {
+    if (data is _i21.Product) {
       return 'Product';
     }
-    if (data is _i20.Role) {
+    if (data is _i22.Role) {
       return 'Role';
     }
-    if (data is _i21.Serving) {
+    if (data is _i23.Serving) {
       return 'Serving';
     }
-    if (data is _i22.Store) {
+    if (data is _i24.Store) {
       return 'Store';
     }
-    if (data is _i23.Tenant) {
+    if (data is _i25.Tenant) {
       return 'Tenant';
     }
-    if (data is _i24.CardType) {
+    if (data is _i26.CardType) {
       return 'CardType';
     }
-    if (data is _i25.Trainer) {
+    if (data is _i27.Trainer) {
       return 'Trainer';
     }
-    if (data is _i26.User) {
+    if (data is _i28.User) {
       return 'User';
     }
-    className = _i31.Protocol().getClassNameForObject(data);
+    className = _i33.Protocol().getClassNameForObject(data);
     if (className != null) {
       return 'serverpod_auth.$className';
     }
@@ -427,36 +449,42 @@ class Protocol extends _i1.SerializationManager {
     if (dataClassName == 'Order') {
       return deserialize<_i17.Order>(data['data']);
     }
+    if (dataClassName == 'OrderStatus') {
+      return deserialize<_i18.OrderStatus>(data['data']);
+    }
+    if (dataClassName == 'PaymentMethod') {
+      return deserialize<_i19.PaymentMethod>(data['data']);
+    }
     if (dataClassName == 'Permission') {
-      return deserialize<_i18.Permission>(data['data']);
+      return deserialize<_i20.Permission>(data['data']);
     }
     if (dataClassName == 'Product') {
-      return deserialize<_i19.Product>(data['data']);
+      return deserialize<_i21.Product>(data['data']);
     }
     if (dataClassName == 'Role') {
-      return deserialize<_i20.Role>(data['data']);
+      return deserialize<_i22.Role>(data['data']);
     }
     if (dataClassName == 'Serving') {
-      return deserialize<_i21.Serving>(data['data']);
+      return deserialize<_i23.Serving>(data['data']);
     }
     if (dataClassName == 'Store') {
-      return deserialize<_i22.Store>(data['data']);
+      return deserialize<_i24.Store>(data['data']);
     }
     if (dataClassName == 'Tenant') {
-      return deserialize<_i23.Tenant>(data['data']);
+      return deserialize<_i25.Tenant>(data['data']);
     }
     if (dataClassName == 'CardType') {
-      return deserialize<_i24.CardType>(data['data']);
+      return deserialize<_i26.CardType>(data['data']);
     }
     if (dataClassName == 'Trainer') {
-      return deserialize<_i25.Trainer>(data['data']);
+      return deserialize<_i27.Trainer>(data['data']);
     }
     if (dataClassName == 'User') {
-      return deserialize<_i26.User>(data['data']);
+      return deserialize<_i28.User>(data['data']);
     }
     if (dataClassName.startsWith('serverpod_auth.')) {
       data['className'] = dataClassName.substring(15);
-      return _i31.Protocol().deserializeByClassName(data);
+      return _i33.Protocol().deserializeByClassName(data);
     }
     return super.deserializeByClassName(data);
   }

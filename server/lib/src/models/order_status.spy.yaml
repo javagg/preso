@@ -1,0 +1,7 @@
+enum: OrderStatus
+serialized: byName
+values:
+  - canceled
+  - paid
+  - refunded
+  - unpaid

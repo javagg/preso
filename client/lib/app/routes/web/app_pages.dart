@@ -19,7 +19,6 @@ import '../../modules/trainer/trainer_view.dart';
 import '../../modules/web/root.dart';
 import '../../modules/dashboard/dashboard_binding.dart';
 import '../../modules/dashboard/dashboard_view.dart';
-import '../../modules/tenant/tenant_binding.dart';
 import '../../modules/tenant/tenant_view.dart';
 import '../app_routes.dart';
 export '../app_routes.dart';
@@ -58,7 +57,7 @@ class AppPages {
           ),
           GetPage(
             middlewares: [
-              EnsureAuthMiddleware(),
+              // EnsureAuthMiddleware(),
             ],
             name: Paths.tenants,
             page: () => const TenantView(),
@@ -67,7 +66,6 @@ class AppPages {
             bindings: [TenantBinding()],
           ),
           GetPage(
-            // middlewares: [EnsureAuthMiddleware()],
             name: Paths.trainers,
             page: () => TrainerView(),
             transition: Transition.noTransition,

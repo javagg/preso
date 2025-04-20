@@ -37,7 +37,6 @@ abstract class Note implements _i1.TableRow, _i1.ProtocolSerialization {
   @override
   int? id;
 
-  /// The contents of the note.
   String text;
 
   @override
@@ -130,7 +129,6 @@ class NoteTable extends _i1.Table {
     );
   }
 
-  /// The contents of the note.
   late final _i1.ColumnString text;
 
   @override

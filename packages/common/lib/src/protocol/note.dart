@@ -35,7 +35,6 @@ abstract class Note implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  /// The contents of the note.
   String text;
 
   /// Returns a shallow copy of this [Note]

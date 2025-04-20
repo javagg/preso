@@ -1,4 +1,10 @@
 class: Order
 table: order
 fields:
-  no: int
+  price: double
+  product: Product?, relation
+  creater: User?, relation
+  createdAt: DateTime
+  updatedAt: DateTime
+  paymentMethod: PaymentMethod
+  status: OrderStatus

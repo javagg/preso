@@ -1,5 +1,10 @@
 class: Product
 table: product
 fields:
+  tenantId: int
   name: String
   description: String
+  offShelf: bool, default=true
+  price: double
+  store: Store?, relation
+  applicableToAllStores: bool, default=false

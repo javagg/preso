@@ -75,75 +75,6 @@ class RootBinding extends Binding {
   }
 }
 
-class MenuItem {
-  const MenuItem({
-    required this.text,
-    required this.icon,
-  });
-
-  final String text;
-  final IconData icon;
-}
-
-var menus = <(String, IconData)>[
-  ("Like", Icons.favorite),
-  ("Share", Icons.share),
-  ("Download", Icons.download),
-  ("Cancel", Icons.cancel),
-  ("Logout", Icons.logout),
-  ("Login", Icons.login),
-];
-
-class MenuItems {
-  static const List<MenuItem> firstItems = [like, share, download];
-  static const List<MenuItem> secondItems = [cancel];
-
-  static const like = MenuItem(text: 'Like', icon: Icons.favorite);
-  static const share = MenuItem(text: 'Share', icon: Icons.share);
-  static const download = MenuItem(text: 'Download', icon: Icons.download);
-  static const cancel = MenuItem(text: 'Cancel', icon: Icons.cancel);
-
-  static Widget buildItem(MenuItem item) {
-    return Row(
-      children: [
-        Icon(
-          item.icon,
-          color: Colors.white,
-          size: 22,
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: Text(
-            item.text,
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  static void onChanged(BuildContext context, MenuItem item) {
-    switch (item) {
-      case MenuItems.like:
-        //Do something
-        break;
-      case MenuItems.share:
-        //Do something
-        break;
-      case MenuItems.download:
-        //Do something
-        break;
-      case MenuItems.cancel:
-        //Do something
-        break;
-    }
-  }
-}
-
 class RootView extends GetView<RootController> {
   const RootView({super.key});
 
@@ -151,17 +82,12 @@ class RootView extends GetView<RootController> {
   Widget build(BuildContext context) {
     var sideMenu = controller.sideMenu;
     return GetRouterOutlet.builder(
-      route: Routes.dashboard, //'/', //Routes.home,
-      // initialRoute: Routes.root,// '/',// Routes.root,
+      route: Routes.dashboard,
       builder: (context) {
         return Scaffold(
           key: controller.scaffoldKey,
           appBar: AppBar(
             leading: Hero(tag: "logo", child: FlutterLogo()),
-            // title: RouterListener(builder: (context) {
-            //   final title = context.location;
-            //   return Text(title);
-            // }),
             centerTitle: true,
             actions: [
               MenuAnchor(

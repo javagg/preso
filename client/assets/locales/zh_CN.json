@@ -14,7 +14,11 @@
     "next": "下一步",
     "previous": "上一步",
     "loading": "加载中...",
-    "help": "帮助"
+    "help": "帮助",
+    "createdAt": "创建时间",
+    "updatedAt": "更新时间",
+    "description": "描述",
+    "submit": "提交"
   },
   "app": {
     "title": "来运动",
@@ -33,7 +37,12 @@
     "members": "会员管理",
     "trainers": "教练管理",
     "classes": "课程管理",
-    "orders": "订单管理"
+    "orders": "订单管理",
+    "help": "帮助"
+  },
+  "tenant": {
+    "name": "租户名称",
+    "description": "租户描述"
   },
   "nav": {
     "home": "首页",

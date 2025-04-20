@@ -10,22 +10,59 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
+import 'product.dart' as _i2;
+import 'user.dart' as _i3;
+import 'payment_method.dart' as _i4;
+import 'order_status.dart' as _i5;
 
 abstract class Order implements _i1.TableRow, _i1.ProtocolSerialization {
   Order._({
     this.id,
-    required this.no,
+    required this.price,
+    required this.productId,
+    this.product,
+    required this.createrId,
+    this.creater,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.paymentMethod,
+    required this.status,
   });
 
   factory Order({
     int? id,
-    required int no,
+    required double price,
+    required int productId,
+    _i2.Product? product,
+    required int createrId,
+    _i3.User? creater,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    required _i4.PaymentMethod paymentMethod,
+    required _i5.OrderStatus status,
   }) = _OrderImpl;
 
   factory Order.fromJson(Map<String, dynamic> jsonSerialization) {
     return Order(
       id: jsonSerialization['id'] as int?,
-      no: jsonSerialization['no'] as int,
+      price: (jsonSerialization['price'] as num).toDouble(),
+      productId: jsonSerialization['productId'] as int,
+      product: jsonSerialization['product'] == null
+          ? null
+          : _i2.Product.fromJson(
+              (jsonSerialization['product'] as Map<String, dynamic>)),
+      createrId: jsonSerialization['createrId'] as int,
+      creater: jsonSerialization['creater'] == null
+          ? null
+          : _i3.User.fromJson(
+              (jsonSerialization['creater'] as Map<String, dynamic>)),
+      createdAt:
+          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['createdAt']),
+      updatedAt:
+          _i1.DateTimeJsonExtension.fromJson(jsonSerialization['updatedAt']),
+      paymentMethod: _i4.PaymentMethod.fromJson(
+          (jsonSerialization['paymentMethod'] as String)),
+      status: _i5.OrderStatus.fromJson((jsonSerialization['status'] as String)),
     );
   }
 
@@ -36,7 +73,23 @@ abstract class Order implements _i1.TableRow, _i1.ProtocolSerialization {
   @override
   int? id;
 
-  int no;
+  double price;
+
+  int productId;
+
+  _i2.Product? product;
+
+  int createrId;
+
+  _i3.User? creater;
+
+  DateTime createdAt;
+
+  DateTime updatedAt;
+
+  _i4.PaymentMethod paymentMethod;
+
+  _i5.OrderStatus status;
 
   @override
   _i1.Table get table => t;
@@ -46,13 +99,29 @@ abstract class Order implements _i1.TableRow, _i1.ProtocolSerialization {
   @_i1.useResult
   Order copyWith({
     int? id,
-    int? no,
+    double? price,
+    int? productId,
+    _i2.Product? product,
+    int? createrId,
+    _i3.User? creater,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    _i4.PaymentMethod? paymentMethod,
+    _i5.OrderStatus? status,
   });
   @override
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
-      'no': no,
+      'price': price,
+      'productId': productId,
+      if (product != null) 'product': product?.toJson(),
+      'createrId': createrId,
+      if (creater != null) 'creater': creater?.toJson(),
+      'createdAt': createdAt.toJson(),
+      'updatedAt': updatedAt.toJson(),
+      'paymentMethod': paymentMethod.toJson(),
+      'status': status.toJson(),
     };
   }
 
@@ -60,12 +129,26 @@ abstract class Order implements _i1.TableRow, _i1.ProtocolSerialization {
   Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
-      'no': no,
+      'price': price,
+      'productId': productId,
+      if (product != null) 'product': product?.toJsonForProtocol(),
+      'createrId': createrId,
+      if (creater != null) 'creater': creater?.toJsonForProtocol(),
+      'createdAt': createdAt.toJson(),
+      'updatedAt': updatedAt.toJson(),
+      'paymentMethod': paymentMethod.toJson(),
+      'status': status.toJson(),
     };
   }
 
-  static OrderInclude include() {
-    return OrderInclude._();
+  static OrderInclude include({
+    _i2.ProductInclude? product,
+    _i3.UserInclude? creater,
+  }) {
+    return OrderInclude._(
+      product: product,
+      creater: creater,
+    );
   }
 
   static OrderIncludeList includeList({
@@ -99,10 +182,26 @@ class _Undefined {}
 class _OrderImpl extends Order {
   _OrderImpl({
     int? id,
-    required int no,
+    required double price,
+    required int productId,
+    _i2.Product? product,
+    required int createrId,
+    _i3.User? creater,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    required _i4.PaymentMethod paymentMethod,
+    required _i5.OrderStatus status,
   }) : super._(
           id: id,
-          no: no,
+          price: price,
+          productId: productId,
+          product: product,
+          createrId: createrId,
+          creater: creater,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          paymentMethod: paymentMethod,
+          status: status,
         );
 
   /// Returns a shallow copy of this [Order]
@@ -111,37 +210,151 @@ class _OrderImpl extends Order {
   @override
   Order copyWith({
     Object? id = _Undefined,
-    int? no,
+    double? price,
+    int? productId,
+    Object? product = _Undefined,
+    int? createrId,
+    Object? creater = _Undefined,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    _i4.PaymentMethod? paymentMethod,
+    _i5.OrderStatus? status,
   }) {
     return Order(
       id: id is int? ? id : this.id,
-      no: no ?? this.no,
+      price: price ?? this.price,
+      productId: productId ?? this.productId,
+      product: product is _i2.Product? ? product : this.product?.copyWith(),
+      createrId: createrId ?? this.createrId,
+      creater: creater is _i3.User? ? creater : this.creater?.copyWith(),
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      paymentMethod: paymentMethod ?? this.paymentMethod,
+      status: status ?? this.status,
     );
   }
 }
 
 class OrderTable extends _i1.Table {
   OrderTable({super.tableRelation}) : super(tableName: 'order') {
-    no = _i1.ColumnInt(
-      'no',
+    price = _i1.ColumnDouble(
+      'price',
       this,
+    );
+    productId = _i1.ColumnInt(
+      'productId',
+      this,
+    );
+    createrId = _i1.ColumnInt(
+      'createrId',
+      this,
+    );
+    createdAt = _i1.ColumnDateTime(
+      'createdAt',
+      this,
+    );
+    updatedAt = _i1.ColumnDateTime(
+      'updatedAt',
+      this,
+    );
+    paymentMethod = _i1.ColumnEnum(
+      'paymentMethod',
+      this,
+      _i1.EnumSerialization.byName,
+    );
+    status = _i1.ColumnEnum(
+      'status',
+      this,
+      _i1.EnumSerialization.byName,
     );
   }
 
-  late final _i1.ColumnInt no;
+  late final _i1.ColumnDouble price;
+
+  late final _i1.ColumnInt productId;
+
+  _i2.ProductTable? _product;
+
+  late final _i1.ColumnInt createrId;
+
+  _i3.UserTable? _creater;
+
+  late final _i1.ColumnDateTime createdAt;
+
+  late final _i1.ColumnDateTime updatedAt;
+
+  late final _i1.ColumnEnum<_i4.PaymentMethod> paymentMethod;
+
+  late final _i1.ColumnEnum<_i5.OrderStatus> status;
+
+  _i2.ProductTable get product {
+    if (_product != null) return _product!;
+    _product = _i1.createRelationTable(
+      relationFieldName: 'product',
+      field: Order.t.productId,
+      foreignField: _i2.Product.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i2.ProductTable(tableRelation: foreignTableRelation),
+    );
+    return _product!;
+  }
+
+  _i3.UserTable get creater {
+    if (_creater != null) return _creater!;
+    _creater = _i1.createRelationTable(
+      relationFieldName: 'creater',
+      field: Order.t.createrId,
+      foreignField: _i3.User.t.id,
+      tableRelation: tableRelation,
+      createTable: (foreignTableRelation) =>
+          _i3.UserTable(tableRelation: foreignTableRelation),
+    );
+    return _creater!;
+  }
 
   @override
   List<_i1.Column> get columns => [
         id,
-        no,
+        price,
+        productId,
+        createrId,
+        createdAt,
+        updatedAt,
+        paymentMethod,
+        status,
       ];
+
+  @override
+  _i1.Table? getRelationTable(String relationField) {
+    if (relationField == 'product') {
+      return product;
+    }
+    if (relationField == 'creater') {
+      return creater;
+    }
+    return null;
+  }
 }
 
 class OrderInclude extends _i1.IncludeObject {
-  OrderInclude._();
+  OrderInclude._({
+    _i2.ProductInclude? product,
+    _i3.UserInclude? creater,
+  }) {
+    _product = product;
+    _creater = creater;
+  }
+
+  _i2.ProductInclude? _product;
+
+  _i3.UserInclude? _creater;
 
   @override
-  Map<String, _i1.Include?> get includes => {};
+  Map<String, _i1.Include?> get includes => {
+        'product': _product,
+        'creater': _creater,
+      };
 
   @override
   _i1.Table get table => Order.t;
@@ -169,6 +382,8 @@ class OrderIncludeList extends _i1.IncludeList {
 
 class OrderRepository {
   const OrderRepository._();
+
+  final attachRow = const OrderAttachRowRepository._();
 
   /// Returns a list of [Order]s matching the given query parameters.
   ///
@@ -201,6 +416,7 @@ class OrderRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<OrderTable>? orderByList,
     _i1.Transaction? transaction,
+    OrderInclude? include,
   }) async {
     return session.db.find<Order>(
       where: where?.call(Order.t),
@@ -210,6 +426,7 @@ class OrderRepository {
       limit: limit,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -238,6 +455,7 @@ class OrderRepository {
     bool orderDescending = false,
     _i1.OrderByListBuilder<OrderTable>? orderByList,
     _i1.Transaction? transaction,
+    OrderInclude? include,
   }) async {
     return session.db.findFirstRow<Order>(
       where: where?.call(Order.t),
@@ -246,6 +464,7 @@ class OrderRepository {
       orderDescending: orderDescending,
       offset: offset,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -254,10 +473,12 @@ class OrderRepository {
     _i1.Session session,
     int id, {
     _i1.Transaction? transaction,
+    OrderInclude? include,
   }) async {
     return session.db.findById<Order>(
       id,
       transaction: transaction,
+      include: include,
     );
   }
 
@@ -375,6 +596,56 @@ class OrderRepository {
     return session.db.count<Order>(
       where: where?.call(Order.t),
       limit: limit,
+      transaction: transaction,
+    );
+  }
+}
+
+class OrderAttachRowRepository {
+  const OrderAttachRowRepository._();
+
+  /// Creates a relation between the given [Order] and [Product]
+  /// by setting the [Order]'s foreign key `productId` to refer to the [Product].
+  Future<void> product(
+    _i1.Session session,
+    Order order,
+    _i2.Product product, {
+    _i1.Transaction? transaction,
+  }) async {
+    if (order.id == null) {
+      throw ArgumentError.notNull('order.id');
+    }
+    if (product.id == null) {
+      throw ArgumentError.notNull('product.id');
+    }
+
+    var $order = order.copyWith(productId: product.id);
+    await session.db.updateRow<Order>(
+      $order,
+      columns: [Order.t.productId],
+      transaction: transaction,
+    );
+  }
+
+  /// Creates a relation between the given [Order] and [User]
+  /// by setting the [Order]'s foreign key `createrId` to refer to the [User].
+  Future<void> creater(
+    _i1.Session session,
+    Order order,
+    _i3.User creater, {
+    _i1.Transaction? transaction,
+  }) async {
+    if (order.id == null) {
+      throw ArgumentError.notNull('order.id');
+    }
+    if (creater.id == null) {
+      throw ArgumentError.notNull('creater.id');
+    }
+
+    var $order = order.copyWith(createrId: creater.id);
+    await session.db.updateRow<Order>(
+      $order,
+      columns: [Order.t.createrId],
       transaction: transaction,
     );
   }

@@ -148,13 +148,11 @@ class TrainerViewController extends GetxController {
     }
   }
 
-  // 刷新数据
   Future<void> refreshData() async {
     currentPage(0);
     await fetchEmployees();
   }
 
-  // 排序方法
   void sort<T>(int columnIndex, bool ascending) {
     sortColumnIndex(columnIndex);
     sortAscending(ascending);
@@ -185,7 +183,6 @@ class TrainerViewController extends GetxController {
     }
   }
 
-  // 获取当前页的数据
   List<Employee> get paginatedData {
     final start = currentPage.value * rowsPerPage.value;
     final end = (currentPage.value + 1) * rowsPerPage.value;
@@ -510,7 +507,100 @@ class TrainerView extends GetView<TrainerViewController> {
           return const Center(child: Text('没有数据'));
         }
 
-        return _buildDataTable(controller);
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: controller.refreshData,
+                  child: DataTable2(
+                    columnSpacing: 12,
+                    horizontalMargin: 12,
+                    minWidth: 600,
+                    sortColumnIndex: controller.sortColumnIndex.value,
+                    sortAscending: controller.sortAscending.value,
+                    columns: [
+                      DataColumn2(
+                        label: const Text('ID'),
+                        size: ColumnSize.S,
+                        onSort: controller.sort,
+                      ),
+                      DataColumn2(
+                        label: const Text('姓名'),
+                        size: ColumnSize.L,
+                        onSort: controller.sort,
+                      ),
+                      DataColumn2(
+                        label: const Text('年龄'),
+                        size: ColumnSize.S,
+                        numeric: true,
+                        onSort: controller.sort,
+                      ),
+                      DataColumn2(
+                        label: const Text('部门'),
+                        size: ColumnSize.M,
+                        onSort: controller.sort,
+                      ),
+                      DataColumn2(
+                        label: const Text('薪资'),
+                        size: ColumnSize.M,
+                        numeric: true,
+                        onSort: controller.sort,
+                      ),
+                      DataColumn2(
+                        label: const Text('操作'),
+                        size: ColumnSize.M,
+                        // numeric: true,
+                        // onSort: controller.sort,
+                      ),
+                    ],
+                    rows: controller.paginatedData
+                        .map((employee) => DataRow2(
+                              selected: employee.id % 2 == 0,
+                              onSelectChanged: (selected) {
+                                if (selected != null) {
+                                  Get.snackbar(
+                                    '选中',
+                                    '选中了 ${employee.name}',
+                                    snackPosition: SnackPosition.bottom,
+                                  );
+                                }
+                              },
+                              cells: [
+                                DataCell(Text(employee.id.toString())),
+                                DataCell(Text(employee.name)),
+                                DataCell(Text(employee.age.toString())),
+                                DataCell(Text(employee.department)),
+                                DataCell(Text(
+                                    '\$${employee.salary.toStringAsFixed(2)}')),
+                                DataCell(Row(
+                                  children: [
+                                    IconButton.outlined(
+                                      onPressed: () {
+                                        Get.snackbar("edit", "edit");
+                                      },
+                                      icon: Icon(Icons.edit),
+                                    ),
+                                    IconButton.outlined(
+                                      onPressed: () {
+                                        Get.snackbar("delete", "deleted");
+                                      },
+                                      icon: Icon(Icons.delete),
+                                    ),
+                                  ],
+                                )),
+                              ],
+                            ))
+                        .toList(),
+                  ),
+                ),
+              ),
+              _buildPaginationControls(controller),
+            ],
+          ),
+        );
+        ;
       }),
     );
   }

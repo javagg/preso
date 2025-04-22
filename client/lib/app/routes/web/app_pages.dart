@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:preso_client/app/modules/login/login_view.dart';
-import 'package:preso_client/app/modules/store/store_binding.dart';
 import 'package:preso_client/app/modules/store/store_view.dart';
 import 'package:preso_client/app/modules/web/admin.dart';
 

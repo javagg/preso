@@ -104,6 +104,8 @@ void withServerpod(
 class TestEndpoints {
   late final _ExampleEndpoint example;
 
+  late final _MaintenanceEndpoint maintenance;
+
   late final _NotesEndpoint notes;
 
   late final _StoreEndpoint store;
@@ -121,6 +123,10 @@ class _InternalTestEndpoints extends TestEndpoints
     _i2.EndpointDispatch endpoints,
   ) {
     example = _ExampleEndpoint(
+      endpoints,
+      serializationManager,
+    );
+    maintenance = _MaintenanceEndpoint(
       endpoints,
       serializationManager,
     );
@@ -212,6 +218,43 @@ class _ExampleEndpoint {
       _localTestStreamManager.outputStreamController,
     );
     return _localTestStreamManager.outputStreamController.stream;
+  }
+}
+
+class _MaintenanceEndpoint {
+  _MaintenanceEndpoint(
+    this._endpointDispatch,
+    this._serializationManager,
+  );
+
+  final _i2.EndpointDispatch _endpointDispatch;
+
+  final _i2.SerializationManager _serializationManager;
+
+  _i3.Future<void> seed(_i1.TestSessionBuilder sessionBuilder) async {
+    return _i1.callAwaitableFunctionAndHandleExceptions(() async {
+      var _localUniqueSession =
+          (sessionBuilder as _i1.InternalTestSessionBuilder).internalBuild(
+        endpoint: 'maintenance',
+        method: 'seed',
+      );
+      try {
+        var _localCallContext = await _endpointDispatch.getMethodCallContext(
+          createSessionCallback: (_) => _localUniqueSession,
+          endpointPath: 'maintenance',
+          methodName: 'seed',
+          parameters: _i1.testObjectToJson({}),
+          serializationManager: _serializationManager,
+        );
+        var _localReturnValue = await (_localCallContext.method.call(
+          _localUniqueSession,
+          _localCallContext.arguments,
+        ) as _i3.Future<void>);
+        return _localReturnValue;
+      } finally {
+        await _localUniqueSession.close();
+      }
+    });
   }
 }
 

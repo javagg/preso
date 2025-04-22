@@ -4,9 +4,9 @@ environment:
   sdk: ^3.6.1
 
 workspace:
-  - packages/serverpod_auth_wechat_flutter
-  - packages/serverpod_auth_server
-  - packages/serverpod_auth_client
+  # - packages/serverpod_auth_wechat_flutter
+  # - packages/serverpod_auth_server
+  # - packages/serverpod_auth_client
   - packages/common
   - packages/taro
   - server
@@ -14,7 +14,7 @@ workspace:
 
 dependencies:
   mailer: ^6.0.1
-  serverpod: 2.4.0
+  serverpod: 2.5.1
   syncfusion_flutter_datagrid: ^28.2.6
   syncfusion_flutter_charts : ^28.2.6
   syncfusion_flutter_gauges : ^28.2.6

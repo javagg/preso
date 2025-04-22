@@ -70,7 +70,7 @@
           "dartType": "int?"
         },
         {
-          "name": "memberId",
+          "name": "userId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -98,9 +98,9 @@
         {
           "constraintName": "appointment_fk_0",
           "columns": [
-            "memberId"
+            "userId"
           ],
-          "referenceTable": "member",
+          "referenceTable": "user",
           "referenceTableSchema": "public",
           "referenceColumns": [
             "id"
@@ -144,7 +144,7 @@
             },
             {
               "type": 0,
-              "definition": "memberId"
+              "definition": "userId"
             }
           ],
           "type": "btree",
@@ -414,8 +414,8 @@
       "managed": true
     },
     {
-      "name": "member",
-      "dartName": "Member",
+      "name": "log",
+      "dartName": "Log",
       "module": "preso",
       "schema": "public",
       "columns": [
@@ -423,57 +423,58 @@
           "name": "id",
           "columnType": 6,
           "isNullable": false,
-          "columnDefault": "nextval('member_id_seq'::regclass)",
+          "columnDefault": "nextval('log_id_seq'::regclass)",
           "dartType": "int?"
         },
         {
-          "name": "name",
-          "columnType": 0,
-          "isNullable": false,
-          "dartType": "String"
-        },
-        {
-          "name": "gender",
-          "columnType": 0,
-          "isNullable": false,
-          "dartType": "String"
-        },
-        {
-          "name": "age",
+          "name": "tenantId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
         },
         {
-          "name": "mobile",
+          "name": "operationTime",
+          "columnType": 4,
+          "isNullable": false,
+          "dartType": "DateTime"
+        },
+        {
+          "name": "createrId",
+          "columnType": 6,
+          "isNullable": false,
+          "dartType": "int"
+        },
+        {
+          "name": "type",
           "columnType": 0,
           "isNullable": false,
-          "dartType": "String"
+          "dartType": "protocol:OpType"
         },
         {
-          "name": "suspended",
-          "columnType": 1,
-          "isNullable": false,
-          "columnDefault": "false",
-          "dartType": "bool"
-        },
-        {
-          "name": "headshot",
-          "columnType": 0,
-          "isNullable": false,
-          "dartType": "String"
-        },
-        {
-          "name": "face",
+          "name": "operatee",
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
         }
       ],
-      "foreignKeys": [],
+      "foreignKeys": [
+        {
+          "constraintName": "log_fk_0",
+          "columns": [
+            "createrId"
+          ],
+          "referenceTable": "user",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 3
+        }
+      ],
       "indexes": [
         {
-          "indexName": "member_pkey",
+          "indexName": "log_pkey",
           "elements": [
             {
               "type": 0,
@@ -501,7 +502,7 @@
           "dartType": "int?"
         },
         {
-          "name": "memberId",
+          "name": "userId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
@@ -524,9 +525,9 @@
         {
           "constraintName": "membership_fk_0",
           "columns": [
-            "memberId"
+            "userId"
           ],
-          "referenceTable": "member",
+          "referenceTable": "user",
           "referenceTableSchema": "public",
           "referenceColumns": [
             "id"
@@ -570,7 +571,7 @@
             },
             {
               "type": 0,
-              "definition": "memberId"
+              "definition": "userId"
             }
           ],
           "type": "btree",
@@ -631,13 +632,76 @@
           "dartType": "int?"
         },
         {
-          "name": "no",
+          "name": "price",
+          "columnType": 3,
+          "isNullable": false,
+          "dartType": "double"
+        },
+        {
+          "name": "productId",
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
+        },
+        {
+          "name": "createrId",
+          "columnType": 6,
+          "isNullable": false,
+          "dartType": "int"
+        },
+        {
+          "name": "createdAt",
+          "columnType": 4,
+          "isNullable": false,
+          "dartType": "DateTime"
+        },
+        {
+          "name": "updatedAt",
+          "columnType": 4,
+          "isNullable": false,
+          "dartType": "DateTime"
+        },
+        {
+          "name": "paymentMethod",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "protocol:PaymentMethod"
+        },
+        {
+          "name": "status",
+          "columnType": 0,
+          "isNullable": false,
+          "dartType": "protocol:OrderStatus"
         }
       ],
-      "foreignKeys": [],
+      "foreignKeys": [
+        {
+          "constraintName": "order_fk_0",
+          "columns": [
+            "productId"
+          ],
+          "referenceTable": "product",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 3
+        },
+        {
+          "constraintName": "order_fk_1",
+          "columns": [
+            "createrId"
+          ],
+          "referenceTable": "user",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 3
+        }
+      ],
       "indexes": [
         {
           "indexName": "order_pkey",
@@ -711,6 +775,12 @@
           "dartType": "int?"
         },
         {
+          "name": "tenantId",
+          "columnType": 6,
+          "isNullable": false,
+          "dartType": "int"
+        },
+        {
           "name": "name",
           "columnType": 0,
           "isNullable": false,
@@ -721,9 +791,49 @@
           "columnType": 0,
           "isNullable": false,
           "dartType": "String"
+        },
+        {
+          "name": "offShelf",
+          "columnType": 1,
+          "isNullable": false,
+          "columnDefault": "true",
+          "dartType": "bool"
+        },
+        {
+          "name": "price",
+          "columnType": 3,
+          "isNullable": false,
+          "dartType": "double"
+        },
+        {
+          "name": "storeId",
+          "columnType": 6,
+          "isNullable": false,
+          "dartType": "int"
+        },
+        {
+          "name": "applicableToAllStores",
+          "columnType": 1,
+          "isNullable": false,
+          "columnDefault": "false",
+          "dartType": "bool"
         }
       ],
-      "foreignKeys": [],
+      "foreignKeys": [
+        {
+          "constraintName": "product_fk_0",
+          "columns": [
+            "storeId"
+          ],
+          "referenceTable": "store",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 3,
+          "onDelete": 3
+        }
+      ],
       "indexes": [
         {
           "indexName": "product_pkey",
@@ -1172,6 +1282,50 @@
           "columnType": 6,
           "isNullable": false,
           "dartType": "int"
+        },
+        {
+          "name": "gender",
+          "columnType": 0,
+          "isNullable": false,
+          "columnDefault": "'male'::text",
+          "dartType": "String"
+        },
+        {
+          "name": "birthday",
+          "columnType": 4,
+          "isNullable": true,
+          "dartType": "DateTime?"
+        },
+        {
+          "name": "mobile",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "name": "suspended",
+          "columnType": 1,
+          "isNullable": false,
+          "columnDefault": "false",
+          "dartType": "bool"
+        },
+        {
+          "name": "headshot",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "name": "face",
+          "columnType": 0,
+          "isNullable": true,
+          "dartType": "String?"
+        },
+        {
+          "name": "asTrainerId",
+          "columnType": 6,
+          "isNullable": true,
+          "dartType": "int?"
         }
       ],
       "foreignKeys": [
@@ -1181,6 +1335,19 @@
             "userInfoId"
           ],
           "referenceTable": "serverpod_user_info",
+          "referenceTableSchema": "public",
+          "referenceColumns": [
+            "id"
+          ],
+          "onUpdate": 4,
+          "onDelete": 4
+        },
+        {
+          "constraintName": "user_fk_1",
+          "columns": [
+            "asTrainerId"
+          ],
+          "referenceTable": "trainer",
           "referenceTableSchema": "public",
           "referenceColumns": [
             "id"
@@ -1201,6 +1368,18 @@
           "type": "btree",
           "isUnique": true,
           "isPrimary": true
+        },
+        {
+          "indexName": "user_info_id_unique_idx",
+          "elements": [
+            {
+              "type": 0,
+              "definition": "userInfoId"
+            }
+          ],
+          "type": "btree",
+          "isUnique": true,
+          "isPrimary": false
         }
       ],
       "managed": true
@@ -2898,7 +3077,7 @@
   "installedModules": [
     {
       "module": "preso",
-      "version": "20250401114431995"
+      "version": "20250422090513772"
     },
     {
       "module": "serverpod",

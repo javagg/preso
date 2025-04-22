@@ -10,14 +10,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'member.dart' as _i2;
+import 'user.dart' as _i2;
 import 'store.dart' as _i3;
 
 abstract class Membership implements _i1.SerializableModel {
   Membership._({
     this.id,
-    required this.memberId,
-    this.member,
+    required this.userId,
+    this.user,
     required this.storeId,
     this.store,
     bool? active,
@@ -25,8 +25,8 @@ abstract class Membership implements _i1.SerializableModel {
 
   factory Membership({
     int? id,
-    required int memberId,
-    _i2.Member? member,
+    required int userId,
+    _i2.User? user,
     required int storeId,
     _i3.Store? store,
     bool? active,
@@ -35,11 +35,11 @@ abstract class Membership implements _i1.SerializableModel {
   factory Membership.fromJson(Map<String, dynamic> jsonSerialization) {
     return Membership(
       id: jsonSerialization['id'] as int?,
-      memberId: jsonSerialization['memberId'] as int,
-      member: jsonSerialization['member'] == null
+      userId: jsonSerialization['userId'] as int,
+      user: jsonSerialization['user'] == null
           ? null
-          : _i2.Member.fromJson(
-              (jsonSerialization['member'] as Map<String, dynamic>)),
+          : _i2.User.fromJson(
+              (jsonSerialization['user'] as Map<String, dynamic>)),
       storeId: jsonSerialization['storeId'] as int,
       store: jsonSerialization['store'] == null
           ? null
@@ -54,9 +54,9 @@ abstract class Membership implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  int memberId;
+  int userId;
 
-  _i2.Member? member;
+  _i2.User? user;
 
   int storeId;
 
@@ -69,8 +69,8 @@ abstract class Membership implements _i1.SerializableModel {
   @_i1.useResult
   Membership copyWith({
     int? id,
-    int? memberId,
-    _i2.Member? member,
+    int? userId,
+    _i2.User? user,
     int? storeId,
     _i3.Store? store,
     bool? active,
@@ -79,8 +79,8 @@ abstract class Membership implements _i1.SerializableModel {
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
-      'memberId': memberId,
-      if (member != null) 'member': member?.toJson(),
+      'userId': userId,
+      if (user != null) 'user': user?.toJson(),
       'storeId': storeId,
       if (store != null) 'store': store?.toJson(),
       'active': active,
@@ -98,15 +98,15 @@ class _Undefined {}
 class _MembershipImpl extends Membership {
   _MembershipImpl({
     int? id,
-    required int memberId,
-    _i2.Member? member,
+    required int userId,
+    _i2.User? user,
     required int storeId,
     _i3.Store? store,
     bool? active,
   }) : super._(
           id: id,
-          memberId: memberId,
-          member: member,
+          userId: userId,
+          user: user,
           storeId: storeId,
           store: store,
           active: active,
@@ -118,16 +118,16 @@ class _MembershipImpl extends Membership {
   @override
   Membership copyWith({
     Object? id = _Undefined,
-    int? memberId,
-    Object? member = _Undefined,
+    int? userId,
+    Object? user = _Undefined,
     int? storeId,
     Object? store = _Undefined,
     bool? active,
   }) {
     return Membership(
       id: id is int? ? id : this.id,
-      memberId: memberId ?? this.memberId,
-      member: member is _i2.Member? ? member : this.member?.copyWith(),
+      userId: userId ?? this.userId,
+      user: user is _i2.User? ? user : this.user?.copyWith(),
       storeId: storeId ?? this.storeId,
       store: store is _i3.Store? ? store : this.store?.copyWith(),
       active: active ?? this.active,

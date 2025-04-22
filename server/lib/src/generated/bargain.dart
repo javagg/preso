@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Bargain implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Bargain implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Bargain._({
     this.id,
     required this.name,
@@ -39,7 +39,7 @@ abstract class Bargain implements _i1.TableRow, _i1.ProtocolSerialization {
   String name;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Bargain]
   /// with some or all fields replaced by the given arguments.
@@ -120,7 +120,7 @@ class _BargainImpl extends Bargain {
   }
 }
 
-class BargainTable extends _i1.Table {
+class BargainTable extends _i1.Table<int> {
   BargainTable({super.tableRelation}) : super(tableName: 'bargain') {
     name = _i1.ColumnString(
       'name',
@@ -144,7 +144,7 @@ class BargainInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Bargain.t;
+  _i1.Table<int> get table => Bargain.t;
 }
 
 class BargainIncludeList extends _i1.IncludeList {
@@ -164,7 +164,7 @@ class BargainIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Bargain.t;
+  _i1.Table<int> get table => Bargain.t;
 }
 
 class BargainRepository {

@@ -1,4 +1,4 @@
-## 2.4.0
+## 2.5.1
 
 - feat: Adds support for configuring certificates for Serverpod API, Web, and Insights servers.
 - feat: Adds support for `Uri`, `BigInt`, and `Set` type in endpoints and models.

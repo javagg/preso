@@ -1,10 +1,10 @@
 class: Membership
 table: membership
 fields:
-  member: Member?, relation(name=member_membership)
+  user: User?, relation(name=user_membership)
   store: Store?, relation(name=store_membership)
   active: bool, default=false
 indexes:
   membership_index_idx:
-    fields: storeId, memberId
+    fields: storeId, userId
     unique: true

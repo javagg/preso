@@ -11,7 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Permission implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Permission
+    implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Permission._({
     this.id,
     required this.name,
@@ -44,7 +45,7 @@ abstract class Permission implements _i1.TableRow, _i1.ProtocolSerialization {
   String description;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Permission]
   /// with some or all fields replaced by the given arguments.
@@ -132,7 +133,7 @@ class _PermissionImpl extends Permission {
   }
 }
 
-class PermissionTable extends _i1.Table {
+class PermissionTable extends _i1.Table<int> {
   PermissionTable({super.tableRelation}) : super(tableName: 'permission') {
     name = _i1.ColumnString(
       'name',
@@ -163,7 +164,7 @@ class PermissionInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Permission.t;
+  _i1.Table<int> get table => Permission.t;
 }
 
 class PermissionIncludeList extends _i1.IncludeList {
@@ -183,7 +184,7 @@ class PermissionIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Permission.t;
+  _i1.Table<int> get table => Permission.t;
 }
 
 class PermissionRepository {

@@ -10,14 +10,14 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod_client/serverpod_client.dart' as _i1;
-import 'member.dart' as _i2;
+import 'user.dart' as _i2;
 import 'trainer.dart' as _i3;
 
 abstract class Appointment implements _i1.SerializableModel {
   Appointment._({
     this.id,
-    required this.memberId,
-    this.member,
+    required this.userId,
+    this.user,
     required this.trainerId,
     this.trainer,
     required this.startTime,
@@ -26,8 +26,8 @@ abstract class Appointment implements _i1.SerializableModel {
 
   factory Appointment({
     int? id,
-    required int memberId,
-    _i2.Member? member,
+    required int userId,
+    _i2.User? user,
     required int trainerId,
     _i3.Trainer? trainer,
     required DateTime startTime,
@@ -37,11 +37,11 @@ abstract class Appointment implements _i1.SerializableModel {
   factory Appointment.fromJson(Map<String, dynamic> jsonSerialization) {
     return Appointment(
       id: jsonSerialization['id'] as int?,
-      memberId: jsonSerialization['memberId'] as int,
-      member: jsonSerialization['member'] == null
+      userId: jsonSerialization['userId'] as int,
+      user: jsonSerialization['user'] == null
           ? null
-          : _i2.Member.fromJson(
-              (jsonSerialization['member'] as Map<String, dynamic>)),
+          : _i2.User.fromJson(
+              (jsonSerialization['user'] as Map<String, dynamic>)),
       trainerId: jsonSerialization['trainerId'] as int,
       trainer: jsonSerialization['trainer'] == null
           ? null
@@ -58,9 +58,9 @@ abstract class Appointment implements _i1.SerializableModel {
   /// the id will be null.
   int? id;
 
-  int memberId;
+  int userId;
 
-  _i2.Member? member;
+  _i2.User? user;
 
   int trainerId;
 
@@ -75,8 +75,8 @@ abstract class Appointment implements _i1.SerializableModel {
   @_i1.useResult
   Appointment copyWith({
     int? id,
-    int? memberId,
-    _i2.Member? member,
+    int? userId,
+    _i2.User? user,
     int? trainerId,
     _i3.Trainer? trainer,
     DateTime? startTime,
@@ -86,8 +86,8 @@ abstract class Appointment implements _i1.SerializableModel {
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
-      'memberId': memberId,
-      if (member != null) 'member': member?.toJson(),
+      'userId': userId,
+      if (user != null) 'user': user?.toJson(),
       'trainerId': trainerId,
       if (trainer != null) 'trainer': trainer?.toJson(),
       'startTime': startTime.toJson(),
@@ -106,16 +106,16 @@ class _Undefined {}
 class _AppointmentImpl extends Appointment {
   _AppointmentImpl({
     int? id,
-    required int memberId,
-    _i2.Member? member,
+    required int userId,
+    _i2.User? user,
     required int trainerId,
     _i3.Trainer? trainer,
     required DateTime startTime,
     required DateTime endTime,
   }) : super._(
           id: id,
-          memberId: memberId,
-          member: member,
+          userId: userId,
+          user: user,
           trainerId: trainerId,
           trainer: trainer,
           startTime: startTime,
@@ -128,8 +128,8 @@ class _AppointmentImpl extends Appointment {
   @override
   Appointment copyWith({
     Object? id = _Undefined,
-    int? memberId,
-    Object? member = _Undefined,
+    int? userId,
+    Object? user = _Undefined,
     int? trainerId,
     Object? trainer = _Undefined,
     DateTime? startTime,
@@ -137,8 +137,8 @@ class _AppointmentImpl extends Appointment {
   }) {
     return Appointment(
       id: id is int? ? id : this.id,
-      memberId: memberId ?? this.memberId,
-      member: member is _i2.Member? ? member : this.member?.copyWith(),
+      userId: userId ?? this.userId,
+      user: user is _i2.User? ? user : this.user?.copyWith(),
       trainerId: trainerId ?? this.trainerId,
       trainer: trainer is _i3.Trainer? ? trainer : this.trainer?.copyWith(),
       startTime: startTime ?? this.startTime,

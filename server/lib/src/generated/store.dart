@@ -15,7 +15,7 @@ import 'card.dart' as _i3;
 import 'serving.dart' as _i4;
 import 'membership.dart' as _i5;
 
-abstract class Store implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Store implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Store._({
     this.id,
     int? tenantId,
@@ -133,7 +133,7 @@ abstract class Store implements _i1.TableRow, _i1.ProtocolSerialization {
   List<_i5.Membership>? membership;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Store]
   /// with some or all fields replaced by the given arguments.
@@ -348,7 +348,7 @@ class _StoreImpl extends Store {
   }
 }
 
-class StoreTable extends _i1.Table {
+class StoreTable extends _i1.Table<int> {
   StoreTable({super.tableRelation}) : super(tableName: 'store') {
     tenantId = _i1.ColumnInt(
       'tenantId',
@@ -618,7 +618,7 @@ class StoreInclude extends _i1.IncludeObject {
       };
 
   @override
-  _i1.Table get table => Store.t;
+  _i1.Table<int> get table => Store.t;
 }
 
 class StoreIncludeList extends _i1.IncludeList {
@@ -638,7 +638,7 @@ class StoreIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Store.t;
+  _i1.Table<int> get table => Store.t;
 }
 
 class StoreRepository {

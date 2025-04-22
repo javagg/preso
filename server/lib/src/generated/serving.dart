@@ -13,7 +13,7 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import 'trainer.dart' as _i2;
 import 'store.dart' as _i3;
 
-abstract class Serving implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Serving implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Serving._({
     this.id,
     required this.trainerId,
@@ -62,7 +62,7 @@ abstract class Serving implements _i1.TableRow, _i1.ProtocolSerialization {
   _i3.Store? store;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Serving]
   /// with some or all fields replaced by the given arguments.
@@ -170,7 +170,7 @@ class _ServingImpl extends Serving {
   }
 }
 
-class ServingTable extends _i1.Table {
+class ServingTable extends _i1.Table<int> {
   ServingTable({super.tableRelation}) : super(tableName: 'serving') {
     trainerId = _i1.ColumnInt(
       'trainerId',
@@ -255,7 +255,7 @@ class ServingInclude extends _i1.IncludeObject {
       };
 
   @override
-  _i1.Table get table => Serving.t;
+  _i1.Table<int> get table => Serving.t;
 }
 
 class ServingIncludeList extends _i1.IncludeList {
@@ -275,7 +275,7 @@ class ServingIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Serving.t;
+  _i1.Table<int> get table => Serving.t;
 }
 
 class ServingRepository {

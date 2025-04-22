@@ -15,7 +15,7 @@ import 'user.dart' as _i3;
 import 'payment_method.dart' as _i4;
 import 'order_status.dart' as _i5;
 
-abstract class Order implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Order implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Order._({
     this.id,
     required this.price,
@@ -92,7 +92,7 @@ abstract class Order implements _i1.TableRow, _i1.ProtocolSerialization {
   _i5.OrderStatus status;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Order]
   /// with some or all fields replaced by the given arguments.
@@ -235,7 +235,7 @@ class _OrderImpl extends Order {
   }
 }
 
-class OrderTable extends _i1.Table {
+class OrderTable extends _i1.Table<int> {
   OrderTable({super.tableRelation}) : super(tableName: 'order') {
     price = _i1.ColumnDouble(
       'price',
@@ -357,7 +357,7 @@ class OrderInclude extends _i1.IncludeObject {
       };
 
   @override
-  _i1.Table get table => Order.t;
+  _i1.Table<int> get table => Order.t;
 }
 
 class OrderIncludeList extends _i1.IncludeList {
@@ -377,7 +377,7 @@ class OrderIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Order.t;
+  _i1.Table<int> get table => Order.t;
 }
 
 class OrderRepository {

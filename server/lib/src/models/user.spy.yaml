@@ -3,5 +3,18 @@ table: user
 fields:
   name: String
   userInfo: module:auth:UserInfo?, relation(onDelete=Cascade, onUpdate=Cascade)
+  gender: String, default="male"
+  birthday: DateTime?
+  mobile: String?
+  suspended: bool, default=false
+  headshot: String?
+  face: String?
+  appointments: List<Appointment>?, relation(name=user_appointment)
+  membership: List<Membership>?, relation(name=user_membership)
+  asTrainer: Trainer?, relation(optional, onDelete=Cascade, onUpdate=Cascade)
   point: String?, !persist
-  password: String?, !persist
+
+indexes:
+  user_info_id_unique_idx:
+    fields: userInfoId
+    unique: true

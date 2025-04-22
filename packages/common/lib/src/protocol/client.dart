@@ -41,6 +41,20 @@ class EndpointExample extends _i1.EndpointRef {
 }
 
 /// {@category Endpoint}
+class EndpointMaintenance extends _i1.EndpointRef {
+  EndpointMaintenance(_i1.EndpointCaller caller) : super(caller);
+
+  @override
+  String get name => 'maintenance';
+
+  _i2.Future<void> seed() => caller.callServerEndpoint<void>(
+        'maintenance',
+        'seed',
+        {},
+      );
+}
+
+/// {@category Endpoint}
 class EndpointNotes extends _i1.EndpointRef {
   EndpointNotes(_i1.EndpointCaller caller) : super(caller);
 
@@ -236,6 +250,7 @@ class Client extends _i1.ServerpodClientShared {
               disconnectStreamsOnLostInternetConnection,
         ) {
     example = EndpointExample(this);
+    maintenance = EndpointMaintenance(this);
     notes = EndpointNotes(this);
     store = EndpointStore(this);
     tenant = EndpointTenant(this);
@@ -244,6 +259,8 @@ class Client extends _i1.ServerpodClientShared {
   }
 
   late final EndpointExample example;
+
+  late final EndpointMaintenance maintenance;
 
   late final EndpointNotes notes;
 
@@ -258,6 +275,7 @@ class Client extends _i1.ServerpodClientShared {
   @override
   Map<String, _i1.EndpointRef> get endpointRefLookup => {
         'example': example,
+        'maintenance': maintenance,
         'notes': notes,
         'store': store,
         'tenant': tenant,

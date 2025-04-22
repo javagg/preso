@@ -12,7 +12,7 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 
 /// Holds a note with a text written by the user.
-abstract class Note implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Note implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Note._({
     this.id,
     required this.text,
@@ -40,7 +40,7 @@ abstract class Note implements _i1.TableRow, _i1.ProtocolSerialization {
   String text;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Note]
   /// with some or all fields replaced by the given arguments.
@@ -121,7 +121,7 @@ class _NoteImpl extends Note {
   }
 }
 
-class NoteTable extends _i1.Table {
+class NoteTable extends _i1.Table<int> {
   NoteTable({super.tableRelation}) : super(tableName: 'note') {
     text = _i1.ColumnString(
       'text',
@@ -145,7 +145,7 @@ class NoteInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Note.t;
+  _i1.Table<int> get table => Note.t;
 }
 
 class NoteIncludeList extends _i1.IncludeList {
@@ -165,7 +165,7 @@ class NoteIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Note.t;
+  _i1.Table<int> get table => Note.t;
 }
 
 class NoteRepository {

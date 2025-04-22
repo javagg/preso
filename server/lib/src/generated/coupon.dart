@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Coupon implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Coupon implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Coupon._({
     this.id,
     required this.name,
@@ -39,7 +39,7 @@ abstract class Coupon implements _i1.TableRow, _i1.ProtocolSerialization {
   String name;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Coupon]
   /// with some or all fields replaced by the given arguments.
@@ -120,7 +120,7 @@ class _CouponImpl extends Coupon {
   }
 }
 
-class CouponTable extends _i1.Table {
+class CouponTable extends _i1.Table<int> {
   CouponTable({super.tableRelation}) : super(tableName: 'coupon') {
     name = _i1.ColumnString(
       'name',
@@ -144,7 +144,7 @@ class CouponInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Coupon.t;
+  _i1.Table<int> get table => Coupon.t;
 }
 
 class CouponIncludeList extends _i1.IncludeList {
@@ -164,7 +164,7 @@ class CouponIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Coupon.t;
+  _i1.Table<int> get table => Coupon.t;
 }
 
 class CouponRepository {

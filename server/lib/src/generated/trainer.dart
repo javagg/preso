@@ -13,7 +13,7 @@ import 'package:serverpod/serverpod.dart' as _i1;
 import 'serving.dart' as _i2;
 import 'appointment.dart' as _i3;
 
-abstract class Trainer implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Trainer implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Trainer._({
     this.id,
     required this.name,
@@ -116,7 +116,7 @@ abstract class Trainer implements _i1.TableRow, _i1.ProtocolSerialization {
   double rating;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Trainer]
   /// with some or all fields replaced by the given arguments.
@@ -310,7 +310,7 @@ class _TrainerImpl extends Trainer {
   }
 }
 
-class TrainerTable extends _i1.Table {
+class TrainerTable extends _i1.Table<int> {
   TrainerTable({super.tableRelation}) : super(tableName: 'trainer') {
     name = _i1.ColumnString(
       'name',
@@ -514,7 +514,7 @@ class TrainerInclude extends _i1.IncludeObject {
       };
 
   @override
-  _i1.Table get table => Trainer.t;
+  _i1.Table<int> get table => Trainer.t;
 }
 
 class TrainerIncludeList extends _i1.IncludeList {
@@ -534,7 +534,7 @@ class TrainerIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Trainer.t;
+  _i1.Table<int> get table => Trainer.t;
 }
 
 class TrainerRepository {

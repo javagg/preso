@@ -3,8 +3,8 @@ import 'package:serverpod/serverpod.dart';
 import 'package:serverpod_auth_server/module.dart';
 
 class MaintenanceEndpoint extends Endpoint {
-  @override
-  Set<Scope> get requiredScopes => {Scope.admin};
+  // @override
+  // Set<Scope> get requiredScopes => {Scope.admin};
 
   Future<void> seed(Session session) async {
     var master = await Tenant.db.insertRow(
@@ -27,7 +27,7 @@ class MaintenanceEndpoint extends Endpoint {
     await User.db
         .insertRow(session, User(name: username, userInfoId: userInfo.id!));
 
-    Address? address = null;
+    Address? address;
     address = await Address.db.insertRow(
       session,
       Address(
@@ -52,24 +52,39 @@ class MaintenanceEndpoint extends Endpoint {
         services: "水;电;网;电视;空调;冰箱;洗衣机;热水器;沙发;床;桌子;椅子;沙发;床;桌子;椅子",
         equipments: "深蹲架;史密斯机",
         facilities: "wifi;免费停车;饮水机",
-        wifi: "zhineng24hours", businessHours: '00:00-24:00',
+        wifi: "zhineng24hours",
+        businessHours: '00:00-24:00',
       ),
     );
     var trainer1 = await Trainer.db.insertRow(
-      session,
-      Trainer(
-        name: "冠希",
-        description: "冠希是一名专业的健身教练", gender: '男  ', age: 30, servingHours: '09:00-21:00', 
-        servingCity: "武汉", phone: "13123450987", classFee: 290.0, headshot: '', photos: '', videos: '',
-      )
-    );
+        session,
+        Trainer(
+          name: "冠希",
+          description: "冠希是一名专业的健身教练",
+          gender: '男  ',
+          age: 30,
+          servingHours: '09:00-21:00',
+          servingCity: "武汉",
+          phone: "13123450987",
+          classFee: 290.0,
+          headshot: '',
+          photos: '',
+          videos: '',
+        ));
     var trainer2 = await Trainer.db.insertRow(
-      session,
-      Trainer(
-        name: "吴彦祖",
-        description: "王老师是一名专业的健身教练", gender: '男  ', age: 30, servingHours: '09:00-21:00', 
-        servingCity: "武汉", phone: "13123450987", classFee: 290.0, headshot: '', photos: '', videos: '',
-      )
-    );
+        session,
+        Trainer(
+          name: "吴彦祖",
+          description: "王老师是一名专业的健身教练",
+          gender: '男  ',
+          age: 30,
+          servingHours: '09:00-21:00',
+          servingCity: "武汉",
+          phone: "13123450987",
+          classFee: 290.0,
+          headshot: '',
+          photos: '',
+          videos: '',
+        ));
   }
 }

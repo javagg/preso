@@ -12,7 +12,7 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'store.dart' as _i2;
 
-abstract class Product implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Product implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Product._({
     this.id,
     required this.tenantId,
@@ -79,7 +79,7 @@ abstract class Product implements _i1.TableRow, _i1.ProtocolSerialization {
   bool applicableToAllStores;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Product]
   /// with some or all fields replaced by the given arguments.
@@ -210,7 +210,7 @@ class _ProductImpl extends Product {
   }
 }
 
-class ProductTable extends _i1.Table {
+class ProductTable extends _i1.Table<int> {
   ProductTable({super.tableRelation}) : super(tableName: 'product') {
     tenantId = _i1.ColumnInt(
       'tenantId',
@@ -305,7 +305,7 @@ class ProductInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {'store': _store};
 
   @override
-  _i1.Table get table => Product.t;
+  _i1.Table<int> get table => Product.t;
 }
 
 class ProductIncludeList extends _i1.IncludeList {
@@ -325,7 +325,7 @@ class ProductIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Product.t;
+  _i1.Table<int> get table => Product.t;
 }
 
 class ProductRepository {

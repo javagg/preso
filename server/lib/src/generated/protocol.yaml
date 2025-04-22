@@ -1,6 +1,8 @@
 example:
   - hello:
   - echoStream:
+maintenance:
+  - seed:
 notes:
   - getAllNotes:
   - updateNote:

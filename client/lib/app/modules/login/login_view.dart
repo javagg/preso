@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:preso_client/serverpod_client.dart';
 import 'package:serverpod_auth_email_flutter/serverpod_auth_email_flutter.dart';
-import 'package:serverpod_auth_wechat_flutter/serverpod_auth_wechat_flutter.dart';
+// import 'package:serverpod_auth_wechat_flutter/serverpod_auth_wechat_flutter.dart';
 import 'package:serverpod_auth_email_flutter/src/signin_dialog.dart';
 
 import '../../../services/auth_service.dart';
@@ -65,12 +65,12 @@ class LoginView extends GetView<LoginController> {
               },
             ),
             Row(children: [
-              SignInWithWechatButton(
-                caller: client.modules.auth,
-                clientId: "_googleClientId",
-                serverClientId: "_googleServerClientId",
-                redirectUri: Uri.parse('http://localhost:8082/wechatsignin'),
-              ),
+              // SignInWithWechatButton(
+              //   caller: client.modules.auth,
+              //   clientId: "_googleClientId",
+              //   serverClientId: "_googleServerClientId",
+              //   redirectUri: Uri.parse('http://localhost:8082/wechatsignin'),
+              // ),
             ]),
           ],
         ),

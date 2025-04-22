@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:serverpod_auth_apple_flutter/serverpod_auth_apple_flutter.dart';
 import 'package:serverpod_auth_email_flutter/serverpod_auth_email_flutter.dart';
 // import 'package:serverpod_auth_google_flutter/serverpod_auth_google_flutter.dart';
-import 'package:serverpod_auth_wechat_flutter/serverpod_auth_wechat_flutter.dart';
+// import 'package:serverpod_auth_wechat_flutter/serverpod_auth_wechat_flutter.dart';
 
 // See https://docs.serverpod.dev/concepts/authentication for information on how
 // to obtain the Client IDs. These can also be specified by adding a plist file

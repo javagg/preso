@@ -12,7 +12,7 @@
 import 'package:serverpod/serverpod.dart' as _i1;
 import 'trade/card_type.dart' as _i2;
 
-abstract class Card implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Card implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Card._({
     this.id,
     required this.tenantId,
@@ -22,7 +22,7 @@ abstract class Card implements _i1.TableRow, _i1.ProtocolSerialization {
     required this.coverImage,
     required this.duration,
     this.type,
-  });
+  }) : _storeCardsStoreId = null;
 
   factory Card({
     int? id,
@@ -36,7 +36,7 @@ abstract class Card implements _i1.TableRow, _i1.ProtocolSerialization {
   }) = _CardImpl;
 
   factory Card.fromJson(Map<String, dynamic> jsonSerialization) {
-    return Card(
+    return CardImplicit._(
       id: jsonSerialization['id'] as int?,
       tenantId: jsonSerialization['tenantId'] as int,
       name: jsonSerialization['name'] as String,
@@ -47,6 +47,7 @@ abstract class Card implements _i1.TableRow, _i1.ProtocolSerialization {
       type: jsonSerialization['type'] == null
           ? null
           : _i2.CardType.fromJson((jsonSerialization['type'] as String)),
+      $_storeCardsStoreId: jsonSerialization['_storeCardsStoreId'] as int?,
     );
   }
 
@@ -71,10 +72,10 @@ abstract class Card implements _i1.TableRow, _i1.ProtocolSerialization {
 
   _i2.CardType? type;
 
-  int? _storeCardsStoreId;
+  final int? _storeCardsStoreId;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Card]
   /// with some or all fields replaced by the given arguments.
@@ -185,7 +186,7 @@ class _CardImpl extends Card {
     int? duration,
     Object? type = _Undefined,
   }) {
-    return Card(
+    return CardImplicit._(
       id: id is int? ? id : this.id,
       tenantId: tenantId ?? this.tenantId,
       name: name ?? this.name,
@@ -194,6 +195,7 @@ class _CardImpl extends Card {
       coverImage: coverImage ?? this.coverImage,
       duration: duration ?? this.duration,
       type: type is _i2.CardType? ? type : this.type,
+      $_storeCardsStoreId: this._storeCardsStoreId,
     );
   }
 }
@@ -208,8 +210,9 @@ class CardImplicit extends _CardImpl {
     required String coverImage,
     required int duration,
     _i2.CardType? type,
-    this.$_storeCardsStoreId,
-  }) : super(
+    int? $_storeCardsStoreId,
+  })  : _storeCardsStoreId = $_storeCardsStoreId,
+        super(
           id: id,
           tenantId: tenantId,
           name: name,
@@ -237,17 +240,11 @@ class CardImplicit extends _CardImpl {
     );
   }
 
-  int? $_storeCardsStoreId;
-
   @override
-  Map<String, dynamic> toJson() {
-    var jsonMap = super.toJson();
-    jsonMap.addAll({'_storeCardsStoreId': $_storeCardsStoreId});
-    return jsonMap;
-  }
+  final int? _storeCardsStoreId;
 }
 
-class CardTable extends _i1.Table {
+class CardTable extends _i1.Table<int> {
   CardTable({super.tableRelation}) : super(tableName: 'card') {
     tenantId = _i1.ColumnInt(
       'tenantId',
@@ -312,6 +309,18 @@ class CardTable extends _i1.Table {
         type,
         $_storeCardsStoreId,
       ];
+
+  @override
+  List<_i1.Column> get managedColumns => [
+        id,
+        tenantId,
+        name,
+        description,
+        price,
+        coverImage,
+        duration,
+        type,
+      ];
 }
 
 class CardInclude extends _i1.IncludeObject {
@@ -321,7 +330,7 @@ class CardInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Card.t;
+  _i1.Table<int> get table => Card.t;
 }
 
 class CardIncludeList extends _i1.IncludeList {
@@ -341,7 +350,7 @@ class CardIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Card.t;
+  _i1.Table<int> get table => Card.t;
 }
 
 class CardRepository {

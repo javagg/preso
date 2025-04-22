@@ -10,14 +10,15 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
-import 'member.dart' as _i2;
+import 'user.dart' as _i2;
 import 'store.dart' as _i3;
 
-abstract class Membership implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Membership
+    implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Membership._({
     this.id,
-    required this.memberId,
-    this.member,
+    required this.userId,
+    this.user,
     required this.storeId,
     this.store,
     bool? active,
@@ -25,8 +26,8 @@ abstract class Membership implements _i1.TableRow, _i1.ProtocolSerialization {
 
   factory Membership({
     int? id,
-    required int memberId,
-    _i2.Member? member,
+    required int userId,
+    _i2.User? user,
     required int storeId,
     _i3.Store? store,
     bool? active,
@@ -35,11 +36,11 @@ abstract class Membership implements _i1.TableRow, _i1.ProtocolSerialization {
   factory Membership.fromJson(Map<String, dynamic> jsonSerialization) {
     return Membership(
       id: jsonSerialization['id'] as int?,
-      memberId: jsonSerialization['memberId'] as int,
-      member: jsonSerialization['member'] == null
+      userId: jsonSerialization['userId'] as int,
+      user: jsonSerialization['user'] == null
           ? null
-          : _i2.Member.fromJson(
-              (jsonSerialization['member'] as Map<String, dynamic>)),
+          : _i2.User.fromJson(
+              (jsonSerialization['user'] as Map<String, dynamic>)),
       storeId: jsonSerialization['storeId'] as int,
       store: jsonSerialization['store'] == null
           ? null
@@ -56,9 +57,9 @@ abstract class Membership implements _i1.TableRow, _i1.ProtocolSerialization {
   @override
   int? id;
 
-  int memberId;
+  int userId;
 
-  _i2.Member? member;
+  _i2.User? user;
 
   int storeId;
 
@@ -67,15 +68,15 @@ abstract class Membership implements _i1.TableRow, _i1.ProtocolSerialization {
   bool active;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Membership]
   /// with some or all fields replaced by the given arguments.
   @_i1.useResult
   Membership copyWith({
     int? id,
-    int? memberId,
-    _i2.Member? member,
+    int? userId,
+    _i2.User? user,
     int? storeId,
     _i3.Store? store,
     bool? active,
@@ -84,8 +85,8 @@ abstract class Membership implements _i1.TableRow, _i1.ProtocolSerialization {
   Map<String, dynamic> toJson() {
     return {
       if (id != null) 'id': id,
-      'memberId': memberId,
-      if (member != null) 'member': member?.toJson(),
+      'userId': userId,
+      if (user != null) 'user': user?.toJson(),
       'storeId': storeId,
       if (store != null) 'store': store?.toJson(),
       'active': active,
@@ -96,8 +97,8 @@ abstract class Membership implements _i1.TableRow, _i1.ProtocolSerialization {
   Map<String, dynamic> toJsonForProtocol() {
     return {
       if (id != null) 'id': id,
-      'memberId': memberId,
-      if (member != null) 'member': member?.toJsonForProtocol(),
+      'userId': userId,
+      if (user != null) 'user': user?.toJsonForProtocol(),
       'storeId': storeId,
       if (store != null) 'store': store?.toJsonForProtocol(),
       'active': active,
@@ -105,11 +106,11 @@ abstract class Membership implements _i1.TableRow, _i1.ProtocolSerialization {
   }
 
   static MembershipInclude include({
-    _i2.MemberInclude? member,
+    _i2.UserInclude? user,
     _i3.StoreInclude? store,
   }) {
     return MembershipInclude._(
-      member: member,
+      user: user,
       store: store,
     );
   }
@@ -145,15 +146,15 @@ class _Undefined {}
 class _MembershipImpl extends Membership {
   _MembershipImpl({
     int? id,
-    required int memberId,
-    _i2.Member? member,
+    required int userId,
+    _i2.User? user,
     required int storeId,
     _i3.Store? store,
     bool? active,
   }) : super._(
           id: id,
-          memberId: memberId,
-          member: member,
+          userId: userId,
+          user: user,
           storeId: storeId,
           store: store,
           active: active,
@@ -165,16 +166,16 @@ class _MembershipImpl extends Membership {
   @override
   Membership copyWith({
     Object? id = _Undefined,
-    int? memberId,
-    Object? member = _Undefined,
+    int? userId,
+    Object? user = _Undefined,
     int? storeId,
     Object? store = _Undefined,
     bool? active,
   }) {
     return Membership(
       id: id is int? ? id : this.id,
-      memberId: memberId ?? this.memberId,
-      member: member is _i2.Member? ? member : this.member?.copyWith(),
+      userId: userId ?? this.userId,
+      user: user is _i2.User? ? user : this.user?.copyWith(),
       storeId: storeId ?? this.storeId,
       store: store is _i3.Store? ? store : this.store?.copyWith(),
       active: active ?? this.active,
@@ -182,10 +183,10 @@ class _MembershipImpl extends Membership {
   }
 }
 
-class MembershipTable extends _i1.Table {
+class MembershipTable extends _i1.Table<int> {
   MembershipTable({super.tableRelation}) : super(tableName: 'membership') {
-    memberId = _i1.ColumnInt(
-      'memberId',
+    userId = _i1.ColumnInt(
+      'userId',
       this,
     );
     storeId = _i1.ColumnInt(
@@ -199,9 +200,9 @@ class MembershipTable extends _i1.Table {
     );
   }
 
-  late final _i1.ColumnInt memberId;
+  late final _i1.ColumnInt userId;
 
-  _i2.MemberTable? _member;
+  _i2.UserTable? _user;
 
   late final _i1.ColumnInt storeId;
 
@@ -209,17 +210,17 @@ class MembershipTable extends _i1.Table {
 
   late final _i1.ColumnBool active;
 
-  _i2.MemberTable get member {
-    if (_member != null) return _member!;
-    _member = _i1.createRelationTable(
-      relationFieldName: 'member',
-      field: Membership.t.memberId,
-      foreignField: _i2.Member.t.id,
+  _i2.UserTable get user {
+    if (_user != null) return _user!;
+    _user = _i1.createRelationTable(
+      relationFieldName: 'user',
+      field: Membership.t.userId,
+      foreignField: _i2.User.t.id,
       tableRelation: tableRelation,
       createTable: (foreignTableRelation) =>
-          _i2.MemberTable(tableRelation: foreignTableRelation),
+          _i2.UserTable(tableRelation: foreignTableRelation),
     );
-    return _member!;
+    return _user!;
   }
 
   _i3.StoreTable get store {
@@ -238,15 +239,15 @@ class MembershipTable extends _i1.Table {
   @override
   List<_i1.Column> get columns => [
         id,
-        memberId,
+        userId,
         storeId,
         active,
       ];
 
   @override
   _i1.Table? getRelationTable(String relationField) {
-    if (relationField == 'member') {
-      return member;
+    if (relationField == 'user') {
+      return user;
     }
     if (relationField == 'store') {
       return store;
@@ -257,25 +258,25 @@ class MembershipTable extends _i1.Table {
 
 class MembershipInclude extends _i1.IncludeObject {
   MembershipInclude._({
-    _i2.MemberInclude? member,
+    _i2.UserInclude? user,
     _i3.StoreInclude? store,
   }) {
-    _member = member;
+    _user = user;
     _store = store;
   }
 
-  _i2.MemberInclude? _member;
+  _i2.UserInclude? _user;
 
   _i3.StoreInclude? _store;
 
   @override
   Map<String, _i1.Include?> get includes => {
-        'member': _member,
+        'user': _user,
         'store': _store,
       };
 
   @override
-  _i1.Table get table => Membership.t;
+  _i1.Table<int> get table => Membership.t;
 }
 
 class MembershipIncludeList extends _i1.IncludeList {
@@ -295,7 +296,7 @@ class MembershipIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Membership.t;
+  _i1.Table<int> get table => Membership.t;
 }
 
 class MembershipRepository {
@@ -522,25 +523,25 @@ class MembershipRepository {
 class MembershipAttachRowRepository {
   const MembershipAttachRowRepository._();
 
-  /// Creates a relation between the given [Membership] and [Member]
-  /// by setting the [Membership]'s foreign key `memberId` to refer to the [Member].
-  Future<void> member(
+  /// Creates a relation between the given [Membership] and [User]
+  /// by setting the [Membership]'s foreign key `userId` to refer to the [User].
+  Future<void> user(
     _i1.Session session,
     Membership membership,
-    _i2.Member member, {
+    _i2.User user, {
     _i1.Transaction? transaction,
   }) async {
     if (membership.id == null) {
       throw ArgumentError.notNull('membership.id');
     }
-    if (member.id == null) {
-      throw ArgumentError.notNull('member.id');
+    if (user.id == null) {
+      throw ArgumentError.notNull('user.id');
     }
 
-    var $membership = membership.copyWith(memberId: member.id);
+    var $membership = membership.copyWith(userId: user.id);
     await session.db.updateRow<Membership>(
       $membership,
-      columns: [Membership.t.memberId],
+      columns: [Membership.t.userId],
       transaction: transaction,
     );
   }

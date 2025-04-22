@@ -16,14 +16,14 @@ CREATE TABLE "address" (
 --
 CREATE TABLE "appointment" (
     "id" bigserial PRIMARY KEY,
-    "memberId" bigint NOT NULL,
+    "userId" bigint NOT NULL,
     "trainerId" bigint NOT NULL,
     "startTime" timestamp without time zone NOT NULL,
     "endTime" timestamp without time zone NOT NULL
 );
 
 -- Indexes
-CREATE UNIQUE INDEX "appointment_index_idx" ON "appointment" USING btree ("trainerId", "memberId");
+CREATE UNIQUE INDEX "appointment_index_idx" ON "appointment" USING btree ("trainerId", "userId");
 
 --
 -- ACTION CREATE TABLE
@@ -78,15 +78,13 @@ CREATE TABLE "invoice" (
 --
 -- ACTION CREATE TABLE
 --
-CREATE TABLE "member" (
+CREATE TABLE "log" (
     "id" bigserial PRIMARY KEY,
-    "name" text NOT NULL,
-    "gender" text NOT NULL,
-    "age" bigint NOT NULL,
-    "mobile" text NOT NULL,
-    "suspended" boolean NOT NULL DEFAULT false,
-    "headshot" text NOT NULL,
-    "face" text NOT NULL
+    "tenantId" bigint NOT NULL,
+    "operationTime" timestamp without time zone NOT NULL,
+    "createrId" bigint NOT NULL,
+    "type" text NOT NULL,
+    "operatee" text NOT NULL
 );
 
 --
@@ -94,13 +92,13 @@ CREATE TABLE "member" (
 --
 CREATE TABLE "membership" (
     "id" bigserial PRIMARY KEY,
-    "memberId" bigint NOT NULL,
+    "userId" bigint NOT NULL,
     "storeId" bigint NOT NULL,
     "active" boolean NOT NULL DEFAULT false
 );
 
 -- Indexes
-CREATE UNIQUE INDEX "membership_index_idx" ON "membership" USING btree ("storeId", "memberId");
+CREATE UNIQUE INDEX "membership_index_idx" ON "membership" USING btree ("storeId", "userId");
 
 --
 -- ACTION CREATE TABLE
@@ -115,7 +113,13 @@ CREATE TABLE "note" (
 --
 CREATE TABLE "order" (
     "id" bigserial PRIMARY KEY,
-    "no" bigint NOT NULL
+    "price" double precision NOT NULL,
+    "productId" bigint NOT NULL,
+    "createrId" bigint NOT NULL,
+    "createdAt" timestamp without time zone NOT NULL,
+    "updatedAt" timestamp without time zone NOT NULL,
+    "paymentMethod" text NOT NULL,
+    "status" text NOT NULL
 );
 
 --
@@ -132,8 +136,13 @@ CREATE TABLE "permission" (
 --
 CREATE TABLE "product" (
     "id" bigserial PRIMARY KEY,
+    "tenantId" bigint NOT NULL,
     "name" text NOT NULL,
-    "description" text NOT NULL
+    "description" text NOT NULL,
+    "offShelf" boolean NOT NULL DEFAULT true,
+    "price" double precision NOT NULL,
+    "storeId" bigint NOT NULL,
+    "applicableToAllStores" boolean NOT NULL DEFAULT false
 );
 
 --
@@ -212,16 +221,26 @@ CREATE TABLE "trainer" (
 CREATE TABLE "user" (
     "id" bigserial PRIMARY KEY,
     "name" text NOT NULL,
-    "userInfoId" bigint NOT NULL
+    "userInfoId" bigint NOT NULL,
+    "gender" text NOT NULL DEFAULT 'male'::text,
+    "birthday" timestamp without time zone,
+    "mobile" text,
+    "suspended" boolean NOT NULL DEFAULT false,
+    "headshot" text,
+    "face" text,
+    "asTrainerId" bigint
 );
+
+-- Indexes
+CREATE UNIQUE INDEX "user_info_id_unique_idx" ON "user" USING btree ("userInfoId");
 
 --
 -- ACTION CREATE FOREIGN KEY
 --
 ALTER TABLE ONLY "appointment"
     ADD CONSTRAINT "appointment_fk_0"
-    FOREIGN KEY("memberId")
-    REFERENCES "member"("id")
+    FOREIGN KEY("userId")
+    REFERENCES "user"("id")
     ON DELETE NO ACTION
     ON UPDATE NO ACTION;
 ALTER TABLE ONLY "appointment"
@@ -244,14 +263,50 @@ ALTER TABLE ONLY "card"
 --
 -- ACTION CREATE FOREIGN KEY
 --
+ALTER TABLE ONLY "log"
+    ADD CONSTRAINT "log_fk_0"
+    FOREIGN KEY("createrId")
+    REFERENCES "user"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+--
+-- ACTION CREATE FOREIGN KEY
+--
 ALTER TABLE ONLY "membership"
     ADD CONSTRAINT "membership_fk_0"
-    FOREIGN KEY("memberId")
-    REFERENCES "member"("id")
+    FOREIGN KEY("userId")
+    REFERENCES "user"("id")
     ON DELETE NO ACTION
     ON UPDATE NO ACTION;
 ALTER TABLE ONLY "membership"
     ADD CONSTRAINT "membership_fk_1"
+    FOREIGN KEY("storeId")
+    REFERENCES "store"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+--
+-- ACTION CREATE FOREIGN KEY
+--
+ALTER TABLE ONLY "order"
+    ADD CONSTRAINT "order_fk_0"
+    FOREIGN KEY("productId")
+    REFERENCES "product"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+ALTER TABLE ONLY "order"
+    ADD CONSTRAINT "order_fk_1"
+    FOREIGN KEY("createrId")
+    REFERENCES "user"("id")
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+--
+-- ACTION CREATE FOREIGN KEY
+--
+ALTER TABLE ONLY "product"
+    ADD CONSTRAINT "product_fk_0"
     FOREIGN KEY("storeId")
     REFERENCES "store"("id")
     ON DELETE NO ACTION
@@ -292,15 +347,21 @@ ALTER TABLE ONLY "user"
     REFERENCES "serverpod_user_info"("id")
     ON DELETE CASCADE
     ON UPDATE CASCADE;
+ALTER TABLE ONLY "user"
+    ADD CONSTRAINT "user_fk_1"
+    FOREIGN KEY("asTrainerId")
+    REFERENCES "trainer"("id")
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
 
 
 --
 -- MIGRATION VERSION FOR preso
 --
 INSERT INTO "serverpod_migrations" ("module", "version", "timestamp")
-    VALUES ('preso', '20250401114431995', now())
+    VALUES ('preso', '20250422090513772', now())
     ON CONFLICT ("module")
-    DO UPDATE SET "version" = '20250401114431995', "timestamp" = now();
+    DO UPDATE SET "version" = '20250422090513772', "timestamp" = now();
 
 --
 -- MIGRATION VERSION FOR serverpod

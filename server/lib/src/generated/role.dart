@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Role implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Role implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Role._({
     this.id,
     required this.name,
@@ -44,7 +44,7 @@ abstract class Role implements _i1.TableRow, _i1.ProtocolSerialization {
   String description;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Role]
   /// with some or all fields replaced by the given arguments.
@@ -132,7 +132,7 @@ class _RoleImpl extends Role {
   }
 }
 
-class RoleTable extends _i1.Table {
+class RoleTable extends _i1.Table<int> {
   RoleTable({super.tableRelation}) : super(tableName: 'role') {
     name = _i1.ColumnString(
       'name',
@@ -163,7 +163,7 @@ class RoleInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Role.t;
+  _i1.Table<int> get table => Role.t;
 }
 
 class RoleIncludeList extends _i1.IncludeList {
@@ -183,7 +183,7 @@ class RoleIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Role.t;
+  _i1.Table<int> get table => Role.t;
 }
 
 class RoleRepository {

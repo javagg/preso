@@ -11,7 +11,7 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:serverpod/serverpod.dart' as _i1;
 
-abstract class Tenant implements _i1.TableRow, _i1.ProtocolSerialization {
+abstract class Tenant implements _i1.TableRow<int>, _i1.ProtocolSerialization {
   Tenant._({
     this.id,
     required this.name,
@@ -44,7 +44,7 @@ abstract class Tenant implements _i1.TableRow, _i1.ProtocolSerialization {
   String description;
 
   @override
-  _i1.Table get table => t;
+  _i1.Table<int> get table => t;
 
   /// Returns a shallow copy of this [Tenant]
   /// with some or all fields replaced by the given arguments.
@@ -132,7 +132,7 @@ class _TenantImpl extends Tenant {
   }
 }
 
-class TenantTable extends _i1.Table {
+class TenantTable extends _i1.Table<int> {
   TenantTable({super.tableRelation}) : super(tableName: 'tenant') {
     name = _i1.ColumnString(
       'name',
@@ -163,7 +163,7 @@ class TenantInclude extends _i1.IncludeObject {
   Map<String, _i1.Include?> get includes => {};
 
   @override
-  _i1.Table get table => Tenant.t;
+  _i1.Table<int> get table => Tenant.t;
 }
 
 class TenantIncludeList extends _i1.IncludeList {
@@ -183,7 +183,7 @@ class TenantIncludeList extends _i1.IncludeList {
   Map<String, _i1.Include?> get includes => include?.includes ?? {};
 
   @override
-  _i1.Table get table => Tenant.t;
+  _i1.Table<int> get table => Tenant.t;
 }
 
 class TenantRepository {

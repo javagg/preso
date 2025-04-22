@@ -1,11 +1,11 @@
 class: Appointment
 table: appointment
 fields:
-  member: Member?, relation(name=member_appointment)
+  user: User?, relation(name=user_appointment)
   trainer: Trainer?, relation(name=trainer_appointment)
   startTime: DateTime
   endTime: DateTime
 indexes:
   appointment_index_idx:
-    fields: trainerId, memberId
+    fields: trainerId, userId
     unique: true

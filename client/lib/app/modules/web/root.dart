@@ -223,14 +223,6 @@ class RootView extends GetView<RootController> {
                       icon: const Icon(Icons.account_box),
                     ),
                     SideMenuItem(
-                      title: 'menu.tenants'.tr,
-                      onTap: (index, _) {
-                        sideMenu.changePage(index);
-                        Get.offAndToNamed(Routes.tanents);
-                      },
-                      icon: const Icon(Icons.supervisor_account),
-                    ),
-                    SideMenuItem(
                       title: 'menu.trainers'.tr,
                       onTap: (index, _) {
                         sideMenu.changePage(index);
@@ -239,7 +231,7 @@ class RootView extends GetView<RootController> {
                       icon: const Icon(Icons.person_2),
                     ),
                     SideMenuItem(
-                      title: 'orders'.tr,
+                      title: 'menu.orders'.tr,
                       onTap: (index, _) {
                         sideMenu.changePage(index);
                         Get.offAndToNamed(Routes.orders);
@@ -249,9 +241,15 @@ class RootView extends GetView<RootController> {
                     SideMenuExpansionItem(
                       title: "menu.admin".tr,
                       icon: const Icon(Icons.kitchen),
-                      // onTap: (index, _, isExpanded) =>
-                      //     {print('$index, expanded $isExpanded')},
                       children: [
+                        SideMenuItem(
+                          title: 'menu.tenants'.tr,
+                          onTap: (index, _) {
+                            sideMenu.changePage(index);
+                            Get.offAndToNamed(Routes.tenants);
+                          },
+                          icon: const Icon(Icons.supervisor_account),
+                        ),
                         SideMenuItem(
                           title: 'menu.stores'.tr,
                           onTap: (index, _) {

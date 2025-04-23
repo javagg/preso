@@ -1,3 +1,4 @@
+// ignore_for_file: constant_identifier_names
 abstract class Routes {
   Routes._();
   static const root = Paths.root;
@@ -17,8 +18,10 @@ abstract class Routes {
   static const orders = Paths.orders;
   static const logs = Paths.logs;
 
-  static const tanents = Paths.tenants;
+  static const tenants = Paths.admin + Paths.tenants;
   static const stores = Paths.admin + Paths.stores;
+  static const add_store = '${Paths.admin}${Paths.stores}/add';
+  static const edit_store = '${Paths.admin}${Paths.stores}${Paths.edit}';
 
   static const sales = Paths.reports + Paths.sales;
 
@@ -50,4 +53,7 @@ abstract class Paths {
 
   static const reports = '/reports';
   static const sales = '/sales';
+
+  static const add = '/add';
+  static const edit = '/edit';
 }

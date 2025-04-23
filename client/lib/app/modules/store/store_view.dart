@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:preso_common/preso_common.dart';
 import '../../../serverpod_client.dart' as pod;
+import '../../routes/web/app_pages.dart';
+import 'store_form.dart';
 
 class StoreController extends GetxController {
   var loading = false.obs;
@@ -82,10 +84,11 @@ class StoreView extends GetView<StoreController> {
         actions: [
           IconButton(
               onPressed: () async {
-                await Get.dialog(
-                  StoreDialog(update: true),
-                  barrierDismissible: false,
-                );
+                Get.toNamed( Routes.stores + '/add');
+                // await Get.dialog(
+                //   StoreDialog(update: true),
+                //   barrierDismissible: false,
+                // );
               },
               icon: Icon(Icons.add_outlined))
         ],
@@ -177,7 +180,7 @@ class StoreView extends GetView<StoreController> {
                               //   }
                               // },
                               cells: [
-                                DataCell(Text(store.id.toString())),
+                                DataCell(Text("${store.id!}")),
                                 DataCell(Text(store.name)),
                                 DataCell(Text(store.description.toString())),
                                 // DataCell(Text(employee.department)),
@@ -187,7 +190,9 @@ class StoreView extends GetView<StoreController> {
                                   children: [
                                     IconButton.outlined(
                                       onPressed: () {
-                                        Get.snackbar("edit", "edit");
+                                        Get.toNamed('${Routes.edit_store}/${store.id!}');
+
+                                        // Get.snackbar("edit", "edit");
                                       },
                                       icon: Icon(Icons.edit),
                                     ),

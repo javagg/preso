@@ -14,6 +14,7 @@ import '../../modules/order/order_binding.dart';
 import '../../modules/order/order_view.dart';
 import '../../modules/reports/report.dart';
 import '../../modules/reports/sale.dart';
+import '../../modules/store/store_form.dart';
 import '../../modules/trainer/trainer_view.dart';
 import '../../modules/web/root.dart';
 import '../../modules/dashboard/dashboard_binding.dart';
@@ -55,16 +56,6 @@ class AppPages {
             bindings: [MemberBinding()],
           ),
           GetPage(
-            middlewares: [
-              // EnsureAuthMiddleware(),
-            ],
-            name: Paths.tenants,
-            page: () => const TenantView(),
-            transition: Transition.noTransition,
-            title: 'menu.tenants'.tr,
-            bindings: [TenantBinding()],
-          ),
-          GetPage(
             name: Paths.trainers,
             page: () => TrainerView(),
             transition: Transition.noTransition,
@@ -89,16 +80,34 @@ class AppPages {
             name: Paths.admin,
             page: () => const AdminView(),
             transition: Transition.noTransition,
-            title: 'menu.admin'.tr,
-            // transition: Transition.size,
+            // title: 'menu.admin'.tr,
             bindings: [AdminBinding()],
             children: [
+              GetPage(
+                name: Paths.tenants,
+                page: () => const TenantView(),
+                transition: Transition.noTransition,
+                // title: 'menu.tenants'.tr,
+                bindings: [TenantBinding()],
+              ),
               GetPage(
                 name: Paths.stores,
                 page: () => const StoreView(),
                 transition: Transition.noTransition,
-                title: 'menu.stores'.tr,
+                // title: 'menu.stores'.tr,
                 bindings: [StoreBinding()],
+              ),
+              GetPage(
+                name: "${Paths.stores}/add",
+                page: () => const StoreFormView(),
+                transition: Transition.noTransition,
+                bindings: [StoreFormBinding()],
+              ),
+              GetPage(
+                name: "${Paths.stores}${Paths.edit}/:id",
+                page: () => const StoreFormView(),
+                transition: Transition.noTransition,
+                bindings: [StoreFormBinding()],
               ),
             ],
           ),

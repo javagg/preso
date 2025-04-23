@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:preso_client/app/controllers/appstore_controller.dart';
 
 import 'serverpod_client.dart';
 import 'services/auth_service.dart';
@@ -23,6 +24,8 @@ void main() async {
         validate: true,
       ) ??
       ThemeData();
+
+  Get.put(AppStoreController());
 
   runApp(
     GetMaterialApp(

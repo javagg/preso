@@ -2,9 +2,9 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-// import 'package:preso_common/preso_common.dart';
-// import 'package:preso_common/preso_common.dart';
+import 'package:preso_common/preso_common.dart' show Trainer;
 
+import '../../../serverpod_client.dart' as pod;
 import '../../../services/auth_service.dart';
 import '../../routes/app_routes.dart';
 import 'root/controller.dart';
@@ -83,8 +83,6 @@ class RootView extends GetView<RootController> {
 
   final List<Widget> pages = [
     HomePage(),
-    Page2(),
-    Page3(),
     MyPage(),
   ];
 
@@ -102,51 +100,54 @@ class RootView extends GetView<RootController> {
               label: 'nav.home'.tr,
             ),
             NavigationDestination(
-              icon: Icon(Icons.business),
-              label: '业务',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.school),
-              label: '学校',
-            ),
-            NavigationDestination(
               icon: Icon(Icons.account_box),
               label: 'nav.my'.tr,
             ),
           ],
         ),
       ),
-      // bottomNavigationBar: Obx(
-      //   () => BottomNavigationBar(
-      //     currentIndex: controller.tabIndex.value,
-      //     onTap: (index) => controller.changePage(index),
-      //     items: [
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.home),
-      //         label: 'nav.home'.tr,
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.business),
-      //         label: '业务',
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.school),
-      //         label: '学校',
-      //       ),
-      //       BottomNavigationBarItem(
-      //         icon: Icon(Icons.account_box),
-      //         label: 'nav.my'.tr,
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
 
-// 页面1
-class HomePage extends StatelessWidget {
-  final controller = Get.find<RootController>();
+class HomePageController extends GetxController {
+  final List<String> imageUrls = [
+    'https://picsum.photos/id/10/800/600',
+    'https://picsum.photos/id/11/800/600',
+    'https://picsum.photos/id/12/800/600',
+    'https://picsum.photos/id/13/800/600',
+    'https://picsum.photos/id/14/800/600',
+  ];
+  final currentStore = 1.obs;
+  final storeName = 'storeName'.obs;
+
+  var trainers = [
+    Trainer(
+        name: "trainer",
+        description: "ppapaaap",
+        gender: "male",
+        age: 20,
+        headshot: "",
+        photos: "",
+        videos: "",
+        servingCity: "",
+        servingHours: "",
+        classFee: 199,
+        phone: "110")
+  ].obs;
+
+  @override
+  void onReady() {
+    super.onReady();
+    pod.client.store.get(currentStore.value).then((store) {
+      storeName.value = store!.name;
+    });
+  }
+}
+
+class HomePage extends GetView<HomePageController> {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,10 +166,24 @@ class HomePage extends StatelessWidget {
             backgroundColor:
                 Colors.transparent.withAlpha((255.0 * 0.1).round()),
           ),
-          onPressed: () {},
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [Text("关山大道店"), Icon(Icons.arrow_drop_down_sharp)],
+          onPressed: () {
+            Get.bottomSheet(
+              Container(
+                height: 300,
+                color: Colors.red,
+              ),
+            );
+          },
+          child: Obx(
+            () {
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(controller.storeName.value),
+                  Icon(Icons.arrow_drop_down_sharp)
+                ],
+              );
+            },
           ),
         ),
       ),
@@ -205,6 +220,36 @@ class HomePage extends StatelessWidget {
             Column(
               children: [
                 SizedBox(
+                    height: 180,
+                    child: Card(
+                        child: Column(children: [
+                      Obx(() {
+                        return ListTile(
+                          title: Text(
+                            controller.storeName.value,
+                            style: Get.textTheme.titleMedium,
+                          ),
+                          subtitle: Row(
+                            children: [
+                              Chip(
+                                label: Text("24小时"),
+                                // onSelected: (bool value) {},
+                              )
+                            ],
+                          ),
+                          trailing: Icon(Icons.arrow_right_outlined),
+                          onTap: () {
+                            Get.bottomSheet(
+                              Container(
+                                height: 300,
+                                color: Colors.red,
+                              ),
+                            );
+                          },
+                        );
+                      }),
+                    ]))),
+                SizedBox(
                   height: 300,
                   child: Card(
                     child: Column(
@@ -240,10 +285,6 @@ class HomePage extends StatelessWidget {
                             "app.trainer".tr,
                             style: Get.textTheme.titleMedium,
                           ),
-                          // trailing: Text(
-                          //   "common.more".tr,
-                          //   style: Get.textTheme.titleSmall,
-                          // ),
                         ),
                         Expanded(
                           child: CarouselView(
@@ -319,32 +360,13 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class Page2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        '业务页面',
-        style: TextStyle(fontSize: 30),
-      ),
-    );
-  }
+class MyPageController extends GetxController {
+  var items = List<String>.generate(20, (index) => 'Item ${index + 1}').obs;
 }
 
-class Page3 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        '学校页面',
-        style: TextStyle(fontSize: 30),
-      ),
-    );
-  }
-}
+class MyPage extends GetView<MyPageController> {
+  const MyPage({super.key});
 
-class MyPage extends StatelessWidget {
-  var controller = Get.find<RootController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -352,10 +374,10 @@ class MyPage extends StatelessWidget {
         () => GridView.builder(
           padding: EdgeInsets.all(10),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 5, // 每行显示2个项目
+            crossAxisCount: 5,
             crossAxisSpacing: 5,
             mainAxisSpacing: 5,
-            childAspectRatio: 1.0, // 宽高比
+            childAspectRatio: 1.0,
           ),
           itemCount: controller.items.length,
           itemBuilder: (context, index) {

@@ -2,7 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:preso_client/app/modules/appointment/appointment_view.dart';
+import 'package:preso_client/icons.dart';
 import 'package:preso_common/preso_common.dart' show Trainer;
 
 import '../../../serverpod_client.dart' as pod;
@@ -363,40 +363,45 @@ class HomePage extends GetView<HomePageController> {
                         ),
                         Expanded(
                           child: CarouselView(
-                            itemSnapping: true,
-                            enableSplash: false,
-                            shrinkExtent: 200,
-                            itemExtent: 200, children: controller.productCards.map((card) {
-                            return Container(
-                              color: Colors.green,
-                              margin: EdgeInsets.all(8),
-                              // child: Text("data"),
-                              child: Column(
-                                children: [
-                                  Expanded(child: Column(
-                                    children: [   Text(card.name),
-                                  Text(card.price.toString()),],
-                                  )),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Center(
-                                      child: TextButton(
-                                        style: TextButton.styleFrom(
-                                          backgroundColor: Colors.yellowAccent,
-                                          elevation: 2,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(12),
+                              itemSnapping: true,
+                              enableSplash: false,
+                              shrinkExtent: 200,
+                              itemExtent: 200,
+                              children: controller.productCards.map((card) {
+                                return Container(
+                                  color: Colors.green,
+                                  margin: EdgeInsets.all(8),
+                                  // child: Text("data"),
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                          child: Column(
+                                        children: [
+                                          Text(card.name),
+                                          Text(card.price.toString()),
+                                        ],
+                                      )),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Center(
+                                            child: TextButton(
+                                          style: TextButton.styleFrom(
+                                            backgroundColor:
+                                                Colors.yellowAccent,
+                                            elevation: 2,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
                                           ),
-                                        ),
-                                        onPressed: () {},
-                                        child: Text("app.buyNow".tr),
+                                          onPressed: () {},
+                                          child: Text("app.buyNow".tr),
+                                        )),
                                       )
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          }).toList()),
+                                    ],
+                                  ),
+                                );
+                              }).toList()),
                         )
                         // AspectRatio(
                         //   aspectRatio: 16 / 9,
@@ -486,10 +491,55 @@ class AppointmentPage extends GetView<AppointmentPageController> {
   }
 }
 
+class ToolItem {
+  final String name;
+  final IconData icon;
+  ToolItem({required this.name, required this.icon});
+}
+
 class MyPageController extends GetxController {
   var username = "john".obs;
 
   var items = List<String>.generate(12, (index) => 'Item ${index + 1}').obs;
+
+  final tools = [
+    ToolItem(
+      name: "在线购卡",
+      icon: AppIcons.cart,
+    ),
+    ToolItem(
+      name: "团购验券",
+      icon: AppIcons.coupon,
+    ),
+    ToolItem(
+      name: "录入人脸",
+      icon: AppIcons.coupon,
+    ),
+    ToolItem(
+      name: "器械报修",
+      icon: AppIcons.coupon,
+    ),
+    ToolItem(
+      name: "店铺通知",
+      icon: AppIcons.coupon,
+    ),
+    ToolItem(
+      name: "会员协议",
+      icon: AppIcons.coupon,
+    ),
+    ToolItem(
+      name: "在线客服",
+      icon: AppIcons.coupon,
+    ),
+    ToolItem(
+      name: "到店记录",
+      icon: AppIcons.coupon,
+    ),
+    ToolItem(
+      name: "我要留言",
+      icon: AppIcons.coupon,
+    ),
+  ];
 }
 
 class MyPage extends GetView<MyPageController> {
@@ -498,24 +548,42 @@ class MyPage extends GetView<MyPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Text("我的"),
+      ),
       body: Obx(
         () => SingleChildScrollView(
           child: Column(
             children: [
-              ListTile(
-                leading: CircleAvatar(
-                  radius: 32,
-                  // backgroundImage: NetworkImage("https://ww"),
-                  child: Icon(Icons.person),
+              Padding(
+                padding: const EdgeInsets.only(top: 16.0),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 32,
+                    // backgroundImage: NetworkImage("https://ww"),
+                    child: Icon(Icons.person),
+                  ),
+                  title: Text(controller.username.value),
+                  subtitle: Text("110020"),
+                  trailing: Text("正常"),
                 ),
-                title: Text(controller.username.value),
-                subtitle: Text("110020"),
-                trailing: Text("正常"),
               ),
               const Divider(
                 height: 1,
                 thickness: 1,
               ),
+              Card(
+                  child: Column(
+                children: [
+                  ListTile(
+                    title: Text("app.myCards".tr),
+                    trailing: TextButton(
+                        onPressed: () {}, child: Text("common.more".tr)),
+                  ),
+                ],
+              )),
               Card(
                 child: Column(
                   children: [
@@ -528,47 +596,21 @@ class MyPage extends GetView<MyPageController> {
                       direction: Axis.horizontal,
                       spacing: 16.0,
                       runSpacing: 4.0,
-                      children: controller.items.map((item) {
+                      children: controller.tools.map((item) {
                         return SizedBox(
                           height: 56,
                           width: 72,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.star, size: 40, color: Colors.amber),
+                              Icon(item.icon, size: 36),
                               // SizedBox(height: 10),
-                              Text(item, style: TextStyle(fontSize: 16)),
+                              Text(item.name, style: TextStyle(fontSize: 12)),
                             ],
                           ),
                         );
                       }).toList(),
                     ),
-                    //   child: GridView.builder(
-                    //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    //       crossAxisCount: 5,
-                    //       crossAxisSpacing: 5,
-                    //       mainAxisSpacing: 5,
-                    //       childAspectRatio: 1.0,
-                    //     ),
-                    //     itemCount: controller.items.length,
-                    //     itemBuilder: (context, index) {
-                    //       return Center(
-                    //         child: SizedBox(
-                    //           height: 20,
-                    //           child: Column(
-                    //             mainAxisAlignment: MainAxisAlignment.center,
-                    //             children: [
-                    //               Icon(Icons.star, size: 40, color: Colors.amber),
-                    //               // SizedBox(height: 10),
-                    //               Text(controller.items[index],
-                    //                   style: TextStyle(fontSize: 16)),
-                    //             ],
-                    //           ),
-                    //         ),
-                    //       );
-                    //     },
-                    //   ),
-                    // ),
                   ],
                 ),
               )

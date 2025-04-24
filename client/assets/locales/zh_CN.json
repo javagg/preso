@@ -24,10 +24,24 @@
     "title": "来运动",
     "description": "来运动是一个健身场馆运行系统",
     "card": "会籍卡",
+    "coupon": "优惠券",
+    "points": "积分",
     "trainer": "教练",
     "class": "课程",
     "member": "会员",
-    "store": "门店"
+    "store": "门店",
+    "order": "订单",
+    "techSupport": "来运动技术支持",
+    "package": "卡包",
+    "tools": "工具",
+    "personal": "个人中心",
+    "membershipStatus": "会籍状态",
+    "statusNormal": "正常",
+    "statusExpired": "过期",
+    "statusSuspended": "停卡",
+    "visits": "到店次数",
+    "buy": "购买",
+    "buyNow": "立即购买"
   },
   "menu": {
     "dashboard": "仪表盘",
@@ -46,6 +60,7 @@
   },
   "nav": {
     "home": "首页",
-    "my": "我的"
+    "my": "我的",
+    "appointment": "预约"
   }
 }

@@ -20,7 +20,10 @@ class RootBinding extends Binding {
       ),
       Bind.lazyPut<HomePageController>(
         () => HomePageController(),
-      )
+      ),
+      Bind.lazyPut<AppointmentPageController>(
+        () => AppointmentPageController(),
+      ),
     ];
   }
 }

@@ -17,6 +17,8 @@ dependencies:
   serverpod_auth_shared_flutter: 2.5.1
   # serverpod_auth_wechat_flutter: 2.5.1
   syncfusion_flutter_datagrid: ^28.2.6
+  syncfusion_flutter_calendar: ^28.2.6
+
   preso_common: 0.1.0
   cupertino_icons: ^1.0.5
   get: ^5.0.0-release-candidate-9.3.2
@@ -39,6 +41,8 @@ dependencies:
   cached_network_image: ^3.4.1
   confirm_dialog: ^1.0.4
   font_awesome_flutter: ^10.8.0
+  flutter_svg: ^2.1.0
+  marquee: ^2.3.0
 
 dev_dependencies:
   flutter_lints: '>=3.0.0 <6.0.0'
@@ -48,5 +52,6 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - assets/images/
     - assets/themes/
     - assets/locales/

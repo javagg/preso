@@ -9,4 +9,9 @@ class AppIcons {
   static const IconData cart = FontAwesomeIcons.cartShopping;
   static const IconData coupon = FontAwesomeIcons.ticketSimple;
   static const IconData face = FontAwesomeIcons.faceAngry;
+  static const IconData handshake = FontAwesomeIcons.handshakeSimple;
+  static const IconData repair = FontAwesomeIcons.screwdriverWrench;
+  static const IconData annouacement = FontAwesomeIcons.bullhorn;
+  static const IconData barcode = FontAwesomeIcons.barcode;
+
 }

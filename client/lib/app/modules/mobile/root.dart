@@ -2,11 +2,15 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:marquee/marquee.dart';
 import 'package:preso_client/icons.dart';
 import 'package:preso_common/preso_common.dart' show Trainer;
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../../../serverpod_client.dart' as pod;
 import '../../../services/auth_service.dart';
+import '../../../widgets/smart_switch.dart';
 import '../../routes/app_routes.dart';
 import 'root/controller.dart';
 export 'root/controller.dart';
@@ -296,9 +300,9 @@ class HomePage extends GetView<HomePageController> {
             Column(
               children: [
                 SizedBox(
-                    height: 120,
-                    child: Card(
-                        child: Column(
+                  height: 120,
+                  child: Card(
+                    child: Column(
                       children: [
                         Obx(
                           () {
@@ -345,7 +349,28 @@ class HomePage extends GetView<HomePageController> {
                           // trailing: Icon(Icons.arrow_right_outlined),
                         )
                       ],
-                    ))),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.volume_up_outlined),
+                        Expanded(
+                          child: Marquee(
+                            velocity: 40,
+                            blankSpace: 100,
+                            text: "欢迎来到来运动关山大道店健身",
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: 300,
                   child: Card(
@@ -484,8 +509,18 @@ class AppointmentPage extends GetView<AppointmentPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text("appointment"),
+      body: Column(
+        children: [
+          SmartSwitch(
+            size: Size(172, 86),
+            states: [false, true, false],
+          ),
+          SfCalendar(
+            view: CalendarView.week,
+            initialDisplayDate: DateTime.now(),
+            showNavigationArrow: true,
+          ),
+        ],
       ),
     );
   }
@@ -517,7 +552,7 @@ class MyPageController extends GetxController {
     ),
     ToolItem(
       name: "器械报修",
-      icon: AppIcons.coupon,
+      icon: AppIcons.repair,
     ),
     ToolItem(
       name: "店铺通知",
@@ -525,7 +560,7 @@ class MyPageController extends GetxController {
     ),
     ToolItem(
       name: "会员协议",
-      icon: AppIcons.coupon,
+      icon: AppIcons.handshake,
     ),
     ToolItem(
       name: "在线客服",
@@ -540,6 +575,117 @@ class MyPageController extends GetxController {
       icon: AppIcons.coupon,
     ),
   ];
+}
+
+class ProfileHeader extends StatelessWidget {
+  const ProfileHeader({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          height: 250,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/profile_bg.png'),
+                fit: BoxFit.cover),
+          ),
+        ),
+        Container(
+          height: 250,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              colors: [
+                Colors.black.withValues(alpha: 0.7),
+                Colors.transparent,
+              ],
+            ),
+          ),
+        ),
+
+        // 内容区域
+        Positioned(
+          bottom: 20,
+          left: 20,
+          right: 20,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              // 用户头像
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: NetworkImage(
+                    'https://example.com/avatar.jpg'), // 替换为实际头像URL
+              ),
+              SizedBox(width: 20),
+
+              // 用户信息
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '张伟',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      'Flutter开发者 | 技术爱好者',
+                      style: TextStyle(
+                        color: Colors.white70,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    Row(
+                      children: [
+                        _buildInfoItem('关注', '1.2k'),
+                        _buildInfoItem('粉丝', '890'),
+                        _buildInfoItem('点赞', '5.6k'),
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        )
+      ],
+    );
+  }
+
+  // 构建数据项组件
+  Widget _buildInfoItem(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 20),
+      child: Column(
+        children: [
+          Text(
+            value,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.white70,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
 class MyPage extends GetView<MyPageController> {
@@ -557,6 +703,7 @@ class MyPage extends GetView<MyPageController> {
         () => SingleChildScrollView(
           child: Column(
             children: [
+              ProfileHeader(),
               Padding(
                 padding: const EdgeInsets.only(top: 16.0),
                 child: ListTile(
@@ -575,15 +722,166 @@ class MyPage extends GetView<MyPageController> {
                 thickness: 1,
               ),
               Card(
-                  child: Column(
-                children: [
-                  ListTile(
-                    title: Text("app.myCards".tr),
-                    trailing: TextButton(
-                        onPressed: () {}, child: Text("common.more".tr)),
-                  ),
-                ],
-              )),
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text("app.myCards".tr),
+                      trailing: TextButton(
+                          onPressed: () {}, child: Text("common.more".tr)),
+                    ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 200,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [Color(0xFF2A2D3E), Color(0xFF1A1C28)],
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 10,
+                            spreadRadius: 2,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Stack(
+                        children: [
+                          // 光晕效果
+                          Positioned(
+                            right: -50,
+                            top: -50,
+                            child: Container(
+                              width: 150,
+                              height: 150,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white.withOpacity(0.1),
+                              ),
+                            ),
+                          ),
+
+                          Padding(
+                            padding: EdgeInsets.all(20),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'VIP CARD',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        letterSpacing: 1.5,
+                                      ),
+                                    ),
+                                    SvgPicture.asset(
+                                      'assets/icons/crown.svg',
+                                      color: Colors.amber,
+                                      width: 30,
+                                    )
+                                  ],
+                                ),
+                                SizedBox(height: 25),
+                                Row(
+                                  children: [
+                                    CircleAvatar(
+                                      radius: 25,
+                                      backgroundImage: NetworkImage(
+                                          'https://example.com/avatar.jpg'),
+                                    ),
+                                    SizedBox(width: 15),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'John Doe',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Text(
+                                          'Platinum Member',
+                                          style: TextStyle(
+                                            color: Colors.amber,
+                                            fontSize: 12,
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Spacer(),
+                                _buildCardNumber(),
+                                SizedBox(height: 15),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Points: 25,380',
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    Text(
+                                      'Valid Thru: 12/25',
+                                      style: TextStyle(
+                                        color: Colors.white70,
+                                        fontSize: 12,
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: 150,
+                      child: ListView.separated(
+                        padding: EdgeInsets.all(16),
+                        separatorBuilder: (_, __) => SizedBox(height: 16),
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return _buildCouponItem(
+                            title: index == 0
+                                ? '限时折扣券'
+                                : index == 1
+                                    ? '满减券'
+                                    : '运费抵扣券',
+                            value: index == 0
+                                ? '8折'
+                                : index == 1
+                                    ? '¥50'
+                                    : '免运费',
+                            condition: index == 0
+                                ? '全品类商品可用'
+                                : index == 1
+                                    ? '满¥300可用'
+                                    : '指定商品可用',
+                            date: '有效期至 2024-12-31',
+                            isExpired: index == 2,
+                          );
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
               Card(
                 child: Column(
                   children: [
@@ -620,4 +918,178 @@ class MyPage extends GetView<MyPageController> {
       ),
     );
   }
+
+  Widget _buildCardNumber() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(
+        4,
+        (index) => Padding(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: Text(
+            '****',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              letterSpacing: 2,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCouponItem({
+    required String title,
+    required String value,
+    required String condition,
+    required String date,
+    bool isExpired = false,
+  }) {
+    return Container(
+      height: 120,
+      decoration: BoxDecoration(
+        color: isExpired ? Colors.grey[200] : Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 6,
+            offset: Offset(0, 2),
+          )
+        ],
+      ),
+      child: Stack(
+        children: [
+          // 左侧虚线分割线
+          Positioned(
+            left: 120,
+            top: 0,
+            bottom: 0,
+            child: CustomPaint(
+              painter: _DashedLinePainter(),
+            ),
+          ),
+
+          Row(
+            children: [
+              // 左侧优惠券价值区域
+              Container(
+                width: 120,
+                decoration: BoxDecoration(
+                  color: isExpired ? Colors.grey[300] : Colors.red[400],
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    bottomLeft: Radius.circular(8),
+                  ),
+                ),
+                child: Center(
+                  child: Text(
+                    value,
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: isExpired ? Colors.grey[500] : Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+
+              // 右侧详情区域
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: isExpired ? Colors.grey : Colors.black,
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        condition,
+                        style: TextStyle(
+                          color: isExpired ? Colors.grey : Colors.black54,
+                        ),
+                      ),
+                      Spacer(),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/icon_time.svg',
+                            color: isExpired ? Colors.grey : Colors.red,
+                            width: 14,
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            date,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: isExpired ? Colors.grey : Colors.red,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+
+          // 右上角状态标签
+          Positioned(
+            right: 8,
+            top: 8,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: isExpired ? Colors.grey : Colors.green,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                isExpired ? '已过期' : '可使用',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+// 自定义虚线绘制
+class _DashedLinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.grey
+      ..strokeWidth = 1
+      ..style = PaintingStyle.stroke;
+
+    const dashWidth = 4;
+    const dashSpace = 4;
+    double startY = 0;
+
+    while (startY < size.height) {
+      canvas.drawLine(
+        Offset(0, startY),
+        Offset(0, startY + dashWidth),
+        paint,
+      );
+      startY += dashWidth + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

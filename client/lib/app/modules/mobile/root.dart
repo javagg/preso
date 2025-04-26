@@ -7,6 +7,7 @@ import 'package:preso_client/icons.dart';
 import 'package:preso_common/preso_common.dart' show Trainer;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:sprintf/sprintf.dart';
 
 import '../../../serverpod_client.dart' as pod;
 import '../../../services/auth_service.dart';
@@ -122,14 +123,29 @@ class RootView extends GetView<RootController> {
 
 class ProductCardData {
   final String name;
-  final double price;
+  final double originalPrice;
+  final double strikePrice;
   final String imageUrl;
 
   ProductCardData({
     required this.name,
-    required this.price,
+    required this.strikePrice,
+    required this.originalPrice,
     required this.imageUrl,
   });
+}
+
+class StoreStatus {
+  final double temperature;
+  final double humidity;
+  final int numWorkingOut;
+  final List<String> cameraSnapshots;
+
+  StoreStatus(
+      {required this.temperature,
+      required this.humidity,
+      required this.numWorkingOut,
+      required this.cameraSnapshots});
 }
 
 class HomePageController extends GetxController {
@@ -146,44 +162,36 @@ class HomePageController extends GetxController {
   var productCards = [
     ProductCardData(
       name: "单次卡",
-      price: 9.9,
+      strikePrice: 9.9,
+      originalPrice: 19.9,
       imageUrl: "",
     ),
     ProductCardData(
       name: "月卡(单店)",
-      price: 99,
+      strikePrice: 99,
+      originalPrice: 159,
       imageUrl: "",
     ),
     ProductCardData(
       name: "月卡(通卡)",
-      price: 169,
+      strikePrice: 169,
+      originalPrice: 199,
       imageUrl: "",
     ),
     ProductCardData(
       name: "年卡(单店)",
-      price: 799,
+      strikePrice: 799,
+      originalPrice: 899,
       imageUrl: "",
     ),
   ];
   var trainers = [
     Trainer(
-        name: "王教练",
+        name: "吴教练",
         description: "ppapaaap",
         gender: "male",
         age: 20,
-        headshot: "",
-        photos: "",
-        videos: "",
-        servingCity: "",
-        servingHours: "",
-        classFee: 199,
-        phone: "110"),
-    Trainer(
-        name: "孙教练",
-        description: "ppapaaap",
-        gender: "male",
-        age: 20,
-        headshot: "",
+        headshot: "assets/images/wuyanzu.jpeg",
         photos: "",
         videos: "",
         servingCity: "",
@@ -195,7 +203,7 @@ class HomePageController extends GetxController {
         description: "ppapaaap",
         gender: "male",
         age: 20,
-        headshot: "",
+        headshot: "assets/images/jirounan.jpeg",
         photos: "",
         videos: "",
         servingCity: "",
@@ -203,11 +211,23 @@ class HomePageController extends GetxController {
         classFee: 199,
         phone: "110"),
     Trainer(
-        name: "赵敏",
+        name: "Joe Black",
         description: "ppapaaap",
         gender: "male",
         age: 20,
-        headshot: "",
+        headshot: "assets/images/nvjiao1.png",
+        photos: "",
+        videos: "",
+        servingCity: "",
+        servingHours: "",
+        classFee: 199,
+        phone: "110"),
+    Trainer(
+        name: "大洋马",
+        description: "ppapaaap",
+        gender: "male",
+        age: 20,
+        headshot: "assets/images/nvjiao2.jpg",
         photos: "",
         videos: "",
         servingCity: "",
@@ -216,6 +236,15 @@ class HomePageController extends GetxController {
         phone: "110"),
   ].obs;
 
+  final storeStatus = StoreStatus(
+      numWorkingOut: 23,
+      temperature: 23.5,
+      humidity: 50.0,
+      cameraSnapshots: [
+        "https://th.bing.com/th/id/OIP.7SSOy8x59mzneSIwv3UurAHaE5?rs=1&pid=ImgDetMain",
+        "https://th.bing.com/th/id/OIP.OMb4hCsYrJNbWdCgmdRuegHaE8?rs=1&pid=ImgDetMain",
+        "https://th.bing.com/th/id/OIP.9INWq_XaPVqnsmOah6uW-wHaFj?rs=1&pid=ImgDetMain",
+      ]);
   @override
   void onReady() {
     super.onReady();
@@ -230,6 +259,7 @@ class HomePage extends GetView<HomePageController> {
 
   @override
   Widget build(BuildContext context) {
+    // final String fmt = 'app.howManyWorkingout'.tr;
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -297,202 +327,352 @@ class HomePage extends GetView<HomePageController> {
                 ),
               ),
             ),
-            Column(
-              children: [
-                SizedBox(
-                  height: 120,
-                  child: Card(
-                    child: Column(
-                      children: [
-                        Obx(
-                          () {
-                            return ListTile(
-                              title: Text(
-                                controller.storeName.value,
-                                style: Get.textTheme.titleMedium,
+            SizedBox(
+              height: 120,
+              child: Card(
+                child: Column(
+                  children: [
+                    Obx(
+                      () {
+                        return ListTile(
+                          title: Text(
+                            controller.storeName.value,
+                            style: Get.textTheme.titleMedium,
+                          ),
+                          subtitle: Row(
+                              children: ["24小时", "月付制", "无推销"].map((tag) {
+                            return Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: Container(
+                                padding: const EdgeInsets.all(1.0),
+                                decoration: BoxDecoration(
+                                  border: Border.all(),
+                                  color: Colors.grey[200],
+                                ),
+                                child: Text(
+                                  tag,
+                                  style: TextStyle(fontSize: 10),
+                                ),
                               ),
-                              subtitle: Row(
-                                  children: ["24小时", "月付制", "无推销"].map((tag) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(2.0),
-                                  child: Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 4),
-                                    color: Colors.limeAccent,
-                                    child: Text(
-                                      tag,
-                                      style: TextStyle(fontSize: 10),
-                                    ),
-                                  ),
-                                );
-                              }).toList()),
-                              trailing: Icon(Icons.arrow_right_outlined),
-                              onTap: () {
-                                Get.bottomSheet(
-                                  Container(
-                                    height: 300,
-                                    color: Colors.red,
-                                  ),
-                                );
-                              },
+                            );
+                          }).toList()),
+                          trailing: Icon(Icons.arrow_right_outlined),
+                          onTap: () {
+                            Get.bottomSheet(
+                              Container(
+                                height: 300,
+                                color: Colors.red,
+                              ),
                             );
                           },
-                        ),
-                        ListTile(
-                          dense: true,
-                          leading: Icon(
-                            Icons.location_on_outlined,
-                            size: 20,
-                          ),
-                          title: Text("关山大道300号硬铁广场3层1001室"),
-                          // subtitle: Text("110020"),
-                          // trailing: Icon(Icons.arrow_right_outlined),
-                        )
-                      ],
+                        );
+                      },
                     ),
+                    ListTile(
+                      dense: true,
+                      leading: Icon(
+                        Icons.location_on_outlined,
+                        size: 20,
+                      ),
+                      title: Text("关山大道300号硬铁广场3层1001室"),
+                      // subtitle: Text("110020"),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.phone_outlined,
+                              size: 20,
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.wechat_outlined,
+                              size: 20,
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 40,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.volume_up_outlined),
+                    Expanded(
+                      child: Marquee(
+                        velocity: 40,
+                        blankSpace: 100,
+                        text: "欢迎来到来运动关山大道店健身",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.orange[400],
+                  // elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                SizedBox(
-                  height: 40,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      children: [
-                        Icon(Icons.volume_up_outlined),
-                        Expanded(
-                          child: Marquee(
-                            velocity: 40,
-                            blankSpace: 100,
-                            text: "欢迎来到来运动关山大道店健身",
-                            style: TextStyle(fontSize: 12),
-                          ),
+                onPressed: () async {
+                  // Get.dialog(arguments: )
+                  await Get.defaultDialog(
+                    title: "团购核销",
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Center(
+                        child: Text(
+                          "团购核销",
+                          style: TextStyle(fontSize: 18, color: Colors.white),
                         ),
-                      ],
-                    ),
+                      ),
+                      Center(
+                        child: Text(
+                          "美图/抖音/高德/小红书",
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                        ),
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: 300,
-                  child: Card(
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: Text(
-                            "app.card".tr,
-                            style: Get.textTheme.titleMedium,
-                          ),
-                          trailing: Text(
-                            "common.more".tr,
-                            style: Get.textTheme.titleSmall,
-                          ),
-                        ),
-                        Expanded(
-                          child: CarouselView(
-                              itemSnapping: true,
-                              enableSplash: false,
-                              shrinkExtent: 200,
-                              itemExtent: 200,
-                              children: controller.productCards.map((card) {
-                                return Container(
-                                  color: Colors.green,
-                                  margin: EdgeInsets.all(8),
-                                  // child: Text("data"),
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                          child: Column(
-                                        children: [
-                                          Text(card.name),
-                                          Text(card.price.toString()),
-                                        ],
-                                      )),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Center(
-                                            child: TextButton(
-                                          style: TextButton.styleFrom(
-                                            backgroundColor:
-                                                Colors.yellowAccent,
-                                            elevation: 2,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
+              ),
+            ),
+            SizedBox(
+              height: 220,
+              child: Card(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        "app.card".tr,
+                        style: Get.textTheme.titleMedium,
+                      ),
+                      trailing: Text(
+                        "common.more".tr,
+                        style: Get.textTheme.titleSmall,
+                      ),
+                    ),
+                    Expanded(
+                      child: CarouselView(
+                          itemSnapping: true,
+                          enableSplash: false,
+                          shrinkExtent: 120,
+                          itemExtent: 120,
+                          children: controller.productCards.map((card) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                color:
+                                    Colors.orange[50]!.withValues(alpha: 0.6),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              top: 16, bottom: 8),
+                                          child: Text(
+                                            card.name,
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold),
                                           ),
-                                          onPressed: () {},
-                                          child: Text("app.buyNow".tr),
-                                        )),
-                                      )
-                                    ],
+                                        ),
+                                        Row(
+                                          textBaseline: TextBaseline.alphabetic,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.baseline,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "¥",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                            Text(
+                                              card.strikePrice.toString(),
+                                              style: TextStyle(
+                                                  fontSize: 32,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                          "¥ ${card.originalPrice}",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              decoration:
+                                                  TextDecoration.lineThrough),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                );
-                              }).toList()),
-                        )
-                        // AspectRatio(
-                        //   aspectRatio: 16 / 9,
-                        //   child: Image.network(
-                        //     "https://www.itying.com/images/flutter/1.png",
-                        //     fit: BoxFit.cover,
-                        //   ),
-                        // ),
-                      ],
+                                  Padding(
+                                    padding: const EdgeInsets.all(6.0),
+                                    child: TextButton(
+                                      style: TextButton.styleFrom(
+                                        backgroundColor: Colors.orange[400],
+                                        // elevation: 2,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                        ),
+                                      ),
+                                      onPressed: () {},
+                                      child: Text(
+                                        "app.buyNow".tr,
+                                        style: TextStyle().copyWith(
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          }).toList()),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 200,
+              child: Card(
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        "app.trainer".tr,
+                        style: Get.textTheme.titleMedium,
+                      ),
                     ),
+                    Expanded(
+                      child: CarouselView(
+                        itemSnapping: true,
+                        enableSplash: false,
+                        itemExtent: 120,
+                        shrinkExtent: 120,
+                        children: controller.trainers.map((trainer) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 16.0),
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: ClipOval(
+                                    child: Image.asset(
+                                      trainer.headshot,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  trainer.name,
+                                  style: Get.textTheme.bodySmall,
+                                ),
+                                Wrap(
+                                  children: ["减脂", "增肌", "产后恢复"].map((ele) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.green,
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
+                                        padding:
+                                            EdgeInsets.symmetric(horizontal: 4),
+                                        child: Text(
+                                          ele,
+                                          style: TextStyle(
+                                              fontSize: 9, color: Colors.white),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Card(
+              child: Column(children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Text(
+                        // sprintf(fmt, controller.storeStatus.numWorkingOut),
+                        "当前有 ${controller.storeStatus.numWorkingOut} 人在健身",
+                        style: Get.textTheme.titleSmall,
+                      ),
+                      Spacer(),
+                      Text(
+                        "${"common.temperature".tr}: ${controller.storeStatus.temperature}°C ${"common.temperature".tr}: ${controller.storeStatus.humidity}%",
+                        //  25.7°C 湿度: 50%",
+                        style: Get.textTheme.titleSmall!.copyWith(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: 210,
-                  child: Card(
-                    child: Column(
-                      children: [
-                        ListTile(
-                          title: Text(
-                            "app.trainer".tr,
-                            style: Get.textTheme.titleMedium,
-                          ),
-                        ),
-                        Expanded(
-                          child: CarouselView(
-                            itemSnapping: true,
-                            enableSplash: false,
-                            itemExtent: 120,
-                            shrinkExtent: 120,
-                            children: controller.trainers.map((trainer) {
-                              return Padding(
-                                padding: const EdgeInsets.only(top: 16.0),
-                                child: Column(
-                                  children: [
-                                    CircleAvatar(
-                                      radius: 32,
-                                      child: Icon(Icons.access_alarm),
-                                    ),
-                                    Text(trainer.name),
-                                    Wrap(
-                                      children: ["减脂", "增肌", "产后恢复"].map((ele) {
-                                        return Padding(
-                                          padding: const EdgeInsets.all(2.0),
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 4),
-                                            color: Colors.limeAccent,
-                                            child: Text(
-                                              ele,
-                                              style: TextStyle(fontSize: 9),
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      ],
+                ...(controller.storeStatus.cameraSnapshots.map((url) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: CachedNetworkImage(
+                        imageUrl: url,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  );
+                }).toList())
+              ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                "app.techSupport".tr,
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey,
+                ),
+              ),
             ),
           ],
         ),
@@ -1042,7 +1222,6 @@ class MyPage extends GetView<MyPageController> {
             ],
           ),
 
-          // 右上角状态标签
           Positioned(
             right: 8,
             top: 8,

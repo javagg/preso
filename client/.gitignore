@@ -49,3 +49,4 @@ ios/
 android/
 windows/
 linux/
+.env

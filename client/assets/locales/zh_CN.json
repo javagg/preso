@@ -18,7 +18,9 @@
     "createdAt": "创建时间",
     "updatedAt": "更新时间",
     "description": "描述",
-    "submit": "提交"
+    "submit": "提交",
+    "temperature": "温度",
+    "humidity": "湿度"
   },
   "app": {
     "title": "来运动",
@@ -41,7 +43,8 @@
     "statusSuspended": "停卡",
     "visits": "到店次数",
     "buy": "购买",
-    "buyNow": "立即购买"
+    "buyNow": "立即购买",
+    "howManyWorkingOut": "当前有 %d 人在健身"
   },
   "menu": {
     "dashboard": "仪表盘",

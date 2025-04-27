@@ -1,14 +1,13 @@
-import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'dart:ui_web' as ui_web;
 import 'package:web/web.dart' as web;
 
-class TencentMapWeb {
-  static void registerWith(Registrar registrar) {
-    registrar.registerViewFactory(
-      'tencent-map',
-      (int viewId) => web.DivElement()
-        ..id = 'tencent-map-$viewId'
-        ..style.width = '100%'
-        ..style.height = '100%',
-    );
-  }
+void registerRedDivFactory() {
+  ui_web.platformViewRegistry.registerViewFactory(
+    'tencent-map',
+    (int viewId, {Object? params}) => web.HTMLDivElement()
+      ..id = 'tencent-map-$viewId'
+      // ..style.backgroundColor = 'red'
+      ..style.width = '100%'
+      ..style.height = '100%',
+  );
 }

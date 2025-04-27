@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../middleware/auth_middleware.dart';
 import '../../modules/login/login_view.dart';
+import '../../modules/mobile/map.dart';
 import '../../modules/mobile/root.dart';
 
 import '../app_routes.dart';
@@ -33,6 +34,13 @@ class AppPages {
       participatesInRootNavigator: true,
       bindings: [LoginBinding()],
     ),
+    GetPage(
+      transition: Transition.noTransition,
+      participatesInRootNavigator: true,
+      name: "/map",
+      page: () => MapView(),
+      // bindings: [LoginBinding()],
+    )
   ];
 }
 

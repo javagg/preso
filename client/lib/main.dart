@@ -11,11 +11,11 @@ import 'languages.dart';
 
 import 'app/routes/mobile/app_pages.dart';
 import 'tencent_map_web.dart';
-import 'tecent_map_.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-    TencentMapWeb.registerWith(registrarFor('tencent-map'));
+    // TencentMapWeb.registerWith(registrarFor('tencent-map'));
 
+  registerRedDivFactory();
   await initializeServerpodClient();
   await GetStorage.init();
   await Languages.instance.init();

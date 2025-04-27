@@ -18,7 +18,7 @@ dependencies:
   # serverpod_auth_wechat_flutter: 2.5.1
   syncfusion_flutter_datagrid: ^28.2.6
   syncfusion_flutter_calendar: ^28.2.6
-
+  web: ^1.1.1
   preso_common: 0.1.0
   cupertino_icons: ^1.0.5
   get: ^5.0.0-release-candidate-9.3.2

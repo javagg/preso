@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:marquee/marquee.dart';
+import 'package:preso_client/app/modules/mobile/map.dart';
 import 'package:preso_client/icons.dart';
 import 'package:preso_common/preso_common.dart' show Trainer;
 import 'package:flutter_svg/flutter_svg.dart';
@@ -371,10 +372,17 @@ class HomePage extends GetView<HomePageController> {
                     ),
                     ListTile(
                       dense: true,
-                      leading: Icon(
-                        Icons.location_on_outlined,
-                        size: 20,
+                      leading: IconButton(
+                        onPressed: () {
+                          print("location");
+                          Get.toNamed('/map');
+                        },
+                        icon: Icon(
+                          Icons.location_on_outlined,
+                          size: 20,
+                        ),
                       ),
+
                       title: Text("关山大道300号硬铁广场3层1001室"),
                       // subtitle: Text("110020"),
                       trailing: Row(
@@ -449,7 +457,7 @@ class HomePage extends GetView<HomePageController> {
                       ),
                       Center(
                         child: Text(
-                          "美图/抖音/高德/小红书",
+                          "美图/抖音/大众点评/高德/小红书",
                           style: TextStyle(fontSize: 12, color: Colors.white),
                         ),
                       )

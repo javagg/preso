@@ -110,16 +110,7 @@ class TencentMap extends StatefulWidget {
 }
 
 class _TencentMapState extends State<TencentMap> {
-  late final web.HTMLDivElement _container;
   Map? _map;
-
-  @override
-  void initState() {
-    super.initState();
-    _container = web.document.createElement('div') as web.HTMLDivElement;
-    _container.style.width = '100%';
-    _container.style.height = '100%';
-  }
 
   // @override
   // void didUpdateWidget(covariant TencentMap oldWidget) {
@@ -154,7 +145,7 @@ class _TencentMapState extends State<TencentMap> {
     Future.delayed(Duration.zero, () {
       final element = web.document.getElementById('tencent-map-$id');
       if (element != null) {
-        element.append(_container);
+        // element.append(_container);
         // _initializeMap();
         _map = Map(
           'tencent-map-$id', null,
@@ -169,15 +160,6 @@ class _TencentMapState extends State<TencentMap> {
   }
 
   void _initializeMap() {
-    // _map = Map(
-    //   _container,
-    //   // MapOptions(
-    //   //   // center: widget.center,
-    //   //   // zoom: widget.zoom,
-    //   //   // disableDefaultUI: !widget.interactive,
-    //   // ),
-    // );
-
     // 添加初始标记
     // _addMarker(widget.center);
 

@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:marquee/marquee.dart';
 import 'package:preso_client/app/modules/mobile/map.dart';
 import 'package:preso_client/icons.dart';
-import 'package:preso_common/preso_common.dart' show Trainer;
+import 'package:preso_common/preso_common.dart' show Store, Trainer;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:sprintf/sprintf.dart';
@@ -160,6 +160,8 @@ class HomePageController extends GetxController {
   final currentStore = 1.obs;
   final storeName = 'storeName'.obs;
 
+  late Store store;
+
   var productCards = [
     ProductCardData(
       name: "单次卡",
@@ -249,8 +251,9 @@ class HomePageController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    pod.client.store.get(currentStore.value).then((store) {
-      storeName.value = store!.name;
+    pod.client.store.get(currentStore.value).then((s) {
+      store = s!;
+      storeName.value = s!.name;
     });
   }
 }
@@ -374,17 +377,15 @@ class HomePage extends GetView<HomePageController> {
                       dense: true,
                       leading: IconButton(
                         onPressed: () {
-                          print("location");
-                          Get.toNamed('/map');
+                          // Get.to(() => MapView());
+                          Get.toNamed('/map', arguments: controller.store);
                         },
                         icon: Icon(
                           Icons.location_on_outlined,
                           size: 20,
                         ),
                       ),
-
                       title: Text("关山大道300号硬铁广场3层1001室"),
-                      // subtitle: Text("110020"),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [

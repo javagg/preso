@@ -2,17 +2,29 @@ import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:preso_client/helpers/geo.dart';
+import 'package:preso_common/preso_common.dart';
 import 'package:web/web.dart' as web;
 
 import '../../../tencent_map.dart';
 import '../../../tencent_map_interop.dart';
 
 class MapController extends GetxController {
-  // 地图实例
   dynamic map;
+  final distance = "0.0 km".obs;
 
-  // LatLng _center = LatLng(39.9042, 116.4074);
-  // double _zoom = 15;
+  @override
+  void onInit() {
+    super.onInit();
+    calculateDis();
+  }
+
+  Future<void> calculateDis() async {
+    var store = Get.arguments as Store;
+    var (lat1, lon1) = await fetchCurrentLocation();
+    var (lat2, lon2) = (store.latitude, store.longitude);
+    distance.value = formatDistance(calculateDistance(lat1, lon1, lat2, lon2));
+  }
 }
 
 class MapBinding implements Binding {
@@ -31,53 +43,47 @@ class MapView extends GetView<MapController> {
 
   @override
   Widget build(BuildContext context) {
+    var store = Get.arguments as Store;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: Text('地图'),
+        backgroundColor: Colors.transparent,
       ),
-      // body: Text("map")
-      // body: Center(
-      //   child: const HtmlElementView(
-      //     viewType: 'tencent-map',
-      //     // onPlatformViewCreated: myOnPlatformViewCreated,
-      //     creationParams: <String, Object?>{
-      //       'key': 'someValue',
-      //     },
-      //   ),
-      // ),
       body: Column(
         children: [
           Expanded(
+            flex: 2,
             child: TencentMap(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 200,
-              center: LatLng(39.9042, 116.4074), zoom: 15, onTap: (position) {},
-              // center: _center,
-              // zoom: _zoom,
-              // onTap: (position) {
-              //   setState(() {
-              //     _center = position;
-              //   });
-              // },
+              center: LatLng(39.9042, 116.4074),
+              zoom: 15,
+              onTap: (position) {},
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            // child: Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            //   children: [
-            //     ElevatedButton(
-            //       onPressed: () => setState(() => _zoom++),
-            //       child: const Text('放大'),
-            //     ),
-            //     ElevatedButton(
-            //       onPressed: () => setState(() => _zoom--),
-            //       child: const Text('缩小'),
-            //     ),
-            //     Text('纬度: ${_center.lat.toStringAsFixed(4)}'),
-            //     Text('经度: ${_center.lng.toStringAsFixed(4)}'),
-            //   ],
-            // ),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  ListTile(
+                    title: Text(store.name),
+                    subtitle: Text("洪山区关山大道300号"),
+                    trailing: Obx(
+                      () {
+                        return Text(
+                          controller.distance.value,
+                          style: TextStyle(
+                            fontSize: 10,
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
         ],
       ),

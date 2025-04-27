@@ -39,7 +39,7 @@ class AppPages {
       participatesInRootNavigator: true,
       name: "/map",
       page: () => MapView(),
-      // bindings: [LoginBinding()],
+      bindings: [MapBinding()],
     )
   ];
 }

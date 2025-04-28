@@ -41,9 +41,6 @@ class SignatureView extends StatelessWidget {
               maximumStrokeWidth: 8,
               strokeColor: Colors.blue,
               backgroundColor: Colors.grey[200],
-              // onDrawEnd: () {
-              //   controller.saveSignature();
-              // },
             ),
           ),
           Row(

@@ -91,6 +91,7 @@ class RootView extends GetView<RootController> {
   final List<Widget> pages = [
     HomePage(),
     AppointmentPage(),
+    OperationPage(),
     MyPage(),
   ];
 
@@ -110,6 +111,10 @@ class RootView extends GetView<RootController> {
             NavigationDestination(
               icon: Icon(Icons.schedule_outlined),
               label: 'nav.appointment'.tr,
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.dashboard_outlined),
+              label: 'nav.operation'.tr,
             ),
             NavigationDestination(
               icon: Icon(Icons.account_box_outlined),
@@ -1094,7 +1099,9 @@ class MyPage extends GetView<MyPageController> {
                               case 5:
                                 var v = await Get.toNamed('/signature');
                                 // if (v != null) controller.signatureImage = value;
-
+                                break;
+                              case 8:
+                                Get.toNamed('/feedback');
                                 break;
                               default:
                                 break; // 其他情况不做任何操作或处理为 fals
@@ -1273,8 +1280,7 @@ class MyPage extends GetView<MyPageController> {
   }
 }
 
-// 自定义虚线绘制
-class _DashedLinePainter extends CustomPainter {
+ class _DashedLinePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
@@ -1298,4 +1304,18 @@ class _DashedLinePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
+
+class OperationPageController extends GetxController {
+ 
+}
+class OperationPage extends GetView<OperationPageController> {
+  const OperationPage({super.key});
+  
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
 }

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../middleware/auth_middleware.dart';
 import '../../modules/login/login_view.dart';
 import '../../modules/mobile/face.dart';
+import '../../modules/mobile/feedback.dart';
 import '../../modules/mobile/map.dart';
 import '../../modules/mobile/root.dart';
 
@@ -54,6 +55,12 @@ class AppPages {
       name: '/signature',
       participatesInRootNavigator: true,
       page: () => SignatureView(),
+    ),
+    GetPage(
+      name: '/feedback',
+      participatesInRootNavigator: true,
+      page: () => FeedbackView(),
+      bindings: [FeedbackBinding()],
     )
   ];
 }

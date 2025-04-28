@@ -24,6 +24,9 @@ class RootBinding extends Binding {
       Bind.lazyPut<AppointmentPageController>(
         () => AppointmentPageController(),
       ),
+      Bind.lazyPut<OperationPageController>(
+        () => OperationPageController(),
+      ),
     ];
   }
 }

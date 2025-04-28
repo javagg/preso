@@ -948,7 +948,7 @@ class MyPage extends GetView<MyPageController> {
                               height: 150,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.white.withOpacity(0.1),
+                                color: Colors.white.withValues(alpha: 0.1),
                               ),
                             ),
                           ),
@@ -973,7 +973,8 @@ class MyPage extends GetView<MyPageController> {
                                     ),
                                     SvgPicture.asset(
                                       'assets/icons/crown.svg',
-                                      color: Colors.amber,
+                                      colorFilter: ColorFilter.mode(
+                                          Colors.amber, BlendMode.srcIn),
                                       width: 30,
                                     )
                                   ],
@@ -1083,17 +1084,34 @@ class MyPage extends GetView<MyPageController> {
                       direction: Axis.horizontal,
                       spacing: 16.0,
                       runSpacing: 4.0,
-                      children: controller.tools.map((item) {
-                        return SizedBox(
-                          height: 56,
-                          width: 72,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(item.icon, size: 36),
-                              // SizedBox(height: 10),
-                              Text(item.name, style: TextStyle(fontSize: 12)),
-                            ],
+                      children: controller.tools.asMap().entries.map((e) {
+                        return GestureDetector(
+                          onTap: () async {
+                            switch (e.key) {
+                              case 2:
+                                Get.toNamed("/face");
+                                break;
+                              case 5:
+                                var v = await Get.toNamed('/signature');
+                                // if (v != null) controller.signatureImage = value;
+
+                                break;
+                              default:
+                                break; // 其他情况不做任何操作或处理为 fals
+                            }
+                          },
+                          child: SizedBox(
+                            height: 56,
+                            width: 72,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(e.value.icon, size: 36),
+                                // SizedBox(height: 10),
+                                Text(e.value.name,
+                                    style: TextStyle(fontSize: 12)),
+                              ],
+                            ),
                           ),
                         );
                       }).toList(),

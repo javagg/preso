@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 
 import '../../middleware/auth_middleware.dart';
 import '../../modules/login/login_view.dart';
+import '../../modules/mobile/face.dart';
 import '../../modules/mobile/map.dart';
 import '../../modules/mobile/root.dart';
 
+import '../../modules/mobile/signature.dart';
 import '../app_routes.dart';
 export '../app_routes.dart';
 
@@ -40,6 +42,18 @@ class AppPages {
       name: "/map",
       page: () => MapView(),
       bindings: [MapBinding()],
+    ),
+    GetPage(
+      transition: Transition.noTransition,
+      participatesInRootNavigator: true,
+      name: "/face",
+      page: () => FaceView(),
+      bindings: [FaceBinding()],
+    ),
+    GetPage(
+      name: '/signature',
+      participatesInRootNavigator: true,
+      page: () => SignatureView(),
     )
   ];
 }
